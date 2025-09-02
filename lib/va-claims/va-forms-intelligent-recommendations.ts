@@ -1,5 +1,5 @@
 // Intelligent VA Forms Recommendation System
-import { VeteranProfileEnhanced } from './veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '../henry/veteran-profile-enhanced';
 
 export interface FormRecommendation {
   formNumber: string;
