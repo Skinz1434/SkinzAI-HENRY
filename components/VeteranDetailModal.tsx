@@ -8,7 +8,7 @@ import {
   Stethoscope, Pill, Activity, FolderOpen, RefreshCw,
   AlertTriangle, TrendingUp, Users, Star
 } from 'lucide-react';
-import { VeteranDetails } from '@/lib/veteran-details';
+import { VeteranDetails } from '@/lib/henry/veteran-details';
 
 interface VeteranDetailModalProps {
   veteran: VeteranDetails;
