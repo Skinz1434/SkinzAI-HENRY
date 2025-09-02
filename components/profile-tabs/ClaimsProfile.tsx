@@ -6,7 +6,7 @@ import { FileText, Clock, CheckCircle, XCircle, AlertCircle, TrendingUp, Calenda
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import ClaimsDetailModal from '../ClaimsDetailModal';
 import { generateDetailedClaim } from '@/lib/va-claims/claims-data';
-import { ClaimDetail } from '@/lib/claims-types';
+import { ClaimDetail } from '@/lib/va-claims/claims-types';
 
 interface ClaimsProfileProps {
   veteran: VeteranProfileEnhanced;
