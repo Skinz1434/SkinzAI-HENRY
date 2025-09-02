@@ -1,17 +1,27 @@
+<div align="center">
+
 # 🛡️ HENRY Platform
 ### Heroes' Early Notification & Response Yesterday
 
-<div align="center">
+<img src="https://github.com/user-attachments/assets/henry-platform-hero-banner" alt="HENRY Platform - Advanced AI-Powered Veterans Administration" width="800" height="300" style="border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
 
-![HENRY Platform](https://img.shields.io/badge/HENRY-Platform-blue?style=for-the-badge&logo=shield)
+---
+
+![HENRY Platform](https://img.shields.io/badge/HENRY-Platform-blue?style=for-the-badge&logo=shield&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=for-the-badge&logo=typescript)
-![Tailwind](https://img.shields.io/badge/Tailwind-CSS-blue?style=for-the-badge&logo=tailwindcss)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![AI Powered](https://img.shields.io/badge/AI-Powered-FF6B6B?style=for-the-badge&logo=openai&logoColor=white)
 ![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)
 
-**Advanced AI-Powered Veterans Administration Management Platform**
+**🚀 Advanced AI-Powered Veterans Administration Management Platform**
 
 *Streamlining veteran services through intelligent data integration and real-time profile synchronization*
+
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-View_Platform-4CAF50?style=for-the-badge)](https://henry-platform-kppdcs615-the-architects-projects.vercel.app)
+[![Documentation](https://img.shields.io/badge/📚_Docs-Read_More-2196F3?style=for-the-badge)](https://github.com/Skinz1434/SkinzAI-HENRY)
+[![Contact](https://img.shields.io/badge/💬_Contact-Get_In_Touch-9C27B0?style=for-the-badge)](mailto:skinner.michael@outlook.com)
 
 </div>
 

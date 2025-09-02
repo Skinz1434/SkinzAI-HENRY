@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint --fix .",
+    "lint:check": "eslint .",
+    "type-check": "npx tsc --noEmit",
+    "test": "echo \"Tests will be added in future iterations\" && exit 0",
+    "audit": "npm audit --audit-level=moderate"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",

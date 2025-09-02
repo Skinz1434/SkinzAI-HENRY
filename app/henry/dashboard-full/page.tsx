@@ -168,7 +168,7 @@ export default function DashboardFullPage() {
         <div className="relative bg-gradient-to-r from-gray-800/95 via-gray-800/98 to-gray-800/95 backdrop-blur-xl border-b border-gray-700/50 shadow-2xl">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="flex items-center justify-between h-20">
+            <div className="flex items-center justify-between h-16 md:h-20">
               <div className="flex items-center">
                 {/* Enhanced Logo */}
                 <div className="relative mr-6 group">
@@ -233,9 +233,6 @@ export default function DashboardFullPage() {
             </div>
           </div>
         </div>
-          </div>
-        </div>
-      </div>
 
         {/* Enhanced Tabs */}
         <div className="relative bg-gradient-to-r from-gray-800/90 via-gray-800/95 to-gray-800/90 backdrop-blur-sm border-b border-gray-700/50">
@@ -283,8 +280,8 @@ export default function DashboardFullPage() {
           </div>
         </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'overview' && (
           <OverviewEnhanced accuracy={vetProfileAccuracy} veteranCount={totalRecords} veterans={veterans} />
         )}

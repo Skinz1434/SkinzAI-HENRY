@@ -31,13 +31,16 @@ jobs:
         run: npm ci
         
       - name: 🔍 Run TypeScript Check
-        run: npm run type-check || true
+        run: npm run type-check
+        continue-on-error: true
         
       - name: 🎨 Run Linter
-        run: npm run lint || true
+        run: npm run lint:check
+        continue-on-error: true
         
       - name: 📊 Run Tests
-        run: npm test || true
+        run: npm test
+        continue-on-error: true
         env:
           CI: true
 
