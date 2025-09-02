@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { 
   Shield, Award, MapPin, Calendar, Star, ChevronRight, Flag, Users, 
   GraduationCap, Target, Zap, Globe, Clock, Medal, Briefcase, 

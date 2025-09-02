@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { 
   User, Calendar, MapPin, Phone, Mail, Hash, Shield, Award, 
   Activity, Heart, Pill, FileText, DollarSign, Home, School,

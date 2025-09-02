@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { DollarSign, TrendingUp, CreditCard, PiggyBank, Receipt, AlertCircle } from 'lucide-react';
 
 interface FinancialProfileProps {

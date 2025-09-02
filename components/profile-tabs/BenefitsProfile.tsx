@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { DollarSign, GraduationCap, Home, Heart, Shield, TrendingUp, Calendar, CheckCircle, XCircle, Clock, Award, CreditCard } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 

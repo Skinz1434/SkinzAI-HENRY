@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { 
   vaFormsDatabase, 
   letterTemplatesDatabase, 

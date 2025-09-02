@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { 
   Activity, TrendingUp, AlertTriangle, Brain, Target, Users, 
   Award, Calendar, Clock, DollarSign, FileText, Heart, 

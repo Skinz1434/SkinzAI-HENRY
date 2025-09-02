@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { Activity, Pill, Calendar, FileText, AlertCircle, TrendingUp, Heart, Brain, Stethoscope, Syringe, FlaskConical, Clock } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 

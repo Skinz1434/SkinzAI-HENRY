@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { User, Phone, Mail, MapPin, Calendar, Heart, Shield, AlertCircle, CreditCard, Users, Globe, FileText } from 'lucide-react';
 
 interface PersonalProfileProps {

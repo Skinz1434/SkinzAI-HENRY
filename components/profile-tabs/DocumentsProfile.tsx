@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import { FileText, Download, Eye, Upload, Search, Filter, Folder, File, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import DocumentViewer from '../DocumentViewer';
 
