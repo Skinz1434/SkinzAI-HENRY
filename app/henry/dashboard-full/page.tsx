@@ -1,6 +1,13 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+
+// Extend Window interface for scroll timeout
+declare global {
+  interface Window {
+    scrollTimeout: NodeJS.Timeout;
+  }
+}
 import { 
   Activity, 
   Users, 
@@ -55,6 +62,39 @@ export default function DashboardFullPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [syncingIds, setSyncingIds] = useState<Set<string>>(new Set());
   const [vetProfileAccuracy, setVetProfileAccuracy] = useState(97.3);
+  const [scrollY, setScrollY] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [showTopFade, setShowTopFade] = useState(false);
+  const [showBottomFade, setShowBottomFade] = useState(false);
+
+  // Scroll event handler
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      
+      setScrollY(scrollTop);
+      setShowTopFade(scrollTop > 50);
+      setShowBottomFade(scrollTop + clientHeight < scrollHeight - 50);
+      
+      setIsScrolling(true);
+      
+      // Clear scrolling state after a delay
+      clearTimeout(window.scrollTimeout);
+      window.scrollTimeout = setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(window.scrollTimeout);
+    };
+  }, []);
 
   // Load veterans data
   const loadVeterans = useCallback(async () => {
@@ -163,6 +203,18 @@ export default function DashboardFullPage() {
       <div className="min-h-screen bg-gray-900 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/10 to-purple-900/10 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.05),transparent_70%)] pointer-events-none" />
+        
+        {/* Scroll-based Fade Overlays */}
+        <div 
+          className={`fixed top-0 left-0 right-0 h-16 bg-gradient-to-b from-gray-900 via-gray-900/50 to-transparent pointer-events-none z-40 transition-opacity duration-300 ${
+            showTopFade && isScrolling ? 'opacity-100' : 'opacity-0'
+          }`} 
+        />
+        <div 
+          className={`fixed bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent pointer-events-none z-40 transition-opacity duration-300 ${
+            showBottomFade && isScrolling ? 'opacity-100' : 'opacity-0'
+          }`} 
+        />
         
         {/* Enhanced Header */}
         <div className="relative bg-gradient-to-r from-gray-800/95 via-gray-800/98 to-gray-800/95 backdrop-blur-xl border-b border-gray-700/50 shadow-2xl">
