@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { veteranDataService } from '../veteran-data-service';
+import { veteranDataService } from '../henry/veteran-data-service';
 import type { Database } from './database.types';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
