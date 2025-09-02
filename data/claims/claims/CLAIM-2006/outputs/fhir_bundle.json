@@ -1,0 +1,98 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-U6GC9C",
+        "name": [
+          {
+            "family": "Carter",
+            "given": [
+              "Morgan"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "82732730"
+          }
+        ],
+        "birthDate": "1977-02-10"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-IGNHNF",
+        "code": {
+          "text": "Diabetes Mellitus II (AO Presumptive)"
+        },
+        "subject": {
+          "reference": "Patient/pat-U6GC9C"
+        },
+        "onsetDateTime": "2010-11-07"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "med-JL4LVZ",
+        "medicationCodeableConcept": {
+          "text": "Metformin 500mg BID"
+        },
+        "subject": {
+          "reference": "Patient/pat-U6GC9C"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-2OMK17",
+        "code": {
+          "text": "Audiology Evaluation"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/pat-U6GC9C"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-C1QZKI",
+        "code": {
+          "text": "HbA1c"
+        },
+        "valueQuantity": {
+          "value": 7.3,
+          "unit": "%"
+        },
+        "effectiveDateTime": "2025-08-13"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "qr-FZY3WE",
+        "questionnaire": "DBQ Template (demo)",
+        "status": "completed",
+        "item": [
+          {
+            "linkId": "functionalImpact",
+            "text": "Functional impact",
+            "answer": [
+              {
+                "valueString": "Mild to moderate limitations"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

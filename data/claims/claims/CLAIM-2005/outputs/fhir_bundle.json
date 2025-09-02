@@ -1,0 +1,98 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-N8QB69",
+        "name": [
+          {
+            "family": "Patel",
+            "given": [
+              "Riley"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "36027531"
+          }
+        ],
+        "birthDate": "1979-03-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-0MXEFM",
+        "code": {
+          "text": "MST (Mental Health)"
+        },
+        "subject": {
+          "reference": "Patient/pat-N8QB69"
+        },
+        "onsetDateTime": "2012-09-13"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "med-YJ0TVR",
+        "medicationCodeableConcept": {
+          "text": "Metformin 500mg BID"
+        },
+        "subject": {
+          "reference": "Patient/pat-N8QB69"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-7K2L9Y",
+        "code": {
+          "text": "Audiology Evaluation"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/pat-N8QB69"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-QD0FT6",
+        "code": {
+          "text": "HbA1c"
+        },
+        "valueQuantity": {
+          "value": 7.77,
+          "unit": "%"
+        },
+        "effectiveDateTime": "2022-12-22"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "qr-H18WFU",
+        "questionnaire": "DBQ Template (demo)",
+        "status": "completed",
+        "item": [
+          {
+            "linkId": "functionalImpact",
+            "text": "Functional impact",
+            "answer": [
+              {
+                "valueString": "Mild to moderate limitations"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

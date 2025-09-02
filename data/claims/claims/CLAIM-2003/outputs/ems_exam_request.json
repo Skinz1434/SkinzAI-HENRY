@@ -1,0 +1,17 @@
+{
+  "claim_id": "CLAIM-2003",
+  "veteran_file_number": "75667751",
+  "requested_dbq": "Back (Thoracolumbar Spine) Conditions",
+  "condition": "Lumbar Strain",
+  "exam_type": "Review",
+  "questions_for_examiner": [
+    "Provide medical opinion on nexus with full rationale.",
+    "Document objective findings and diagnostics.",
+    "Describe functional occupational impact."
+  ],
+  "audit": {
+    "created_at": "2025-08-29T22:04:43.737054Z",
+    "created_by": "demo-v2",
+    "trace": "TRACE-8HFMQF"
+  }
+}

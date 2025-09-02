@@ -1,0 +1,5 @@
+SERVICE TREATMENT RECORD — 2017-09-10
+    Provider: Unit Aid Station
+    Subjective: Veteran reports issues related to tbi — mentions headache, LOC, cognitive slowing.
+    Objective: Vitals stable; exam notable for findings consistent with tbi.
+    Assessment/Plan: Monitor, follow up in clinic; document any worsening symptoms.

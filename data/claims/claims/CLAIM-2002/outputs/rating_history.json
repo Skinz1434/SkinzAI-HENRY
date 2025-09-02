@@ -1,0 +1,28 @@
+{
+  "history": [
+    {
+      "date": "2020-03-28",
+      "issue": "Hearing Loss",
+      "decision": "Denied",
+      "reason": "Insufficient nexus (demo)"
+    },
+    {
+      "date": "2025-05-08",
+      "issue": "Hearing Loss",
+      "decision": "Granted",
+      "percent": 30
+    }
+  ],
+  "appeals": [
+    {
+      "date": "2022-04-30",
+      "type": "HLR",
+      "outcome": "Duty to assist error (demo)"
+    },
+    {
+      "date": "2024-09-06",
+      "type": "Board Appeal",
+      "outcome": "Remand for new exam (demo)"
+    }
+  ]
+}

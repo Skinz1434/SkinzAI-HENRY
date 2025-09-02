@@ -1,0 +1,98 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-TCCU0X",
+        "name": [
+          {
+            "family": "Hayes",
+            "given": [
+              "Riley"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "37784483"
+          }
+        ],
+        "birthDate": "1980-03-22"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-S57Q6J",
+        "code": {
+          "text": "PTSD"
+        },
+        "subject": {
+          "reference": "Patient/pat-TCCU0X"
+        },
+        "onsetDateTime": "2014-06-06"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "med-OYQ0D7",
+        "medicationCodeableConcept": {
+          "text": "Sertraline 50mg daily"
+        },
+        "subject": {
+          "reference": "Patient/pat-TCCU0X"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-M3B3I4",
+        "code": {
+          "text": "Audiology Evaluation"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/pat-TCCU0X"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-2YJAG6",
+        "code": {
+          "text": "HbA1c"
+        },
+        "valueQuantity": {
+          "value": 7.4,
+          "unit": "%"
+        },
+        "effectiveDateTime": "2024-09-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "qr-XLJBR4",
+        "questionnaire": "DBQ Template (demo)",
+        "status": "completed",
+        "item": [
+          {
+            "linkId": "functionalImpact",
+            "text": "Functional impact",
+            "answer": [
+              {
+                "valueString": "Mild to moderate limitations"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

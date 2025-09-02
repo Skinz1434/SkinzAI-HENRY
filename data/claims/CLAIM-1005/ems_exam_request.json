@@ -1,0 +1,24 @@
+{
+  "claim_id": "CLAIM-1005",
+  "veteran_file_number": "80867083",
+  "veteran_name": "Riley Parker",
+  "requested_dbq": "Mental Disorders (Other than PTSD)",
+  "condition": "MST (Mental Health)",
+  "exam_type": "Initial",
+  "questions_for_examiner": [
+    "Provide a medical opinion on nexus to service with rationale.",
+    "Document objective findings and relevant diagnostics.",
+    "Describe functional impact and occupational limitations."
+  ],
+  "evidence_summary": "Automated evidence extraction indicates multiple relevant documents with high relevance scores.",
+  "routing": {
+    "origin_system": "VBMS",
+    "destination_system": "EMS",
+    "webhook_url": "https://example.org/ems/webhook (demo)"
+  },
+  "audit": {
+    "created_at": "2025-08-29T21:54:13.647038Z",
+    "created_by": "demo-automation",
+    "explainability_ref": "XPL-TX63CF"
+  }
+}

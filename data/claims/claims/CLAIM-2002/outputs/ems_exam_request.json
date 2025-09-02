@@ -1,0 +1,17 @@
+{
+  "claim_id": "CLAIM-2002",
+  "veteran_file_number": "52256583",
+  "requested_dbq": "Hearing Loss and Tinnitus",
+  "condition": "Hearing Loss",
+  "exam_type": "Review",
+  "questions_for_examiner": [
+    "Provide medical opinion on nexus with full rationale.",
+    "Document objective findings and diagnostics.",
+    "Describe functional occupational impact."
+  ],
+  "audit": {
+    "created_at": "2025-08-29T22:04:43.293056Z",
+    "created_by": "demo-v2",
+    "trace": "TRACE-BDXFXY"
+  }
+}

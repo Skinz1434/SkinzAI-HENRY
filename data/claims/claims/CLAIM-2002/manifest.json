@@ -1,0 +1,301 @@
+{
+  "claim_id": "CLAIM-2002",
+  "veteran": {
+    "file_number": "52256583",
+    "name": "Morgan Miller",
+    "branch": "Air Force",
+    "mos": "4N0X1 Aerospace Medical Service",
+    "service_entry": "2009-11-12",
+    "service_separation": "2019-06-09"
+  },
+  "claimed_conditions": [
+    "Hearing Loss",
+    "Tinnitus"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-G59ZDQ",
+      "filename": "2009-07-06__STR_1.pdf",
+      "type": "Service Treatment Record",
+      "date": "2009-07-06",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2009-07-06__STR_1.pdf"
+    },
+    {
+      "doc_id": "DOC-K3BJLY",
+      "filename": "2009-06-03__STR_2.pdf",
+      "type": "Service Treatment Record",
+      "date": "2009-06-03",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2009-06-03__STR_2.pdf"
+    },
+    {
+      "doc_id": "DOC-RLN244",
+      "filename": "2012-01-26__STR_3.pdf",
+      "type": "Service Treatment Record",
+      "date": "2012-01-26",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2012-01-26__STR_3.pdf"
+    },
+    {
+      "doc_id": "DOC-I1MFGU",
+      "filename": "2008-12-25__STR_4.pdf",
+      "type": "Service Treatment Record",
+      "date": "2008-12-25",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2008-12-25__STR_4.pdf"
+    },
+    {
+      "doc_id": "DOC-P9LLRF",
+      "filename": "2022-07-24__VHA_Note_1.pdf",
+      "type": "VHA Progress Note",
+      "date": "2022-07-24",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2022-07-24__VHA_Note_1.pdf"
+    },
+    {
+      "doc_id": "DOC-MF5ZAC",
+      "filename": "2023-07-06__VHA_Note_2.pdf",
+      "type": "VHA Progress Note",
+      "date": "2023-07-06",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2023-07-06__VHA_Note_2.pdf"
+    },
+    {
+      "doc_id": "DOC-OC3UX2",
+      "filename": "2025-04-01__VHA_Note_3.pdf",
+      "type": "VHA Progress Note",
+      "date": "2025-04-01",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2025-04-01__VHA_Note_3.pdf"
+    },
+    {
+      "doc_id": "DOC-Z460BD",
+      "filename": "2024-06-13__Imaging_Report.txt",
+      "type": "Imaging Report",
+      "date": "2024-06-13",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2024-06-13__Imaging_Report.txt"
+    },
+    {
+      "doc_id": "DOC-WTBIZA",
+      "filename": "2012-02-19__Buddy_Statement.pdf",
+      "type": "Buddy/Lay Statement",
+      "date": "2012-02-19",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2012-02-19__Buddy_Statement.pdf"
+    },
+    {
+      "doc_id": "DOC-599KCI",
+      "filename": "2024-07-14__Private_Record.pdf",
+      "type": "Private Medical Record",
+      "date": "2024-07-14",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2024-07-14__Private_Record.pdf"
+    },
+    {
+      "doc_id": "DOC-LDED25",
+      "filename": "2024-11-07__C&P_Exam_Report.pdf",
+      "type": "C&P Exam",
+      "date": "2024-11-07",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2024-11-07__C&P_Exam_Report.pdf"
+    },
+    {
+      "doc_id": "DOC-3CB8H6",
+      "filename": "2023-08-14__Statement_of_the_Case.pdf",
+      "type": "Appeals - SOC",
+      "date": "2023-08-14",
+      "pages": 1,
+      "path": "claims/CLAIM-2002/documents/2023-08-14__Statement_of_the_Case.pdf"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-G59ZDQ",
+      "doc_type": "Service Treatment Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.83,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-K3BJLY",
+      "doc_type": "Service Treatment Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.93,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-RLN244",
+      "doc_type": "Service Treatment Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.91,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-I1MFGU",
+      "doc_type": "Service Treatment Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.81,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-P9LLRF",
+      "doc_type": "VHA Progress Note",
+      "condition": "Hearing Loss",
+      "relevance": 0.78,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-MF5ZAC",
+      "doc_type": "VHA Progress Note",
+      "condition": "Hearing Loss",
+      "relevance": 0.91,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-OC3UX2",
+      "doc_type": "VHA Progress Note",
+      "condition": "Hearing Loss",
+      "relevance": 0.83,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-Z460BD",
+      "doc_type": "Imaging Report",
+      "condition": "Hearing Loss",
+      "relevance": 0.82,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-WTBIZA",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "Hearing Loss",
+      "relevance": 0.34,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-599KCI",
+      "doc_type": "Private Medical Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.9,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-LDED25",
+      "doc_type": "C&P Exam",
+      "condition": "Hearing Loss",
+      "relevance": 0.93,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    },
+    {
+      "doc_id": "DOC-3CB8H6",
+      "doc_type": "Appeals - SOC",
+      "condition": "Hearing Loss",
+      "relevance": 0.43,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.85",
+        "38 CFR \u00a74.86"
+      ],
+      "icd10": [
+        "H90.3",
+        "H93.19"
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-2002/outputs/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-2002/outputs/fhir_bundle.json",
+    "cnp_exam": "claims/CLAIM-2002/outputs/cnp_exam.json",
+    "rating_history": "claims/CLAIM-2002/outputs/rating_history.json"
+  }
+}

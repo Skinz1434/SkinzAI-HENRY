@@ -1,0 +1,277 @@
+{
+  "claim_id": "CLAIM-2004",
+  "veteran": {
+    "file_number": "44740254",
+    "name": "Riley Miller",
+    "branch": "Space Force",
+    "mos": "1N8X1 Targeting Analyst",
+    "service_entry": "2011-01-19",
+    "service_separation": "2013-11-22"
+  },
+  "claimed_conditions": [
+    "TBI",
+    "Headaches"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-PEUKH9",
+      "filename": "2010-11-21__STR_1.pdf",
+      "type": "Service Treatment Record",
+      "date": "2010-11-21",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2010-11-21__STR_1.pdf"
+    },
+    {
+      "doc_id": "DOC-33R14X",
+      "filename": "2012-04-11__STR_2.pdf",
+      "type": "Service Treatment Record",
+      "date": "2012-04-11",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2012-04-11__STR_2.pdf"
+    },
+    {
+      "doc_id": "DOC-TYG5OP",
+      "filename": "2012-10-11__STR_3.pdf",
+      "type": "Service Treatment Record",
+      "date": "2012-10-11",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2012-10-11__STR_3.pdf"
+    },
+    {
+      "doc_id": "DOC-KE30IX",
+      "filename": "2012-10-27__STR_4.pdf",
+      "type": "Service Treatment Record",
+      "date": "2012-10-27",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2012-10-27__STR_4.pdf"
+    },
+    {
+      "doc_id": "DOC-M8ZI0S",
+      "filename": "2024-09-25__VHA_Note_1.pdf",
+      "type": "VHA Progress Note",
+      "date": "2024-09-25",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2024-09-25__VHA_Note_1.pdf"
+    },
+    {
+      "doc_id": "DOC-ZXY4FJ",
+      "filename": "2020-01-20__VHA_Note_2.pdf",
+      "type": "VHA Progress Note",
+      "date": "2020-01-20",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2020-01-20__VHA_Note_2.pdf"
+    },
+    {
+      "doc_id": "DOC-PMWQLR",
+      "filename": "2019-09-15__VHA_Note_3.pdf",
+      "type": "VHA Progress Note",
+      "date": "2019-09-15",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2019-09-15__VHA_Note_3.pdf"
+    },
+    {
+      "doc_id": "DOC-BLJJMJ",
+      "filename": "2022-02-04__Imaging_Report.txt",
+      "type": "Imaging Report",
+      "date": "2022-02-04",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2022-02-04__Imaging_Report.txt"
+    },
+    {
+      "doc_id": "DOC-N26FYI",
+      "filename": "2010-04-15__Buddy_Statement.pdf",
+      "type": "Buddy/Lay Statement",
+      "date": "2010-04-15",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2010-04-15__Buddy_Statement.pdf"
+    },
+    {
+      "doc_id": "DOC-71DCLA",
+      "filename": "2021-05-05__Private_Record.pdf",
+      "type": "Private Medical Record",
+      "date": "2021-05-05",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2021-05-05__Private_Record.pdf"
+    },
+    {
+      "doc_id": "DOC-DXUMCG",
+      "filename": "2023-04-17__C&P_Exam_Report.pdf",
+      "type": "C&P Exam",
+      "date": "2023-04-17",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2023-04-17__C&P_Exam_Report.pdf"
+    },
+    {
+      "doc_id": "DOC-MEGZR7",
+      "filename": "2024-12-17__Statement_of_the_Case.pdf",
+      "type": "Appeals - SOC",
+      "date": "2024-12-17",
+      "pages": 1,
+      "path": "claims/CLAIM-2004/documents/2024-12-17__Statement_of_the_Case.pdf"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-PEUKH9",
+      "doc_type": "Service Treatment Record",
+      "condition": "TBI",
+      "relevance": 0.94,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-33R14X",
+      "doc_type": "Service Treatment Record",
+      "condition": "TBI",
+      "relevance": 0.9,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-TYG5OP",
+      "doc_type": "Service Treatment Record",
+      "condition": "TBI",
+      "relevance": 0.83,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-KE30IX",
+      "doc_type": "Service Treatment Record",
+      "condition": "TBI",
+      "relevance": 0.82,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-M8ZI0S",
+      "doc_type": "VHA Progress Note",
+      "condition": "TBI",
+      "relevance": 0.77,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-ZXY4FJ",
+      "doc_type": "VHA Progress Note",
+      "condition": "TBI",
+      "relevance": 0.87,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-PMWQLR",
+      "doc_type": "VHA Progress Note",
+      "condition": "TBI",
+      "relevance": 0.92,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-BLJJMJ",
+      "doc_type": "Imaging Report",
+      "condition": "TBI",
+      "relevance": 0.86,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-N26FYI",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "TBI",
+      "relevance": 0.45,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-71DCLA",
+      "doc_type": "Private Medical Record",
+      "condition": "TBI",
+      "relevance": 0.83,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-DXUMCG",
+      "doc_type": "C&P Exam",
+      "condition": "TBI",
+      "relevance": 0.93,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    },
+    {
+      "doc_id": "DOC-MEGZR7",
+      "doc_type": "Appeals - SOC",
+      "condition": "TBI",
+      "relevance": 0.29,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.124a"
+      ],
+      "icd10": [
+        "S06.0X0A"
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-2004/outputs/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-2004/outputs/fhir_bundle.json",
+    "cnp_exam": "claims/CLAIM-2004/outputs/cnp_exam.json",
+    "rating_history": "claims/CLAIM-2004/outputs/rating_history.json"
+  }
+}

@@ -1,0 +1,73 @@
+claim_id,doc_id,filename,label_condition,doc_type,relevance_gt,nexus_gt
+CLAIM-2001,DOC-O5C714,2007-06-03__STR_1.pdf,PTSD,Service Treatment Record,0.88,True
+CLAIM-2001,DOC-ZA40Q0,2010-02-23__STR_2.pdf,PTSD,Service Treatment Record,0.86,True
+CLAIM-2001,DOC-IVYQHJ,2012-01-28__STR_3.pdf,PTSD,Service Treatment Record,0.79,True
+CLAIM-2001,DOC-A5ONM5,2007-02-08__STR_4.pdf,PTSD,Service Treatment Record,0.76,True
+CLAIM-2001,DOC-4MNMY5,2022-10-07__VHA_Note_1.pdf,PTSD,VHA Progress Note,0.75,False
+CLAIM-2001,DOC-VGL72B,2020-09-20__VHA_Note_2.pdf,PTSD,VHA Progress Note,0.92,False
+CLAIM-2001,DOC-PZJKML,2021-09-29__VHA_Note_3.pdf,PTSD,VHA Progress Note,0.78,False
+CLAIM-2001,DOC-P9X714,2017-01-22__Imaging_Report.txt,PTSD,Imaging Report,0.94,True
+CLAIM-2001,DOC-A1IMCF,2015-05-16__Buddy_Statement.pdf,PTSD,Buddy/Lay Statement,0.32,False
+CLAIM-2001,DOC-3LWNT8,2015-05-25__Private_Record.pdf,PTSD,Private Medical Record,0.89,True
+CLAIM-2001,DOC-1WXH15,2025-11-13__C&P_Exam_Report.pdf,PTSD,C&P Exam,0.78,True
+CLAIM-2001,DOC-WF8KOM,2025-06-16__Statement_of_the_Case.pdf,PTSD,Appeals - SOC,0.41,False
+CLAIM-2002,DOC-G59ZDQ,2009-07-06__STR_1.pdf,Hearing Loss,Service Treatment Record,0.83,True
+CLAIM-2002,DOC-K3BJLY,2009-06-03__STR_2.pdf,Hearing Loss,Service Treatment Record,0.93,True
+CLAIM-2002,DOC-RLN244,2012-01-26__STR_3.pdf,Hearing Loss,Service Treatment Record,0.91,True
+CLAIM-2002,DOC-I1MFGU,2008-12-25__STR_4.pdf,Hearing Loss,Service Treatment Record,0.81,True
+CLAIM-2002,DOC-P9LLRF,2022-07-24__VHA_Note_1.pdf,Hearing Loss,VHA Progress Note,0.78,False
+CLAIM-2002,DOC-MF5ZAC,2023-07-06__VHA_Note_2.pdf,Hearing Loss,VHA Progress Note,0.91,False
+CLAIM-2002,DOC-OC3UX2,2025-04-01__VHA_Note_3.pdf,Hearing Loss,VHA Progress Note,0.83,False
+CLAIM-2002,DOC-Z460BD,2024-06-13__Imaging_Report.txt,Hearing Loss,Imaging Report,0.82,True
+CLAIM-2002,DOC-WTBIZA,2012-02-19__Buddy_Statement.pdf,Hearing Loss,Buddy/Lay Statement,0.34,False
+CLAIM-2002,DOC-599KCI,2024-07-14__Private_Record.pdf,Hearing Loss,Private Medical Record,0.9,True
+CLAIM-2002,DOC-LDED25,2024-11-07__C&P_Exam_Report.pdf,Hearing Loss,C&P Exam,0.93,True
+CLAIM-2002,DOC-3CB8H6,2023-08-14__Statement_of_the_Case.pdf,Hearing Loss,Appeals - SOC,0.43,False
+CLAIM-2003,DOC-ASMA9L,2012-05-04__STR_1.pdf,Lumbar Strain,Service Treatment Record,0.79,True
+CLAIM-2003,DOC-5C6DTT,2010-04-02__STR_2.pdf,Lumbar Strain,Service Treatment Record,0.8,True
+CLAIM-2003,DOC-EW89Q2,2011-08-05__STR_3.pdf,Lumbar Strain,Service Treatment Record,0.89,True
+CLAIM-2003,DOC-0YEOSB,2010-11-04__STR_4.pdf,Lumbar Strain,Service Treatment Record,0.93,True
+CLAIM-2003,DOC-T98TWI,2019-12-19__VHA_Note_1.pdf,Lumbar Strain,VHA Progress Note,0.88,False
+CLAIM-2003,DOC-MQVV7U,2023-09-07__VHA_Note_2.pdf,Lumbar Strain,VHA Progress Note,0.9,False
+CLAIM-2003,DOC-PNBA4P,2019-03-20__VHA_Note_3.pdf,Lumbar Strain,VHA Progress Note,0.88,False
+CLAIM-2003,DOC-QJTV9S,2016-07-19__Imaging_Report.txt,Lumbar Strain,Imaging Report,0.78,True
+CLAIM-2003,DOC-W194GU,2014-08-22__Buddy_Statement.pdf,Lumbar Strain,Buddy/Lay Statement,0.3,False
+CLAIM-2003,DOC-8FML67,2021-10-18__Private_Record.pdf,Lumbar Strain,Private Medical Record,0.87,True
+CLAIM-2003,DOC-WS62AJ,2022-01-03__C&P_Exam_Report.pdf,Lumbar Strain,C&P Exam,0.9,True
+CLAIM-2003,DOC-WKBRBK,2024-02-17__Statement_of_the_Case.pdf,Lumbar Strain,Appeals - SOC,0.33,False
+CLAIM-2004,DOC-PEUKH9,2010-11-21__STR_1.pdf,TBI,Service Treatment Record,0.94,True
+CLAIM-2004,DOC-33R14X,2012-04-11__STR_2.pdf,TBI,Service Treatment Record,0.9,True
+CLAIM-2004,DOC-TYG5OP,2012-10-11__STR_3.pdf,TBI,Service Treatment Record,0.83,True
+CLAIM-2004,DOC-KE30IX,2012-10-27__STR_4.pdf,TBI,Service Treatment Record,0.82,True
+CLAIM-2004,DOC-M8ZI0S,2024-09-25__VHA_Note_1.pdf,TBI,VHA Progress Note,0.77,False
+CLAIM-2004,DOC-ZXY4FJ,2020-01-20__VHA_Note_2.pdf,TBI,VHA Progress Note,0.87,False
+CLAIM-2004,DOC-PMWQLR,2019-09-15__VHA_Note_3.pdf,TBI,VHA Progress Note,0.92,False
+CLAIM-2004,DOC-BLJJMJ,2022-02-04__Imaging_Report.txt,TBI,Imaging Report,0.86,True
+CLAIM-2004,DOC-N26FYI,2010-04-15__Buddy_Statement.pdf,TBI,Buddy/Lay Statement,0.45,False
+CLAIM-2004,DOC-71DCLA,2021-05-05__Private_Record.pdf,TBI,Private Medical Record,0.83,True
+CLAIM-2004,DOC-DXUMCG,2023-04-17__C&P_Exam_Report.pdf,TBI,C&P Exam,0.93,True
+CLAIM-2004,DOC-MEGZR7,2024-12-17__Statement_of_the_Case.pdf,TBI,Appeals - SOC,0.29,False
+CLAIM-2005,DOC-SDJA50,2007-06-03__STR_1.pdf,MST (Mental Health),Service Treatment Record,0.93,True
+CLAIM-2005,DOC-EWI7XB,2011-03-31__STR_2.pdf,MST (Mental Health),Service Treatment Record,0.8,True
+CLAIM-2005,DOC-ODVNL8,2008-05-29__STR_3.pdf,MST (Mental Health),Service Treatment Record,0.94,True
+CLAIM-2005,DOC-QBIDQW,2012-03-15__STR_4.pdf,MST (Mental Health),Service Treatment Record,0.88,True
+CLAIM-2005,DOC-QN845R,2022-12-18__VHA_Note_1.pdf,MST (Mental Health),VHA Progress Note,0.87,False
+CLAIM-2005,DOC-7YTZAS,2021-10-11__VHA_Note_2.pdf,MST (Mental Health),VHA Progress Note,0.78,False
+CLAIM-2005,DOC-X4Z7TQ,2020-05-11__VHA_Note_3.pdf,MST (Mental Health),VHA Progress Note,0.83,False
+CLAIM-2005,DOC-8CLAL7,2022-09-05__Imaging_Report.txt,MST (Mental Health),Imaging Report,0.93,True
+CLAIM-2005,DOC-3NO493,2017-08-01__Buddy_Statement.pdf,MST (Mental Health),Buddy/Lay Statement,0.38,False
+CLAIM-2005,DOC-66178R,2024-10-23__Private_Record.pdf,MST (Mental Health),Private Medical Record,0.93,True
+CLAIM-2005,DOC-6NU89J,2022-02-20__C&P_Exam_Report.pdf,MST (Mental Health),C&P Exam,0.9,True
+CLAIM-2005,DOC-KUN376,2024-05-07__Statement_of_the_Case.pdf,MST (Mental Health),Appeals - SOC,0.43,False
+CLAIM-2006,DOC-OCZY9V,2009-11-29__STR_1.pdf,Diabetes Mellitus II (AO Presumptive),Service Treatment Record,0.86,True
+CLAIM-2006,DOC-GIHO0V,2010-02-11__STR_2.pdf,Diabetes Mellitus II (AO Presumptive),Service Treatment Record,0.92,True
+CLAIM-2006,DOC-XX24Q1,2011-06-27__STR_3.pdf,Diabetes Mellitus II (AO Presumptive),Service Treatment Record,0.77,True
+CLAIM-2006,DOC-6520QJ,2008-03-18__STR_4.pdf,Diabetes Mellitus II (AO Presumptive),Service Treatment Record,0.92,True
+CLAIM-2006,DOC-IIUS6I,2023-07-30__VHA_Note_1.pdf,Diabetes Mellitus II (AO Presumptive),VHA Progress Note,0.75,False
+CLAIM-2006,DOC-1ASQCH,2023-09-29__VHA_Note_2.pdf,Diabetes Mellitus II (AO Presumptive),VHA Progress Note,0.84,False
+CLAIM-2006,DOC-4WOW8R,2020-03-12__VHA_Note_3.pdf,Diabetes Mellitus II (AO Presumptive),VHA Progress Note,0.83,False
+CLAIM-2006,DOC-1RNFZ5,2020-08-09__Imaging_Report.txt,Diabetes Mellitus II (AO Presumptive),Imaging Report,0.82,True
+CLAIM-2006,DOC-INU5IV,2013-05-07__Buddy_Statement.pdf,Diabetes Mellitus II (AO Presumptive),Buddy/Lay Statement,0.32,False
+CLAIM-2006,DOC-F4KPN3,2020-04-13__Private_Record.pdf,Diabetes Mellitus II (AO Presumptive),Private Medical Record,0.86,True
+CLAIM-2006,DOC-1MNGLY,2022-03-21__C&P_Exam_Report.pdf,Diabetes Mellitus II (AO Presumptive),C&P Exam,0.8,True
+CLAIM-2006,DOC-E3OUPJ,2025-04-14__Statement_of_the_Case.pdf,Diabetes Mellitus II (AO Presumptive),Appeals - SOC,0.4,False

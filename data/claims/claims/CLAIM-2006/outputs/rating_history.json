@@ -1,0 +1,28 @@
+{
+  "history": [
+    {
+      "date": "2021-04-29",
+      "issue": "Diabetes Mellitus II (AO Presumptive)",
+      "decision": "Denied",
+      "reason": "Insufficient nexus (demo)"
+    },
+    {
+      "date": "2023-11-23",
+      "issue": "Diabetes Mellitus II (AO Presumptive)",
+      "decision": "Granted",
+      "percent": 50
+    }
+  ],
+  "appeals": [
+    {
+      "date": "2021-08-17",
+      "type": "HLR",
+      "outcome": "Duty to assist error (demo)"
+    },
+    {
+      "date": "2025-11-20",
+      "type": "Board Appeal",
+      "outcome": "Remand for new exam (demo)"
+    }
+  ]
+}

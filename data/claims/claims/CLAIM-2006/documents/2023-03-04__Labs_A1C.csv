@@ -1,0 +1,4 @@
+Date,Test,Result,Unit,RefRange
+2022-08-02,HbA1c,8.97,%,<5.7
+2023-04-05,HbA1c,9.37,%,<5.7
+2024-06-29,Fasting Glucose,144,mg/dL,70-99

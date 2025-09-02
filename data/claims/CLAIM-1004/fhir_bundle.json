@@ -1,0 +1,54 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-PNSM43",
+        "name": [
+          {
+            "family": "Parker",
+            "given": [
+              "Cameron"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "46288475"
+          }
+        ],
+        "birthDate": "1979-02-16"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-D8W3ZP",
+        "code": {
+          "text": "TBI"
+        },
+        "subject": {
+          "reference": "Patient/1"
+        },
+        "onsetDateTime": "2015-11-08"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-8J3TRP",
+        "code": {
+          "text": "TBI severity score (demo)"
+        },
+        "valueQuantity": {
+          "value": 10,
+          "unit": "score"
+        },
+        "effectiveDateTime": "2022-07-04"
+      }
+    }
+  ]
+}

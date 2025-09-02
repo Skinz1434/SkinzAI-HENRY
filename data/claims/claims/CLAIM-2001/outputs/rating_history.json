@@ -1,0 +1,28 @@
+{
+  "history": [
+    {
+      "date": "2021-06-16",
+      "issue": "PTSD",
+      "decision": "Denied",
+      "reason": "Insufficient nexus (demo)"
+    },
+    {
+      "date": "2024-06-02",
+      "issue": "PTSD",
+      "decision": "Granted",
+      "percent": 50
+    }
+  ],
+  "appeals": [
+    {
+      "date": "2021-08-31",
+      "type": "HLR",
+      "outcome": "Duty to assist error (demo)"
+    },
+    {
+      "date": "2023-12-28",
+      "type": "Board Appeal",
+      "outcome": "Remand for new exam (demo)"
+    }
+  ]
+}

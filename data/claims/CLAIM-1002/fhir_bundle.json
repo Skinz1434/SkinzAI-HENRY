@@ -1,0 +1,54 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-4ZW9XA",
+        "name": [
+          {
+            "family": "Parker",
+            "given": [
+              "Quinn"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "88800797"
+          }
+        ],
+        "birthDate": "1992-07-29"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-3KX7EE",
+        "code": {
+          "text": "Hearing Loss"
+        },
+        "subject": {
+          "reference": "Patient/1"
+        },
+        "onsetDateTime": "2011-03-15"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-0FKHMY",
+        "code": {
+          "text": "Hearing Loss severity score (demo)"
+        },
+        "valueQuantity": {
+          "value": 5,
+          "unit": "score"
+        },
+        "effectiveDateTime": "2023-11-02"
+      }
+    }
+  ]
+}

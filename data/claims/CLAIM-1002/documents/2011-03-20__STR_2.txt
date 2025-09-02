@@ -1,0 +1,5 @@
+SERVICE TREATMENT RECORD — 2015-07-02
+    Provider: Unit Aid Station
+    Subjective: Veteran reports issues related to hearing loss — mentions MOS noise hazard, tinnitus, noise exposure.
+    Objective: Vitals stable; exam notable for findings consistent with hearing loss.
+    Assessment/Plan: Monitor, follow up in clinic; document any worsening symptoms.

@@ -1,0 +1,288 @@
+{
+  "claim_id": "CLAIM-2005",
+  "veteran": {
+    "file_number": "36027531",
+    "name": "Riley Patel",
+    "branch": "Marine Corps",
+    "mos": "3531 Motor Vehicle Operator",
+    "service_entry": "2012-05-01",
+    "service_separation": "2013-11-12"
+  },
+  "claimed_conditions": [
+    "MST (Mental Health)"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-SDJA50",
+      "filename": "2007-06-03__STR_1.pdf",
+      "type": "Service Treatment Record",
+      "date": "2007-06-03",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2007-06-03__STR_1.pdf"
+    },
+    {
+      "doc_id": "DOC-EWI7XB",
+      "filename": "2011-03-31__STR_2.pdf",
+      "type": "Service Treatment Record",
+      "date": "2011-03-31",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2011-03-31__STR_2.pdf"
+    },
+    {
+      "doc_id": "DOC-ODVNL8",
+      "filename": "2008-05-29__STR_3.pdf",
+      "type": "Service Treatment Record",
+      "date": "2008-05-29",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2008-05-29__STR_3.pdf"
+    },
+    {
+      "doc_id": "DOC-QBIDQW",
+      "filename": "2012-03-15__STR_4.pdf",
+      "type": "Service Treatment Record",
+      "date": "2012-03-15",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2012-03-15__STR_4.pdf"
+    },
+    {
+      "doc_id": "DOC-QN845R",
+      "filename": "2022-12-18__VHA_Note_1.pdf",
+      "type": "VHA Progress Note",
+      "date": "2022-12-18",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2022-12-18__VHA_Note_1.pdf"
+    },
+    {
+      "doc_id": "DOC-7YTZAS",
+      "filename": "2021-10-11__VHA_Note_2.pdf",
+      "type": "VHA Progress Note",
+      "date": "2021-10-11",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2021-10-11__VHA_Note_2.pdf"
+    },
+    {
+      "doc_id": "DOC-X4Z7TQ",
+      "filename": "2020-05-11__VHA_Note_3.pdf",
+      "type": "VHA Progress Note",
+      "date": "2020-05-11",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2020-05-11__VHA_Note_3.pdf"
+    },
+    {
+      "doc_id": "DOC-8CLAL7",
+      "filename": "2022-09-05__Imaging_Report.txt",
+      "type": "Imaging Report",
+      "date": "2022-09-05",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2022-09-05__Imaging_Report.txt"
+    },
+    {
+      "doc_id": "DOC-3NO493",
+      "filename": "2017-08-01__Buddy_Statement.pdf",
+      "type": "Buddy/Lay Statement",
+      "date": "2017-08-01",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2017-08-01__Buddy_Statement.pdf"
+    },
+    {
+      "doc_id": "DOC-66178R",
+      "filename": "2024-10-23__Private_Record.pdf",
+      "type": "Private Medical Record",
+      "date": "2024-10-23",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2024-10-23__Private_Record.pdf"
+    },
+    {
+      "doc_id": "DOC-6NU89J",
+      "filename": "2022-02-20__C&P_Exam_Report.pdf",
+      "type": "C&P Exam",
+      "date": "2022-02-20",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2022-02-20__C&P_Exam_Report.pdf"
+    },
+    {
+      "doc_id": "DOC-KUN376",
+      "filename": "2024-05-07__Statement_of_the_Case.pdf",
+      "type": "Appeals - SOC",
+      "date": "2024-05-07",
+      "pages": 1,
+      "path": "claims/CLAIM-2005/documents/2024-05-07__Statement_of_the_Case.pdf"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-SDJA50",
+      "doc_type": "Service Treatment Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.93,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-EWI7XB",
+      "doc_type": "Service Treatment Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.8,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-ODVNL8",
+      "doc_type": "Service Treatment Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.94,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-QBIDQW",
+      "doc_type": "Service Treatment Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.88,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-QN845R",
+      "doc_type": "VHA Progress Note",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.87,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-7YTZAS",
+      "doc_type": "VHA Progress Note",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.78,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-X4Z7TQ",
+      "doc_type": "VHA Progress Note",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.83,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-8CLAL7",
+      "doc_type": "Imaging Report",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.93,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-3NO493",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.38,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-66178R",
+      "doc_type": "Private Medical Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.93,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-6NU89J",
+      "doc_type": "C&P Exam",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.9,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    },
+    {
+      "doc_id": "DOC-KUN376",
+      "doc_type": "Appeals - SOC",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.43,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.304(f)"
+      ],
+      "icd10": [
+        "F41.1",
+        "F33.1"
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-2005/outputs/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-2005/outputs/fhir_bundle.json",
+    "cnp_exam": "claims/CLAIM-2005/outputs/cnp_exam.json",
+    "rating_history": "claims/CLAIM-2005/outputs/rating_history.json"
+  }
+}

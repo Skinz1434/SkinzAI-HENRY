@@ -1,0 +1,230 @@
+{
+  "claim_id": "CLAIM-1002",
+  "veteran": {
+    "file_number": "88800797",
+    "name": "Quinn Parker",
+    "branch": "Space Force",
+    "mos": "1N8X1 Targeting Analyst",
+    "service_entry": "2009-06-23",
+    "service_separation": "2020-07-14"
+  },
+  "claimed_conditions": [
+    "Hearing Loss"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-QICATV",
+      "filename": "2020-07-14__DD214.txt",
+      "type": "DD214",
+      "date": "2020-07-14",
+      "pages": 1,
+      "path": "claims/CLAIM-1002/documents/2020-07-14__DD214.txt"
+    },
+    {
+      "doc_id": "DOC-ZCCBLS",
+      "filename": "2024-03-13__VA-Form-21-526EZ.txt",
+      "type": "Application",
+      "date": "2024-03-13",
+      "pages": 5,
+      "path": "claims/CLAIM-1002/documents/2024-03-13__VA-Form-21-526EZ.txt"
+    },
+    {
+      "doc_id": "DOC-UIRODX",
+      "filename": "2022-10-22__STR_1.txt",
+      "type": "Service Treatment Record",
+      "date": "2022-10-22",
+      "pages": 6,
+      "path": "claims/CLAIM-1002/documents/2022-10-22__STR_1.txt"
+    },
+    {
+      "doc_id": "DOC-Y9DOM5",
+      "filename": "2011-03-20__STR_2.txt",
+      "type": "Service Treatment Record",
+      "date": "2011-03-20",
+      "pages": 4,
+      "path": "claims/CLAIM-1002/documents/2011-03-20__STR_2.txt"
+    },
+    {
+      "doc_id": "DOC-GQ5C34",
+      "filename": "2019-06-19__STR_3.txt",
+      "type": "Service Treatment Record",
+      "date": "2019-06-19",
+      "pages": 2,
+      "path": "claims/CLAIM-1002/documents/2019-06-19__STR_3.txt"
+    },
+    {
+      "doc_id": "DOC-94874F",
+      "filename": "2024-08-17__VHA_Note_1.txt",
+      "type": "VHA Progress Note",
+      "date": "2024-08-17",
+      "pages": 8,
+      "path": "claims/CLAIM-1002/documents/2024-08-17__VHA_Note_1.txt"
+    },
+    {
+      "doc_id": "DOC-56FAO7",
+      "filename": "2014-10-18__VHA_Note_2.txt",
+      "type": "VHA Progress Note",
+      "date": "2014-10-18",
+      "pages": 8,
+      "path": "claims/CLAIM-1002/documents/2014-10-18__VHA_Note_2.txt"
+    },
+    {
+      "doc_id": "DOC-Z02XRG",
+      "filename": "2019-06-28__Private_Record.txt",
+      "type": "Private Medical Record",
+      "date": "2019-06-28",
+      "pages": 4,
+      "path": "claims/CLAIM-1002/documents/2019-06-28__Private_Record.txt"
+    },
+    {
+      "doc_id": "DOC-0CLBR7",
+      "filename": "2022-12-28__Buddy_Statement.txt",
+      "type": "Buddy/Lay Statement",
+      "date": "2022-12-28",
+      "pages": 3,
+      "path": "claims/CLAIM-1002/documents/2022-12-28__Buddy_Statement.txt"
+    },
+    {
+      "doc_id": "DOC-CGVYIE",
+      "filename": "2021-05-23__C&P_Exam_Report.txt",
+      "type": "C&P Exam",
+      "date": "2021-05-23",
+      "pages": 4,
+      "path": "claims/CLAIM-1002/documents/2021-05-23__C&P_Exam_Report.txt"
+    },
+    {
+      "doc_id": "DOC-WPVS7H",
+      "filename": "2010-11-22__Rating_Decision.txt",
+      "type": "Rating Decision",
+      "date": "2010-11-22",
+      "pages": 6,
+      "path": "claims/CLAIM-1002/documents/2010-11-22__Rating_Decision.txt"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-QICATV",
+      "doc_type": "DD214",
+      "condition": "Hearing Loss",
+      "relevance": 0.22,
+      "nexus_suggested": false,
+      "page_refs": [
+        1
+      ]
+    },
+    {
+      "doc_id": "DOC-ZCCBLS",
+      "doc_type": "Application",
+      "condition": "Hearing Loss",
+      "relevance": 0.3,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        5
+      ]
+    },
+    {
+      "doc_id": "DOC-UIRODX",
+      "doc_type": "Service Treatment Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.83,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        6
+      ]
+    },
+    {
+      "doc_id": "DOC-Y9DOM5",
+      "doc_type": "Service Treatment Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.65,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-GQ5C34",
+      "doc_type": "Service Treatment Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.65,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        2
+      ]
+    },
+    {
+      "doc_id": "DOC-94874F",
+      "doc_type": "VHA Progress Note",
+      "condition": "Hearing Loss",
+      "relevance": 0.87,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-56FAO7",
+      "doc_type": "VHA Progress Note",
+      "condition": "Hearing Loss",
+      "relevance": 0.54,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-Z02XRG",
+      "doc_type": "Private Medical Record",
+      "condition": "Hearing Loss",
+      "relevance": 0.72,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-0CLBR7",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "Hearing Loss",
+      "relevance": 0.99,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        3
+      ]
+    },
+    {
+      "doc_id": "DOC-CGVYIE",
+      "doc_type": "C&P Exam",
+      "condition": "Hearing Loss",
+      "relevance": 0.99,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-WPVS7H",
+      "doc_type": "Rating Decision",
+      "condition": "Hearing Loss",
+      "relevance": 0.14,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        6
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-1002/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-1002/fhir_bundle.json"
+  }
+}

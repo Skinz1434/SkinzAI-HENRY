@@ -1,0 +1,276 @@
+{
+  "claim_id": "CLAIM-2003",
+  "veteran": {
+    "file_number": "75667751",
+    "name": "Riley Hayes",
+    "branch": "Air Force",
+    "mos": "4N0X1 Aerospace Medical Service",
+    "service_entry": "2004-01-29",
+    "service_separation": "2012-08-18"
+  },
+  "claimed_conditions": [
+    "Lumbar Strain"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-ASMA9L",
+      "filename": "2012-05-04__STR_1.pdf",
+      "type": "Service Treatment Record",
+      "date": "2012-05-04",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2012-05-04__STR_1.pdf"
+    },
+    {
+      "doc_id": "DOC-5C6DTT",
+      "filename": "2010-04-02__STR_2.pdf",
+      "type": "Service Treatment Record",
+      "date": "2010-04-02",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2010-04-02__STR_2.pdf"
+    },
+    {
+      "doc_id": "DOC-EW89Q2",
+      "filename": "2011-08-05__STR_3.pdf",
+      "type": "Service Treatment Record",
+      "date": "2011-08-05",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2011-08-05__STR_3.pdf"
+    },
+    {
+      "doc_id": "DOC-0YEOSB",
+      "filename": "2010-11-04__STR_4.pdf",
+      "type": "Service Treatment Record",
+      "date": "2010-11-04",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2010-11-04__STR_4.pdf"
+    },
+    {
+      "doc_id": "DOC-T98TWI",
+      "filename": "2019-12-19__VHA_Note_1.pdf",
+      "type": "VHA Progress Note",
+      "date": "2019-12-19",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2019-12-19__VHA_Note_1.pdf"
+    },
+    {
+      "doc_id": "DOC-MQVV7U",
+      "filename": "2023-09-07__VHA_Note_2.pdf",
+      "type": "VHA Progress Note",
+      "date": "2023-09-07",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2023-09-07__VHA_Note_2.pdf"
+    },
+    {
+      "doc_id": "DOC-PNBA4P",
+      "filename": "2019-03-20__VHA_Note_3.pdf",
+      "type": "VHA Progress Note",
+      "date": "2019-03-20",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2019-03-20__VHA_Note_3.pdf"
+    },
+    {
+      "doc_id": "DOC-QJTV9S",
+      "filename": "2016-07-19__Imaging_Report.txt",
+      "type": "Imaging Report",
+      "date": "2016-07-19",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2016-07-19__Imaging_Report.txt"
+    },
+    {
+      "doc_id": "DOC-W194GU",
+      "filename": "2014-08-22__Buddy_Statement.pdf",
+      "type": "Buddy/Lay Statement",
+      "date": "2014-08-22",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2014-08-22__Buddy_Statement.pdf"
+    },
+    {
+      "doc_id": "DOC-8FML67",
+      "filename": "2021-10-18__Private_Record.pdf",
+      "type": "Private Medical Record",
+      "date": "2021-10-18",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2021-10-18__Private_Record.pdf"
+    },
+    {
+      "doc_id": "DOC-WS62AJ",
+      "filename": "2022-01-03__C&P_Exam_Report.pdf",
+      "type": "C&P Exam",
+      "date": "2022-01-03",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2022-01-03__C&P_Exam_Report.pdf"
+    },
+    {
+      "doc_id": "DOC-WKBRBK",
+      "filename": "2024-02-17__Statement_of_the_Case.pdf",
+      "type": "Appeals - SOC",
+      "date": "2024-02-17",
+      "pages": 1,
+      "path": "claims/CLAIM-2003/documents/2024-02-17__Statement_of_the_Case.pdf"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-ASMA9L",
+      "doc_type": "Service Treatment Record",
+      "condition": "Lumbar Strain",
+      "relevance": 0.79,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-5C6DTT",
+      "doc_type": "Service Treatment Record",
+      "condition": "Lumbar Strain",
+      "relevance": 0.8,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-EW89Q2",
+      "doc_type": "Service Treatment Record",
+      "condition": "Lumbar Strain",
+      "relevance": 0.89,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-0YEOSB",
+      "doc_type": "Service Treatment Record",
+      "condition": "Lumbar Strain",
+      "relevance": 0.93,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-T98TWI",
+      "doc_type": "VHA Progress Note",
+      "condition": "Lumbar Strain",
+      "relevance": 0.88,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-MQVV7U",
+      "doc_type": "VHA Progress Note",
+      "condition": "Lumbar Strain",
+      "relevance": 0.9,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-PNBA4P",
+      "doc_type": "VHA Progress Note",
+      "condition": "Lumbar Strain",
+      "relevance": 0.88,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-QJTV9S",
+      "doc_type": "Imaging Report",
+      "condition": "Lumbar Strain",
+      "relevance": 0.78,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-W194GU",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "Lumbar Strain",
+      "relevance": 0.3,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-8FML67",
+      "doc_type": "Private Medical Record",
+      "condition": "Lumbar Strain",
+      "relevance": 0.87,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-WS62AJ",
+      "doc_type": "C&P Exam",
+      "condition": "Lumbar Strain",
+      "relevance": 0.9,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    },
+    {
+      "doc_id": "DOC-WKBRBK",
+      "doc_type": "Appeals - SOC",
+      "condition": "Lumbar Strain",
+      "relevance": 0.33,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.71a"
+      ],
+      "icd10": [
+        "M54.5"
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-2003/outputs/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-2003/outputs/fhir_bundle.json",
+    "cnp_exam": "claims/CLAIM-2003/outputs/cnp_exam.json",
+    "rating_history": "claims/CLAIM-2003/outputs/rating_history.json"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "claim_id": "CLAIM-2004",
+  "veteran_file_number": "44740254",
+  "requested_dbq": "Residuals of TBI",
+  "condition": "TBI",
+  "exam_type": "Initial",
+  "questions_for_examiner": [
+    "Provide medical opinion on nexus with full rationale.",
+    "Document objective findings and diagnostics.",
+    "Describe functional occupational impact."
+  ],
+  "audit": {
+    "created_at": "2025-08-29T22:04:44.193148Z",
+    "created_by": "demo-v2",
+    "trace": "TRACE-ZOKZLH"
+  }
+}

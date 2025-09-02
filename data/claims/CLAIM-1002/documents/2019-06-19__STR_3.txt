@@ -1,0 +1,5 @@
+SERVICE TREATMENT RECORD — 2010-04-19
+    Provider: Unit Aid Station
+    Subjective: Veteran reports issues related to hearing loss — mentions threshold shift, MOS noise hazard, audiogram.
+    Objective: Vitals stable; exam notable for findings consistent with hearing loss.
+    Assessment/Plan: Monitor, follow up in clinic; document any worsening symptoms.

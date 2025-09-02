@@ -1,0 +1,230 @@
+{
+  "claim_id": "CLAIM-1004",
+  "veteran": {
+    "file_number": "46288475",
+    "name": "Cameron Parker",
+    "branch": "Navy",
+    "mos": "AE Aviation Electrician's Mate",
+    "service_entry": "2010-10-23",
+    "service_separation": "2018-03-18"
+  },
+  "claimed_conditions": [
+    "TBI",
+    "Headaches"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-Y9V86W",
+      "filename": "2018-03-18__DD214.txt",
+      "type": "DD214",
+      "date": "2018-03-18",
+      "pages": 7,
+      "path": "claims/CLAIM-1004/documents/2018-03-18__DD214.txt"
+    },
+    {
+      "doc_id": "DOC-QF5Q14",
+      "filename": "2025-07-15__VA-Form-21-526EZ.txt",
+      "type": "Application",
+      "date": "2025-07-15",
+      "pages": 5,
+      "path": "claims/CLAIM-1004/documents/2025-07-15__VA-Form-21-526EZ.txt"
+    },
+    {
+      "doc_id": "DOC-CKJLTE",
+      "filename": "2019-11-13__STR_1.txt",
+      "type": "Service Treatment Record",
+      "date": "2019-11-13",
+      "pages": 4,
+      "path": "claims/CLAIM-1004/documents/2019-11-13__STR_1.txt"
+    },
+    {
+      "doc_id": "DOC-OTOHP6",
+      "filename": "2019-04-22__STR_2.txt",
+      "type": "Service Treatment Record",
+      "date": "2019-04-22",
+      "pages": 1,
+      "path": "claims/CLAIM-1004/documents/2019-04-22__STR_2.txt"
+    },
+    {
+      "doc_id": "DOC-KO64T0",
+      "filename": "2017-11-21__STR_3.txt",
+      "type": "Service Treatment Record",
+      "date": "2017-11-21",
+      "pages": 4,
+      "path": "claims/CLAIM-1004/documents/2017-11-21__STR_3.txt"
+    },
+    {
+      "doc_id": "DOC-JRNY20",
+      "filename": "2014-12-03__VHA_Note_1.txt",
+      "type": "VHA Progress Note",
+      "date": "2014-12-03",
+      "pages": 8,
+      "path": "claims/CLAIM-1004/documents/2014-12-03__VHA_Note_1.txt"
+    },
+    {
+      "doc_id": "DOC-T6VXDP",
+      "filename": "2023-12-16__VHA_Note_2.txt",
+      "type": "VHA Progress Note",
+      "date": "2023-12-16",
+      "pages": 8,
+      "path": "claims/CLAIM-1004/documents/2023-12-16__VHA_Note_2.txt"
+    },
+    {
+      "doc_id": "DOC-JLQM5K",
+      "filename": "2011-02-16__Private_Record.txt",
+      "type": "Private Medical Record",
+      "date": "2011-02-16",
+      "pages": 7,
+      "path": "claims/CLAIM-1004/documents/2011-02-16__Private_Record.txt"
+    },
+    {
+      "doc_id": "DOC-Q0B8IC",
+      "filename": "2011-11-02__Buddy_Statement.txt",
+      "type": "Buddy/Lay Statement",
+      "date": "2011-11-02",
+      "pages": 1,
+      "path": "claims/CLAIM-1004/documents/2011-11-02__Buddy_Statement.txt"
+    },
+    {
+      "doc_id": "DOC-8HAFEY",
+      "filename": "2010-09-12__C&P_Exam_Report.txt",
+      "type": "C&P Exam",
+      "date": "2010-09-12",
+      "pages": 4,
+      "path": "claims/CLAIM-1004/documents/2010-09-12__C&P_Exam_Report.txt"
+    },
+    {
+      "doc_id": "DOC-1GV0E3",
+      "filename": "2015-10-01__Rating_Decision.txt",
+      "type": "Rating Decision",
+      "date": "2015-10-01",
+      "pages": 5,
+      "path": "claims/CLAIM-1004/documents/2015-10-01__Rating_Decision.txt"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-Y9V86W",
+      "doc_type": "DD214",
+      "condition": "TBI",
+      "relevance": 0.15,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        7
+      ]
+    },
+    {
+      "doc_id": "DOC-QF5Q14",
+      "doc_type": "Application",
+      "condition": "TBI",
+      "relevance": 0.11,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        5
+      ]
+    },
+    {
+      "doc_id": "DOC-CKJLTE",
+      "doc_type": "Service Treatment Record",
+      "condition": "TBI",
+      "relevance": 0.65,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-OTOHP6",
+      "doc_type": "Service Treatment Record",
+      "condition": "TBI",
+      "relevance": 0.83,
+      "nexus_suggested": true,
+      "page_refs": [
+        1
+      ]
+    },
+    {
+      "doc_id": "DOC-KO64T0",
+      "doc_type": "Service Treatment Record",
+      "condition": "TBI",
+      "relevance": 0.97,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-JRNY20",
+      "doc_type": "VHA Progress Note",
+      "condition": "TBI",
+      "relevance": 0.69,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-T6VXDP",
+      "doc_type": "VHA Progress Note",
+      "condition": "TBI",
+      "relevance": 0.85,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-JLQM5K",
+      "doc_type": "Private Medical Record",
+      "condition": "TBI",
+      "relevance": 0.54,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        7
+      ]
+    },
+    {
+      "doc_id": "DOC-Q0B8IC",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "TBI",
+      "relevance": 0.84,
+      "nexus_suggested": false,
+      "page_refs": [
+        1
+      ]
+    },
+    {
+      "doc_id": "DOC-8HAFEY",
+      "doc_type": "C&P Exam",
+      "condition": "TBI",
+      "relevance": 0.81,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-1GV0E3",
+      "doc_type": "Rating Decision",
+      "condition": "TBI",
+      "relevance": 0.15,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        5
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-1004/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-1004/fhir_bundle.json"
+  }
+}

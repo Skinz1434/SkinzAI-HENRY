@@ -23,7 +23,13 @@
       "Bash(git init:*)",
       "Bash(git rm:*)",
       "Bash(git pull:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(npx tsx:*)",
+      "Bash(tree:*)",
+      "Bash(if [ ! -d \"node_modules\" ])",
+      "Bash(then echo \"Installing dependencies...\")",
+      "Bash(else echo \"Dependencies already installed\")",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []

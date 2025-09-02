@@ -1,0 +1,17 @@
+{
+  "claim_id": "CLAIM-2001",
+  "veteran_file_number": "37784483",
+  "requested_dbq": "PTSD Review (Initial/Review)",
+  "condition": "PTSD",
+  "exam_type": "Review",
+  "questions_for_examiner": [
+    "Provide medical opinion on nexus with full rationale.",
+    "Document objective findings and diagnostics.",
+    "Describe functional occupational impact."
+  ],
+  "audit": {
+    "created_at": "2025-08-29T22:04:42.751676Z",
+    "created_by": "demo-v2",
+    "trace": "TRACE-D5XWX0"
+  }
+}

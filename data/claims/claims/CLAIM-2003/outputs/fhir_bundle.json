@@ -1,0 +1,98 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-R4AGC4",
+        "name": [
+          {
+            "family": "Hayes",
+            "given": [
+              "Riley"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "75667751"
+          }
+        ],
+        "birthDate": "1984-12-30"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-YI6GR0",
+        "code": {
+          "text": "Lumbar Strain"
+        },
+        "subject": {
+          "reference": "Patient/pat-R4AGC4"
+        },
+        "onsetDateTime": "2016-09-27"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "med-N2YLOI",
+        "medicationCodeableConcept": {
+          "text": "Metformin 500mg BID"
+        },
+        "subject": {
+          "reference": "Patient/pat-R4AGC4"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-ZJZ6D0",
+        "code": {
+          "text": "MRI Lumbar Spine"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/pat-R4AGC4"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-Y6PZZT",
+        "code": {
+          "text": "HbA1c"
+        },
+        "valueQuantity": {
+          "value": 7.68,
+          "unit": "%"
+        },
+        "effectiveDateTime": "2021-10-08"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "qr-Q92QZV",
+        "questionnaire": "DBQ Template (demo)",
+        "status": "completed",
+        "item": [
+          {
+            "linkId": "functionalImpact",
+            "text": "Functional impact",
+            "answer": [
+              {
+                "valueString": "Mild to moderate limitations"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

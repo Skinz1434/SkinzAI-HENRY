@@ -1,0 +1,54 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-L0UKEY",
+        "name": [
+          {
+            "family": "Parker",
+            "given": [
+              "Riley"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "80867083"
+          }
+        ],
+        "birthDate": "1994-10-31"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-Z7SRCB",
+        "code": {
+          "text": "MST (Mental Health)"
+        },
+        "subject": {
+          "reference": "Patient/1"
+        },
+        "onsetDateTime": "2014-11-05"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-0VAIY4",
+        "code": {
+          "text": "MST (Mental Health) severity score (demo)"
+        },
+        "valueQuantity": {
+          "value": 10,
+          "unit": "score"
+        },
+        "effectiveDateTime": "2021-02-12"
+      }
+    }
+  ]
+}

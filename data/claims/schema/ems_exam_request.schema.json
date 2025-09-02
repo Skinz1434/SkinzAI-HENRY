@@ -1,0 +1,20 @@
+{
+  "title": "EMS Exam Request",
+  "type": "object",
+  "properties": {
+    "claim_id": {
+      "type": "string"
+    },
+    "veteran_file_number": {
+      "type": "string"
+    },
+    "requested_dbq": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "claim_id",
+    "veteran_file_number",
+    "requested_dbq"
+  ]
+}

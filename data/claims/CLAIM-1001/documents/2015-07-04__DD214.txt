@@ -1,0 +1,12 @@
+DD FORM 214 (SYNTHETIC DEMO — NOT AN OFFICIAL DOCUMENT)
+--------------------------------------------------------
+1. NAME: Carter, Jordan
+2. DOD ID / FILE: 41668732   3. SSN (Last 4): 2679
+4. BRANCH: Space Force    5. COMPONENT: Active Duty
+6. DATE ENTERED AD: 2007-10-01   7. SEPARATION DATE: 2015-07-04
+8. CHARACTER OF SERVICE: Honorable
+9. PRIMARY SPECIALTY / MOS: 1N8X1 Targeting Analyst
+10. FOREIGN SERVICE: 00 YRS 08 MOS 12 DAYS (synthetic)
+11. DECORATIONS/AWARDS: AAM, NDSM, GWOT, ICM (synthetic)
+12. REASON FOR SEPARATION: Completion of required active service (synthetic)
+13. REMARKS: This is a synthetic training file for AI demo only.

@@ -1,0 +1,276 @@
+{
+  "claim_id": "CLAIM-2001",
+  "veteran": {
+    "file_number": "37784483",
+    "name": "Riley Hayes",
+    "branch": "Marine Corps",
+    "mos": "3531 Motor Vehicle Operator",
+    "service_entry": "2004-07-16",
+    "service_separation": "2012-10-23"
+  },
+  "claimed_conditions": [
+    "PTSD"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-O5C714",
+      "filename": "2007-06-03__STR_1.pdf",
+      "type": "Service Treatment Record",
+      "date": "2007-06-03",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2007-06-03__STR_1.pdf"
+    },
+    {
+      "doc_id": "DOC-ZA40Q0",
+      "filename": "2010-02-23__STR_2.pdf",
+      "type": "Service Treatment Record",
+      "date": "2010-02-23",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2010-02-23__STR_2.pdf"
+    },
+    {
+      "doc_id": "DOC-IVYQHJ",
+      "filename": "2012-01-28__STR_3.pdf",
+      "type": "Service Treatment Record",
+      "date": "2012-01-28",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2012-01-28__STR_3.pdf"
+    },
+    {
+      "doc_id": "DOC-A5ONM5",
+      "filename": "2007-02-08__STR_4.pdf",
+      "type": "Service Treatment Record",
+      "date": "2007-02-08",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2007-02-08__STR_4.pdf"
+    },
+    {
+      "doc_id": "DOC-4MNMY5",
+      "filename": "2022-10-07__VHA_Note_1.pdf",
+      "type": "VHA Progress Note",
+      "date": "2022-10-07",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2022-10-07__VHA_Note_1.pdf"
+    },
+    {
+      "doc_id": "DOC-VGL72B",
+      "filename": "2020-09-20__VHA_Note_2.pdf",
+      "type": "VHA Progress Note",
+      "date": "2020-09-20",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2020-09-20__VHA_Note_2.pdf"
+    },
+    {
+      "doc_id": "DOC-PZJKML",
+      "filename": "2021-09-29__VHA_Note_3.pdf",
+      "type": "VHA Progress Note",
+      "date": "2021-09-29",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2021-09-29__VHA_Note_3.pdf"
+    },
+    {
+      "doc_id": "DOC-P9X714",
+      "filename": "2017-01-22__Imaging_Report.txt",
+      "type": "Imaging Report",
+      "date": "2017-01-22",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2017-01-22__Imaging_Report.txt"
+    },
+    {
+      "doc_id": "DOC-A1IMCF",
+      "filename": "2015-05-16__Buddy_Statement.pdf",
+      "type": "Buddy/Lay Statement",
+      "date": "2015-05-16",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2015-05-16__Buddy_Statement.pdf"
+    },
+    {
+      "doc_id": "DOC-3LWNT8",
+      "filename": "2015-05-25__Private_Record.pdf",
+      "type": "Private Medical Record",
+      "date": "2015-05-25",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2015-05-25__Private_Record.pdf"
+    },
+    {
+      "doc_id": "DOC-1WXH15",
+      "filename": "2025-11-13__C&P_Exam_Report.pdf",
+      "type": "C&P Exam",
+      "date": "2025-11-13",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2025-11-13__C&P_Exam_Report.pdf"
+    },
+    {
+      "doc_id": "DOC-WF8KOM",
+      "filename": "2025-06-16__Statement_of_the_Case.pdf",
+      "type": "Appeals - SOC",
+      "date": "2025-06-16",
+      "pages": 1,
+      "path": "claims/CLAIM-2001/documents/2025-06-16__Statement_of_the_Case.pdf"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-O5C714",
+      "doc_type": "Service Treatment Record",
+      "condition": "PTSD",
+      "relevance": 0.88,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-ZA40Q0",
+      "doc_type": "Service Treatment Record",
+      "condition": "PTSD",
+      "relevance": 0.86,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-IVYQHJ",
+      "doc_type": "Service Treatment Record",
+      "condition": "PTSD",
+      "relevance": 0.79,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-A5ONM5",
+      "doc_type": "Service Treatment Record",
+      "condition": "PTSD",
+      "relevance": 0.76,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-4MNMY5",
+      "doc_type": "VHA Progress Note",
+      "condition": "PTSD",
+      "relevance": 0.75,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-VGL72B",
+      "doc_type": "VHA Progress Note",
+      "condition": "PTSD",
+      "relevance": 0.92,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-PZJKML",
+      "doc_type": "VHA Progress Note",
+      "condition": "PTSD",
+      "relevance": 0.78,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-P9X714",
+      "doc_type": "Imaging Report",
+      "condition": "PTSD",
+      "relevance": 0.94,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-A1IMCF",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "PTSD",
+      "relevance": 0.32,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-3LWNT8",
+      "doc_type": "Private Medical Record",
+      "condition": "PTSD",
+      "relevance": 0.89,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-1WXH15",
+      "doc_type": "C&P Exam",
+      "condition": "PTSD",
+      "relevance": 0.78,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    },
+    {
+      "doc_id": "DOC-WF8KOM",
+      "doc_type": "Appeals - SOC",
+      "condition": "PTSD",
+      "relevance": 0.41,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a74.130"
+      ],
+      "icd10": [
+        "F43.10"
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-2001/outputs/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-2001/outputs/fhir_bundle.json",
+    "cnp_exam": "claims/CLAIM-2001/outputs/cnp_exam.json",
+    "rating_history": "claims/CLAIM-2001/outputs/rating_history.json"
+  }
+}

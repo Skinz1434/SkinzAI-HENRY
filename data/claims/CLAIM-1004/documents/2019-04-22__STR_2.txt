@@ -1,0 +1,5 @@
+SERVICE TREATMENT RECORD — 2014-08-04
+    Provider: Unit Aid Station
+    Subjective: Veteran reports issues related to tbi — mentions LOC, cognitive slowing, blast exposure.
+    Objective: Vitals stable; exam notable for findings consistent with tbi.
+    Assessment/Plan: Monitor, follow up in clinic; document any worsening symptoms.

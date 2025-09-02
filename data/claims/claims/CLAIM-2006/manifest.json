@@ -1,0 +1,277 @@
+{
+  "claim_id": "CLAIM-2006",
+  "veteran": {
+    "file_number": "82732730",
+    "name": "Morgan Carter",
+    "branch": "Air Force",
+    "mos": "4N0X1 Aerospace Medical Service",
+    "service_entry": "2004-03-06",
+    "service_separation": "2013-05-26"
+  },
+  "claimed_conditions": [
+    "Diabetes Mellitus II (AO Presumptive)",
+    "Peripheral Neuropathy"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-OCZY9V",
+      "filename": "2009-11-29__STR_1.pdf",
+      "type": "Service Treatment Record",
+      "date": "2009-11-29",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2009-11-29__STR_1.pdf"
+    },
+    {
+      "doc_id": "DOC-GIHO0V",
+      "filename": "2010-02-11__STR_2.pdf",
+      "type": "Service Treatment Record",
+      "date": "2010-02-11",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2010-02-11__STR_2.pdf"
+    },
+    {
+      "doc_id": "DOC-XX24Q1",
+      "filename": "2011-06-27__STR_3.pdf",
+      "type": "Service Treatment Record",
+      "date": "2011-06-27",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2011-06-27__STR_3.pdf"
+    },
+    {
+      "doc_id": "DOC-6520QJ",
+      "filename": "2008-03-18__STR_4.pdf",
+      "type": "Service Treatment Record",
+      "date": "2008-03-18",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2008-03-18__STR_4.pdf"
+    },
+    {
+      "doc_id": "DOC-IIUS6I",
+      "filename": "2023-07-30__VHA_Note_1.pdf",
+      "type": "VHA Progress Note",
+      "date": "2023-07-30",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2023-07-30__VHA_Note_1.pdf"
+    },
+    {
+      "doc_id": "DOC-1ASQCH",
+      "filename": "2023-09-29__VHA_Note_2.pdf",
+      "type": "VHA Progress Note",
+      "date": "2023-09-29",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2023-09-29__VHA_Note_2.pdf"
+    },
+    {
+      "doc_id": "DOC-4WOW8R",
+      "filename": "2020-03-12__VHA_Note_3.pdf",
+      "type": "VHA Progress Note",
+      "date": "2020-03-12",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2020-03-12__VHA_Note_3.pdf"
+    },
+    {
+      "doc_id": "DOC-1RNFZ5",
+      "filename": "2020-08-09__Imaging_Report.txt",
+      "type": "Imaging Report",
+      "date": "2020-08-09",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2020-08-09__Imaging_Report.txt"
+    },
+    {
+      "doc_id": "DOC-INU5IV",
+      "filename": "2013-05-07__Buddy_Statement.pdf",
+      "type": "Buddy/Lay Statement",
+      "date": "2013-05-07",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2013-05-07__Buddy_Statement.pdf"
+    },
+    {
+      "doc_id": "DOC-F4KPN3",
+      "filename": "2020-04-13__Private_Record.pdf",
+      "type": "Private Medical Record",
+      "date": "2020-04-13",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2020-04-13__Private_Record.pdf"
+    },
+    {
+      "doc_id": "DOC-1MNGLY",
+      "filename": "2022-03-21__C&P_Exam_Report.pdf",
+      "type": "C&P Exam",
+      "date": "2022-03-21",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2022-03-21__C&P_Exam_Report.pdf"
+    },
+    {
+      "doc_id": "DOC-E3OUPJ",
+      "filename": "2025-04-14__Statement_of_the_Case.pdf",
+      "type": "Appeals - SOC",
+      "date": "2025-04-14",
+      "pages": 1,
+      "path": "claims/CLAIM-2006/documents/2025-04-14__Statement_of_the_Case.pdf"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-OCZY9V",
+      "doc_type": "Service Treatment Record",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.86,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-GIHO0V",
+      "doc_type": "Service Treatment Record",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.92,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-XX24Q1",
+      "doc_type": "Service Treatment Record",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.77,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-6520QJ",
+      "doc_type": "Service Treatment Record",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.92,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-IIUS6I",
+      "doc_type": "VHA Progress Note",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.75,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-1ASQCH",
+      "doc_type": "VHA Progress Note",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.84,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-4WOW8R",
+      "doc_type": "VHA Progress Note",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.83,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-1RNFZ5",
+      "doc_type": "Imaging Report",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.82,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-INU5IV",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.32,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-F4KPN3",
+      "doc_type": "Private Medical Record",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.86,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-1MNGLY",
+      "doc_type": "C&P Exam",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.8,
+      "nexus_suggested": true,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    },
+    {
+      "doc_id": "DOC-E3OUPJ",
+      "doc_type": "Appeals - SOC",
+      "condition": "Diabetes Mellitus II (AO Presumptive)",
+      "relevance": 0.4,
+      "nexus_suggested": false,
+      "cfr_refs": [
+        "38 CFR \u00a73.309(e)"
+      ],
+      "icd10": [
+        "E11.9"
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-2006/outputs/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-2006/outputs/fhir_bundle.json",
+    "cnp_exam": "claims/CLAIM-2006/outputs/cnp_exam.json",
+    "rating_history": "claims/CLAIM-2006/outputs/rating_history.json"
+  }
+}

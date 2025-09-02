@@ -1,0 +1,54 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-REN93I",
+        "name": [
+          {
+            "family": "Carter",
+            "given": [
+              "Jordan"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "41668732"
+          }
+        ],
+        "birthDate": "1981-02-17"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-IUC039",
+        "code": {
+          "text": "PTSD"
+        },
+        "subject": {
+          "reference": "Patient/1"
+        },
+        "onsetDateTime": "2015-12-22"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1ERTJ5",
+        "code": {
+          "text": "PTSD severity score (demo)"
+        },
+        "valueQuantity": {
+          "value": 7,
+          "unit": "score"
+        },
+        "effectiveDateTime": "2022-03-10"
+      }
+    }
+  ]
+}

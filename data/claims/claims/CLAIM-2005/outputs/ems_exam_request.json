@@ -1,0 +1,17 @@
+{
+  "claim_id": "CLAIM-2005",
+  "veteran_file_number": "36027531",
+  "requested_dbq": "Mental Disorders (Other than PTSD)",
+  "condition": "MST (Mental Health)",
+  "exam_type": "Initial",
+  "questions_for_examiner": [
+    "Provide medical opinion on nexus with full rationale.",
+    "Document objective findings and diagnostics.",
+    "Describe functional occupational impact."
+  ],
+  "audit": {
+    "created_at": "2025-08-29T22:04:44.648856Z",
+    "created_by": "demo-v2",
+    "trace": "TRACE-BHT1S5"
+  }
+}

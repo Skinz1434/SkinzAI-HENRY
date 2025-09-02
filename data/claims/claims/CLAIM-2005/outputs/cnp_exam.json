@@ -1,0 +1,21 @@
+{
+  "exam_id": "EXAM-EFIOTS",
+  "veteran_file": "36027531",
+  "dbq": "Mental Disorders (Other than PTSD)",
+  "exam_date": "2024-10-20",
+  "findings_summary": "Objective findings consistent with MST (Mental Health).",
+  "medical_opinion": "At least as likely as not (\u226550%) related to service (DEMO).",
+  "cfr_refs": [
+    "38 CFR \u00a73.304(f)"
+  ],
+  "icd10": [
+    "F41.1",
+    "F33.1"
+  ],
+  "dbq_structured": {
+    "functional_impact": "Reduced lifting tolerance; sleep disruption; concentration issues.",
+    "rom_measurements": null,
+    "neurofindings": null,
+    "audiology": null
+  }
+}

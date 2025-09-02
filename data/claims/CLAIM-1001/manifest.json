@@ -1,0 +1,232 @@
+{
+  "claim_id": "CLAIM-1001",
+  "veteran": {
+    "file_number": "41668732",
+    "name": "Jordan Carter",
+    "branch": "Space Force",
+    "mos": "1N8X1 Targeting Analyst",
+    "service_entry": "2007-10-01",
+    "service_separation": "2015-07-04"
+  },
+  "claimed_conditions": [
+    "PTSD",
+    "Sleep disturbance"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-BHSAHX",
+      "filename": "2015-07-04__DD214.txt",
+      "type": "DD214",
+      "date": "2015-07-04",
+      "pages": 7,
+      "path": "claims/CLAIM-1001/documents/2015-07-04__DD214.txt"
+    },
+    {
+      "doc_id": "DOC-QK51FP",
+      "filename": "2024-08-13__VA-Form-21-526EZ.txt",
+      "type": "Application",
+      "date": "2024-08-13",
+      "pages": 5,
+      "path": "claims/CLAIM-1001/documents/2024-08-13__VA-Form-21-526EZ.txt"
+    },
+    {
+      "doc_id": "DOC-NMMJBQ",
+      "filename": "2012-01-30__STR_1.txt",
+      "type": "Service Treatment Record",
+      "date": "2012-01-30",
+      "pages": 2,
+      "path": "claims/CLAIM-1001/documents/2012-01-30__STR_1.txt"
+    },
+    {
+      "doc_id": "DOC-5NGCX1",
+      "filename": "2023-11-15__STR_2.txt",
+      "type": "Service Treatment Record",
+      "date": "2023-11-15",
+      "pages": 2,
+      "path": "claims/CLAIM-1001/documents/2023-11-15__STR_2.txt"
+    },
+    {
+      "doc_id": "DOC-WNNHJ7",
+      "filename": "2020-03-03__STR_3.txt",
+      "type": "Service Treatment Record",
+      "date": "2020-03-03",
+      "pages": 2,
+      "path": "claims/CLAIM-1001/documents/2020-03-03__STR_3.txt"
+    },
+    {
+      "doc_id": "DOC-G0FN9X",
+      "filename": "2024-03-29__VHA_Note_1.txt",
+      "type": "VHA Progress Note",
+      "date": "2024-03-29",
+      "pages": 4,
+      "path": "claims/CLAIM-1001/documents/2024-03-29__VHA_Note_1.txt"
+    },
+    {
+      "doc_id": "DOC-41IBLJ",
+      "filename": "2017-04-10__VHA_Note_2.txt",
+      "type": "VHA Progress Note",
+      "date": "2017-04-10",
+      "pages": 4,
+      "path": "claims/CLAIM-1001/documents/2017-04-10__VHA_Note_2.txt"
+    },
+    {
+      "doc_id": "DOC-HR5XFF",
+      "filename": "2017-01-21__Private_Record.txt",
+      "type": "Private Medical Record",
+      "date": "2017-01-21",
+      "pages": 5,
+      "path": "claims/CLAIM-1001/documents/2017-01-21__Private_Record.txt"
+    },
+    {
+      "doc_id": "DOC-OH9SDB",
+      "filename": "2023-02-02__Buddy_Statement.txt",
+      "type": "Buddy/Lay Statement",
+      "date": "2023-02-02",
+      "pages": 2,
+      "path": "claims/CLAIM-1001/documents/2023-02-02__Buddy_Statement.txt"
+    },
+    {
+      "doc_id": "DOC-FYVNVQ",
+      "filename": "2024-01-28__C&P_Exam_Report.txt",
+      "type": "C&P Exam",
+      "date": "2024-01-28",
+      "pages": 5,
+      "path": "claims/CLAIM-1001/documents/2024-01-28__C&P_Exam_Report.txt"
+    },
+    {
+      "doc_id": "DOC-ZYTJXE",
+      "filename": "2025-04-04__Rating_Decision.txt",
+      "type": "Rating Decision",
+      "date": "2025-04-04",
+      "pages": 7,
+      "path": "claims/CLAIM-1001/documents/2025-04-04__Rating_Decision.txt"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-BHSAHX",
+      "doc_type": "DD214",
+      "condition": "PTSD",
+      "relevance": 0.18,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        7
+      ]
+    },
+    {
+      "doc_id": "DOC-QK51FP",
+      "doc_type": "Application",
+      "condition": "PTSD",
+      "relevance": 0.1,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        5
+      ]
+    },
+    {
+      "doc_id": "DOC-NMMJBQ",
+      "doc_type": "Service Treatment Record",
+      "condition": "PTSD",
+      "relevance": 0.85,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        2
+      ]
+    },
+    {
+      "doc_id": "DOC-5NGCX1",
+      "doc_type": "Service Treatment Record",
+      "condition": "PTSD",
+      "relevance": 0.85,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        2
+      ]
+    },
+    {
+      "doc_id": "DOC-WNNHJ7",
+      "doc_type": "Service Treatment Record",
+      "condition": "PTSD",
+      "relevance": 0.98,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        2
+      ]
+    },
+    {
+      "doc_id": "DOC-G0FN9X",
+      "doc_type": "VHA Progress Note",
+      "condition": "PTSD",
+      "relevance": 0.87,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-41IBLJ",
+      "doc_type": "VHA Progress Note",
+      "condition": "PTSD",
+      "relevance": 0.75,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-HR5XFF",
+      "doc_type": "Private Medical Record",
+      "condition": "PTSD",
+      "relevance": 0.55,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        5
+      ]
+    },
+    {
+      "doc_id": "DOC-OH9SDB",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "PTSD",
+      "relevance": 0.81,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        2
+      ]
+    },
+    {
+      "doc_id": "DOC-FYVNVQ",
+      "doc_type": "C&P Exam",
+      "condition": "PTSD",
+      "relevance": 0.91,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        5
+      ]
+    },
+    {
+      "doc_id": "DOC-ZYTJXE",
+      "doc_type": "Rating Decision",
+      "condition": "PTSD",
+      "relevance": 0.35,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        7
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-1001/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-1001/fhir_bundle.json"
+  }
+}

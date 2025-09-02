@@ -1,0 +1,5 @@
+SERVICE TREATMENT RECORD — 2011-04-24
+    Provider: Unit Aid Station
+    Subjective: Veteran reports issues related to lumbar strain — mentions ROM limitation, sciatica, lifting injury.
+    Objective: Vitals stable; exam notable for findings consistent with lumbar strain.
+    Assessment/Plan: Monitor, follow up in clinic; document any worsening symptoms.

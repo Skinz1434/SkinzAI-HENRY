@@ -1,0 +1,29 @@
+{
+  "title": "Claim Manifest (Demo)",
+  "type": "object",
+  "properties": {
+    "claim_id": {
+      "type": "string"
+    },
+    "veteran": {
+      "type": "object"
+    },
+    "claimed_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "type": "array"
+    },
+    "evidence_mapping": {
+      "type": "array"
+    }
+  },
+  "required": [
+    "claim_id",
+    "veteran",
+    "documents"
+  ]
+}

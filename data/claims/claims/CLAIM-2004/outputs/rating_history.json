@@ -1,0 +1,28 @@
+{
+  "history": [
+    {
+      "date": "2022-11-13",
+      "issue": "TBI",
+      "decision": "Denied",
+      "reason": "Insufficient nexus (demo)"
+    },
+    {
+      "date": "2024-08-14",
+      "issue": "TBI",
+      "decision": "Granted",
+      "percent": 10
+    }
+  ],
+  "appeals": [
+    {
+      "date": "2022-11-03",
+      "type": "HLR",
+      "outcome": "Duty to assist error (demo)"
+    },
+    {
+      "date": "2025-11-24",
+      "type": "Board Appeal",
+      "outcome": "Remand for new exam (demo)"
+    }
+  ]
+}

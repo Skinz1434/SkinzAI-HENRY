@@ -1,0 +1,25 @@
+{
+  "exam_id": "EXAM-SAJRYF",
+  "veteran_file": "52256583",
+  "dbq": "Hearing Loss and Tinnitus",
+  "exam_date": "2022-09-10",
+  "findings_summary": "Objective findings consistent with Hearing Loss.",
+  "medical_opinion": "At least as likely as not (\u226550%) related to service (DEMO).",
+  "cfr_refs": [
+    "38 CFR \u00a74.85",
+    "38 CFR \u00a74.86"
+  ],
+  "icd10": [
+    "H90.3",
+    "H93.19"
+  ],
+  "dbq_structured": {
+    "functional_impact": "Reduced lifting tolerance; sleep disruption; concentration issues.",
+    "rom_measurements": null,
+    "neurofindings": null,
+    "audiology": {
+      "pta_right": 45,
+      "pta_left": 38
+    }
+  }
+}

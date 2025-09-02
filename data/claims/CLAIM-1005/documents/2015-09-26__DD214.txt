@@ -1,0 +1,12 @@
+DD FORM 214 (SYNTHETIC DEMO — NOT AN OFFICIAL DOCUMENT)
+--------------------------------------------------------
+1. NAME: Parker, Riley
+2. DOD ID / FILE: 80867083   3. SSN (Last 4): 8613
+4. BRANCH: Army    5. COMPONENT: Active Duty
+6. DATE ENTERED AD: 2010-01-21   7. SEPARATION DATE: 2015-09-26
+8. CHARACTER OF SERVICE: Honorable
+9. PRIMARY SPECIALTY / MOS: 25B IT Specialist
+10. FOREIGN SERVICE: 00 YRS 08 MOS 12 DAYS (synthetic)
+11. DECORATIONS/AWARDS: AAM, NDSM, GWOT, ICM (synthetic)
+12. REASON FOR SEPARATION: Completion of required active service (synthetic)
+13. REMARKS: This is a synthetic training file for AI demo only.

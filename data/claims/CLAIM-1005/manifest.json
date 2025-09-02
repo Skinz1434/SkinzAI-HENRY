@@ -1,0 +1,232 @@
+{
+  "claim_id": "CLAIM-1005",
+  "veteran": {
+    "file_number": "80867083",
+    "name": "Riley Parker",
+    "branch": "Army",
+    "mos": "25B IT Specialist",
+    "service_entry": "2010-01-21",
+    "service_separation": "2015-09-26"
+  },
+  "claimed_conditions": [
+    "MST (Mental Health)",
+    "Sleep disturbance"
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-4GH2M5",
+      "filename": "2015-09-26__DD214.txt",
+      "type": "DD214",
+      "date": "2015-09-26",
+      "pages": 5,
+      "path": "claims/CLAIM-1005/documents/2015-09-26__DD214.txt"
+    },
+    {
+      "doc_id": "DOC-A8DZR1",
+      "filename": "2025-07-23__VA-Form-21-526EZ.txt",
+      "type": "Application",
+      "date": "2025-07-23",
+      "pages": 8,
+      "path": "claims/CLAIM-1005/documents/2025-07-23__VA-Form-21-526EZ.txt"
+    },
+    {
+      "doc_id": "DOC-KOIXNT",
+      "filename": "2012-02-02__STR_1.txt",
+      "type": "Service Treatment Record",
+      "date": "2012-02-02",
+      "pages": 6,
+      "path": "claims/CLAIM-1005/documents/2012-02-02__STR_1.txt"
+    },
+    {
+      "doc_id": "DOC-QLIZL0",
+      "filename": "2025-10-06__STR_2.txt",
+      "type": "Service Treatment Record",
+      "date": "2025-10-06",
+      "pages": 3,
+      "path": "claims/CLAIM-1005/documents/2025-10-06__STR_2.txt"
+    },
+    {
+      "doc_id": "DOC-9SKDGI",
+      "filename": "2023-03-23__STR_3.txt",
+      "type": "Service Treatment Record",
+      "date": "2023-03-23",
+      "pages": 3,
+      "path": "claims/CLAIM-1005/documents/2023-03-23__STR_3.txt"
+    },
+    {
+      "doc_id": "DOC-ZEBBK7",
+      "filename": "2010-04-26__VHA_Note_1.txt",
+      "type": "VHA Progress Note",
+      "date": "2010-04-26",
+      "pages": 8,
+      "path": "claims/CLAIM-1005/documents/2010-04-26__VHA_Note_1.txt"
+    },
+    {
+      "doc_id": "DOC-UQPGB7",
+      "filename": "2010-04-11__VHA_Note_2.txt",
+      "type": "VHA Progress Note",
+      "date": "2010-04-11",
+      "pages": 8,
+      "path": "claims/CLAIM-1005/documents/2010-04-11__VHA_Note_2.txt"
+    },
+    {
+      "doc_id": "DOC-OCWBFU",
+      "filename": "2011-06-20__Private_Record.txt",
+      "type": "Private Medical Record",
+      "date": "2011-06-20",
+      "pages": 5,
+      "path": "claims/CLAIM-1005/documents/2011-06-20__Private_Record.txt"
+    },
+    {
+      "doc_id": "DOC-E1V2IS",
+      "filename": "2015-07-27__Buddy_Statement.txt",
+      "type": "Buddy/Lay Statement",
+      "date": "2015-07-27",
+      "pages": 8,
+      "path": "claims/CLAIM-1005/documents/2015-07-27__Buddy_Statement.txt"
+    },
+    {
+      "doc_id": "DOC-49KWV0",
+      "filename": "2016-09-01__C&P_Exam_Report.txt",
+      "type": "C&P Exam",
+      "date": "2016-09-01",
+      "pages": 4,
+      "path": "claims/CLAIM-1005/documents/2016-09-01__C&P_Exam_Report.txt"
+    },
+    {
+      "doc_id": "DOC-XFGCAQ",
+      "filename": "2015-12-08__Rating_Decision.txt",
+      "type": "Rating Decision",
+      "date": "2015-12-08",
+      "pages": 8,
+      "path": "claims/CLAIM-1005/documents/2015-12-08__Rating_Decision.txt"
+    }
+  ],
+  "evidence_mapping": [
+    {
+      "doc_id": "DOC-4GH2M5",
+      "doc_type": "DD214",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.25,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        5
+      ]
+    },
+    {
+      "doc_id": "DOC-A8DZR1",
+      "doc_type": "Application",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.22,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-KOIXNT",
+      "doc_type": "Service Treatment Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.85,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        6
+      ]
+    },
+    {
+      "doc_id": "DOC-QLIZL0",
+      "doc_type": "Service Treatment Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.84,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        3
+      ]
+    },
+    {
+      "doc_id": "DOC-9SKDGI",
+      "doc_type": "Service Treatment Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.72,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        3
+      ]
+    },
+    {
+      "doc_id": "DOC-ZEBBK7",
+      "doc_type": "VHA Progress Note",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.84,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-UQPGB7",
+      "doc_type": "VHA Progress Note",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.95,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-OCWBFU",
+      "doc_type": "Private Medical Record",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.89,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        5
+      ]
+    },
+    {
+      "doc_id": "DOC-E1V2IS",
+      "doc_type": "Buddy/Lay Statement",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.81,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    },
+    {
+      "doc_id": "DOC-49KWV0",
+      "doc_type": "C&P Exam",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.82,
+      "nexus_suggested": true,
+      "page_refs": [
+        1,
+        4
+      ]
+    },
+    {
+      "doc_id": "DOC-XFGCAQ",
+      "doc_type": "Rating Decision",
+      "condition": "MST (Mental Health)",
+      "relevance": 0.57,
+      "nexus_suggested": false,
+      "page_refs": [
+        1,
+        8
+      ]
+    }
+  ],
+  "outputs": {
+    "ems_exam_request": "claims/CLAIM-1005/ems_exam_request.json",
+    "fhir_bundle": "claims/CLAIM-1005/fhir_bundle.json"
+  }
+}

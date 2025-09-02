@@ -1,0 +1,54 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-M31YIH",
+        "name": [
+          {
+            "family": "Reed",
+            "given": [
+              "Avery"
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "system": "urn:va:file",
+            "value": "35917225"
+          }
+        ],
+        "birthDate": "1996-08-08"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-AIR4CO",
+        "code": {
+          "text": "Lumbar Strain"
+        },
+        "subject": {
+          "reference": "Patient/1"
+        },
+        "onsetDateTime": "2016-06-15"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-GZRIXA",
+        "code": {
+          "text": "Lumbar Strain severity score (demo)"
+        },
+        "valueQuantity": {
+          "value": 2,
+          "unit": "score"
+        },
+        "effectiveDateTime": "2025-05-14"
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "version": "2.0",
+  "created": "2025-08-29T22:04:42.191005Z",
+  "notes": "Extreme-depth synthetic dataset for AI doc review (VBMS\u2192EMS). All fictional.",
+  "claims": [
+    {
+      "claim_id": "CLAIM-2001",
+      "file_number": "37784483",
+      "primary_condition": "PTSD",
+      "secondaries": []
+    },
+    {
+      "claim_id": "CLAIM-2002",
+      "file_number": "52256583",
+      "primary_condition": "Hearing Loss",
+      "secondaries": [
+        "Tinnitus"
+      ]
+    },
+    {
+      "claim_id": "CLAIM-2003",
+      "file_number": "75667751",
+      "primary_condition": "Lumbar Strain",
+      "secondaries": []
+    },
+    {
+      "claim_id": "CLAIM-2004",
+      "file_number": "44740254",
+      "primary_condition": "TBI",
+      "secondaries": [
+        "Headaches"
+      ]
+    },
+    {
+      "claim_id": "CLAIM-2005",
+      "file_number": "36027531",
+      "primary_condition": "MST (Mental Health)",
+      "secondaries": []
+    },
+    {
+      "claim_id": "CLAIM-2006",
+      "file_number": "82732730",
+      "primary_condition": "Diabetes Mellitus II (AO Presumptive)",
+      "secondaries": [
+        "Peripheral Neuropathy"
+      ]
+    }
+  ]
+}

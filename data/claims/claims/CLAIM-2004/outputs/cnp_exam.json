@@ -1,0 +1,20 @@
+{
+  "exam_id": "EXAM-P6BR15",
+  "veteran_file": "44740254",
+  "dbq": "Residuals of TBI",
+  "exam_date": "2024-11-25",
+  "findings_summary": "Objective findings consistent with TBI.",
+  "medical_opinion": "At least as likely as not (\u226550%) related to service (DEMO).",
+  "cfr_refs": [
+    "38 CFR \u00a74.124a"
+  ],
+  "icd10": [
+    "S06.0X0A"
+  ],
+  "dbq_structured": {
+    "functional_impact": "Reduced lifting tolerance; sleep disruption; concentration issues.",
+    "rom_measurements": null,
+    "neurofindings": null,
+    "audiology": null
+  }
+}
