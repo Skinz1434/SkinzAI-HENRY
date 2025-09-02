@@ -13,7 +13,7 @@ import {
   FileCheck, UserCheck, Building, Truck, Map, Flag,
   Award as AwardIcon, Medal, Ribbon, Trophy
 } from 'lucide-react';
-import { VeteranProfileEnhanced } from '@/lib/veteran-profile-enhanced';
+import { VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
 import {
   LineChart, Line, BarChart, Bar, PieChart as RePieChart, Pie, Cell,
   AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
