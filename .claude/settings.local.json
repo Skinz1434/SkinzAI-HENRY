@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ide__getDiagnostics",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run build:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(timeout 60 npm run build)",
+      "Bash(npm ls:*)",
+      "Bash(vercel:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(sed:*)",
+      "Read(Z:\\/**)",
+      "Bash(ln:*)",
+      "Bash(git init:*)",
+      "Bash(git rm:*)",
+      "Bash(git pull:*)",
+      "Bash(git reset:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
