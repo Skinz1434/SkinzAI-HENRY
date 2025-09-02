@@ -202,7 +202,6 @@ export default function DashboardFullPage() {
       {/* Background with gradient overlay */}
       <div className="min-h-screen bg-gray-900 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/10 to-purple-900/10 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.05),transparent_70%)] pointer-events-none" />
         
         {/* Scroll-based Fade Overlays */}
         <div 
