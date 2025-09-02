@@ -1,17 +1,9 @@
 {
-  "name": "henry-platform",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
   "installCommand": "npm install",
   "regions": ["iad1"],
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_key",
-    "ENCRYPTION_KEY": "@encryption_key",
-    "DATABASE_URL": "@database_url"
-  },
   "headers": [
     {
       "source": "/api/(.*)",
