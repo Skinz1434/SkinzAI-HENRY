@@ -1,19 +1,45 @@
 import { Veteran, Claim, Branch, DischargeStatus, ClaimType, ClaimStatus } from '@/types';
 import { getRankForBranch } from './military-data';
 
-// Generate realistic mock veteran data
+// Generate realistic mock veteran data with enhanced diversity and realism
 export function generateMockVeterans(count: number = 100): Veteran[] {
-  const firstNames = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Mary', 'Patricia', 'Jennifer', 'Linda'];
-  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+  const maleFirstNames = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Christopher', 'Charles', 'Daniel', 'Matthew', 'Anthony', 'Mark', 'Donald', 'Steven', 'Andrew', 'Kenneth', 'Paul'];
+  const femaleFirstNames = ['Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth', 'Barbara', 'Susan', 'Jessica', 'Sarah', 'Karen', 'Nancy', 'Lisa', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle'];
+  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson'];
+  
+  const deploymentLocations = ['Iraq', 'Afghanistan', 'Korea', 'Germany', 'Japan', 'Kuwait', 'Qatar', 'Djibouti', 'Syria', 'Philippines'];
+  const occupationalSpecialties = ['Infantry', 'Artillery', 'Intelligence', 'Medical', 'Aviation', 'Communications', 'Logistics', 'Military Police', 'Engineering', 'Cyber Operations'];
   
   const veterans: Veteran[] = [];
   
   for (let i = 0; i < count; i++) {
-    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    // Realistic gender distribution (approximately 15% female veterans)
+    const isFemale = Math.random() < 0.15;
+    const firstName = isFemale 
+      ? femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)]
+      : maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)];
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-    const serviceStartYear = 1970 + Math.floor(Math.random() * 40);
-    const serviceYears = 2 + Math.floor(Math.random() * 20);
+    
+    // Realistic service era distribution
+    const eraRandom = Math.random();
+    let serviceStartYear: number;
+    if (eraRandom < 0.1) {
+      serviceStartYear = 1965 + Math.floor(Math.random() * 10); // Vietnam era
+    } else if (eraRandom < 0.3) {
+      serviceStartYear = 1975 + Math.floor(Math.random() * 15); // Post-Vietnam
+    } else if (eraRandom < 0.5) {
+      serviceStartYear = 1990 + Math.floor(Math.random() * 10); // Gulf War era
+    } else {
+      serviceStartYear = 2000 + Math.floor(Math.random() * 24); // OIF/OEF era
+    }
+    
+    const serviceYears = Math.random() < 0.4 ? (2 + Math.floor(Math.random() * 4)) : (4 + Math.floor(Math.random() * 16)); // 40% short term, 60% career
     const branch = Object.values(Branch)[Math.floor(Math.random() * Object.values(Branch).length)];
+    
+    // Add deployment and occupation data
+    const hasDeployment = Math.random() > 0.4; // 60% have deployments
+    const deploymentLocation = hasDeployment ? deploymentLocations[Math.floor(Math.random() * deploymentLocations.length)] : null;
+    const occupation = occupationalSpecialties[Math.floor(Math.random() * occupationalSpecialties.length)];
     
     // More realistic discharge distribution - 85% honorable, 10% general, 5% other
     const dischargeRandom = Math.random();

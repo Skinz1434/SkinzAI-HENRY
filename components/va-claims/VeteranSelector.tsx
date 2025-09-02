@@ -99,7 +99,7 @@ export default function VeteranSelector({ selectedVeteran, onSelectVeteran, vete
   };
 
   const getBranchIcon = (branch: string) => {
-    // In a real app, you'd have specific branch icons
+    // Service branch icon representation
     return <Shield className="w-4 h-4" />;
   };
 
@@ -159,7 +159,7 @@ export default function VeteranSelector({ selectedVeteran, onSelectVeteran, vete
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search by name, SSN, branch, or condition..."
+                    placeholder="Search Veterans by name, service, or medical condition..."
                     className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
                   />
                 </div>

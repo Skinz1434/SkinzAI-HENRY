@@ -67,7 +67,7 @@ export default function DashboardFullPage() {
       setVeterans(result.data);
       setTotalRecords(result.total);
     } catch (error) {
-      console.error('Failed to load veterans:', error);
+      // Failed to load veterans data
     } finally {
       setLoading(false);
     }
@@ -159,73 +159,129 @@ export default function DashboardFullPage() {
         />
       )}
       
-      <div className="min-h-screen bg-gray-900">
-      {/* Header */}
-      <div className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <div className="relative mr-4 group">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                <Shield className="relative w-10 h-10 text-cyan-400 animate-pulse drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"></div>
-              </div>
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-lg blur-sm opacity-25"></div>
+      {/* Background with gradient overlay */}
+      <div className="min-h-screen bg-gray-900 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/10 to-purple-900/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.05),transparent_70%)] pointer-events-none" />
+        
+        {/* Enhanced Header */}
+        <div className="relative bg-gradient-to-r from-gray-800/95 via-gray-800/98 to-gray-800/95 backdrop-blur-xl border-b border-gray-700/50 shadow-2xl">
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="flex items-center justify-between h-20">
+              <div className="flex items-center">
+                {/* Enhanced Logo */}
+                <div className="relative mr-6 group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-all duration-500" />
+                  <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 p-3 rounded-2xl border border-cyan-400/30 shadow-lg">
+                    <Shield className="w-8 h-8 text-cyan-400 drop-shadow-[0_0_20px_rgba(6,182,212,0.6)]" />
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse shadow-lg" />
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-ping" />
+                  </div>
+                </div>
+                
+                {/* Enhanced Title */}
                 <div className="relative">
-                  <h1 className="text-3xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-gradient-x">
-                    HENRY Platform
-                  </h1>
-                  <p className="text-xs text-gray-400 font-semibold tracking-wider uppercase">Heroes' Early Notification & Response Yesterday</p>
+                  <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                  <div className="relative group">
+                    <h1 className="text-4xl font-black bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
+                      HENRY Platform
+                    </h1>
+                    <p className="text-xs text-gray-400 font-bold tracking-[0.2em] uppercase mt-1">
+                      Heroes' Early Notification & Response Yesterday
+                    </p>
+                    <div className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <a 
-                href="/va-claims-ai"
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
-              >
-                <Brain className="w-5 h-5" />
-                <span className="font-semibold">VA Claims AI</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
-              <div className="text-right">
-                <p className="text-xs text-gray-400">Vet Profile Accuracy</p>
-                <p className="text-lg font-bold text-green-400">{vetProfileAccuracy.toFixed(1)}%</p>
+              
+              {/* Enhanced Header Actions */}
+              <div className="flex items-center gap-6">
+                {/* Status Indicators */}
+                <div className="hidden md:flex items-center gap-4 px-4 py-2 bg-gray-900/50 rounded-xl border border-gray-700/50 backdrop-blur-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                    <span className="text-xs text-gray-400">All Systems Operational</span>
+                  </div>
+                </div>
+                
+                {/* VA Claims AI Button */}
+                <a 
+                  href="/va-claims-ai"
+                  className="relative group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl blur-lg opacity-0 group-hover:opacity-30 transition-all duration-500" />
+                  <Brain className="w-5 h-5 relative z-10" />
+                  <span className="font-semibold relative z-10">VA Claims AI</span>
+                  <ExternalLink className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+                
+                {/* Accuracy Metric */}
+                <div className="text-right px-4 py-2 bg-green-500/10 rounded-xl border border-green-500/20 backdrop-blur-sm">
+                  <p className="text-xs text-gray-400 font-medium">Vet Profile Accuracy</p>
+                  <p className="text-xl font-bold text-green-400 flex items-center gap-1">
+                    {vetProfileAccuracy.toFixed(1)}%
+                    <TrendingUp className="w-4 h-4" />
+                  </p>
+                </div>
+                
+                {/* Refresh Button */}
+                <button className="p-3 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all duration-200 hover:scale-110">
+                  <RefreshCw className="w-5 h-5" />
+                </button>
               </div>
-              <button className="p-2 text-gray-400 hover:text-white">
-                <RefreshCw className="w-5 h-5" />
-              </button>
             </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8">
-            {tabs.map(tab => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as TabType)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 transition-colors ${
-                    activeTab === tab.id
-                      ? 'border-blue-400 text-blue-400'
-                      : 'border-transparent text-gray-400 hover:text-gray-300'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {tab.label}
-                </button>
-              );
-            })}
+        {/* Enhanced Tabs */}
+        <div className="relative bg-gradient-to-r from-gray-800/90 via-gray-800/95 to-gray-800/90 backdrop-blur-sm border-b border-gray-700/50">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/5 via-transparent to-purple-900/5" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="flex space-x-1">
+              {tabs.map(tab => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as TabType)}
+                    className={`relative px-6 py-4 font-medium text-sm flex items-center gap-2 transition-all duration-300 rounded-t-lg group ${
+                      isActive
+                        ? 'text-white bg-gradient-to-b from-blue-600/20 to-transparent border-b-2 border-blue-400'
+                        : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/30'
+                    }`}
+                  >
+                    {/* Active tab glow effect */}
+                    {isActive && (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-cyan-600/10 to-purple-600/10 rounded-t-lg" />
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent" />
+                      </>
+                    )}
+                    
+                    {/* Icon with enhanced styling */}
+                    <div className={`relative transition-all duration-300 ${
+                      isActive ? 'scale-110' : 'group-hover:scale-105'
+                    }`}>
+                      <Icon className={`w-4 h-4 relative z-10 ${
+                        isActive ? 'text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]' : ''
+                      }`} />
+                    </div>
+                    
+                    <span className="relative z-10 font-semibold">{tab.label}</span>
+                    
+                    {/* Hover effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg" />
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

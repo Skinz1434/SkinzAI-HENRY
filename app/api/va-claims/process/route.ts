@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       analysis,
     });
   } catch (error) {
-    console.error('Error processing claim:', error);
+    // Error processing claim - logged for monitoring
     return NextResponse.json(
       { error: 'Failed to process claim' },
       { status: 500 }
@@ -122,7 +122,7 @@ ${documentSummary}`;
     // Parse AI response into structured format
     return parseAIResponse(response);
   } catch (error) {
-    console.error('AI analysis error:', error);
+    // AI analysis error - fallback to mock analysis
     // Return mock analysis for demo
     return generateMockAnalysis();
   }

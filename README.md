@@ -1,16 +1,23 @@
-# THE HENRY PLATFORM
-## Heroes' Early Notification & Response Yesterday
+# 🛡️ HENRY Platform
+### Heroes' Early Notification & Response Yesterday
 
-*What happens when a Marine with 800+ hours of obsessive development meets the most critical problem in Veteran care...*
+<div align="center">
 
-**MISSION-CRITICAL SYSTEM**  
-*Proprietary HENRY Protocol Algorithm*  
-*Predictive Veteran Crisis Prevention Platform*  
-*Status: OPERATIONAL*
+![HENRY Platform](https://img.shields.io/badge/HENRY-Platform-blue?style=for-the-badge&logo=shield)
+![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=for-the-badge&logo=typescript)
+![Tailwind](https://img.shields.io/badge/Tailwind-CSS-blue?style=for-the-badge&logo=tailwindcss)
+![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)
+
+**Advanced AI-Powered Veterans Administration Management Platform**
+
+*Streamlining veteran services through intelligent data integration and real-time profile synchronization*
+
+</div>
 
 ---
 
-**Architect & Creator: Michael Skinner**  
+**🎖️ Architect & Creator: Michael Skinner**  
 *Marine Veteran | AI Subject Matter Expert | Software Engineer*  
 *Personal Innovation Project | 800+ Development Hours | Built: Sept 2024*
 
