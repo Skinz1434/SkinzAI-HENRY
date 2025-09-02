@@ -111,7 +111,7 @@ export function generateMockVeterans(count: number = 100): Veteran[] {
       serviceStartDate: new Date(serviceStartYear, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
       serviceEndDate: new Date(serviceStartYear + serviceYears, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
       dischargeStatus,
-      rank: getRankForBranch(branch),
+      rank: getRankForBranch(branch).rank,
       mos: occupation,
       combatService: hasDeployment && Math.random() > 0.3,
       
@@ -233,7 +233,7 @@ function generateMockConditions(veteranId: string, count: number) {
     { name: 'Shoulder Condition', icd10: 'M75.30', avgRating: 20 }
   ];
   
-  const selectedConditions = [];
+  const selectedConditions: any[] = [];
   const usedConditions = new Set();
   
   for (let i = 0; i < count && i < conditions.length; i++) {
