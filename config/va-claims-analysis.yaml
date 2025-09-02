@@ -1,0 +1,370 @@
+# VA Claims Analysis Configuration
+# This file defines the comprehensive analysis rules and scoring algorithms
+
+version: 1.0.0
+name: VA Claims AI Analysis Engine
+description: Comprehensive configuration for VA disability claims analysis
+
+# Analysis Profiles
+analysis_profiles:
+  standard:
+    name: Standard Analysis
+    description: Default analysis for most claims
+    confidence_threshold: 0.75
+    evidence_requirements:
+      minimum_documents: 3
+      required_types:
+        - medical_record
+        - service_record
+      preferred_types:
+        - nexus_letter
+        - buddy_statement
+        - dbq
+
+  expedited:
+    name: Expedited Analysis
+    description: Fast-track for terminal or homeless veterans
+    confidence_threshold: 0.65
+    evidence_requirements:
+      minimum_documents: 2
+      priority_conditions:
+        - als
+        - terminal_cancer
+        - homelessness
+
+  complex:
+    name: Complex Analysis
+    description: Multi-condition claims with secondary issues
+    confidence_threshold: 0.85
+    evidence_requirements:
+      minimum_documents: 5
+      secondary_analysis: true
+      requires_specialist_review: true
+
+# Condition Mappings
+conditions:
+  ptsd:
+    name: Post-Traumatic Stress Disorder
+    icd10_codes: [F43.10, F43.11, F43.12]
+    dbq_required: PTSD_DBQ
+    rating_criteria:
+      0: No symptoms
+      10: Occupational and social impairment due to mild symptoms
+      30: Occasional decrease in work efficiency
+      50: Reduced reliability and productivity
+      70: Deficiencies in most areas
+      100: Total occupational and social impairment
+    evidence_weight:
+      diagnosis: 0.3
+      nexus: 0.35
+      continuity: 0.2
+      severity: 0.15
+    presumptive_for:
+      - combat_veterans
+      - mst_victims
+      - pow_survivors
+
+  tinnitus:
+    name: Tinnitus
+    icd10_codes: [H93.11, H93.12, H93.13]
+    dbq_required: HEARING_LOSS_TINNITUS_DBQ
+    max_rating: 10
+    evidence_weight:
+      noise_exposure: 0.4
+      audiogram: 0.3
+      nexus: 0.3
+    common_secondary_to:
+      - tbi
+      - acoustic_trauma
+
+  back_conditions:
+    name: Back Conditions
+    icd10_codes: [M54.5, M47.26, M51.36]
+    dbq_required: BACK_CONDITIONS_DBQ
+    rating_criteria:
+      0: No limitation
+      10: Forward flexion greater than 60 degrees
+      20: Forward flexion greater than 30 degrees but not greater than 60
+      40: Forward flexion 30 degrees or less
+      50: Unfavorable ankylosis of entire thoracolumbar spine
+      100: Unfavorable ankylosis of entire spine
+    range_of_motion_required: true
+    evidence_weight:
+      imaging: 0.35
+      rom_testing: 0.3
+      functional_loss: 0.35
+
+  hearing_loss:
+    name: Bilateral Hearing Loss
+    icd10_codes: [H90.3, H91.93]
+    dbq_required: HEARING_LOSS_TINNITUS_DBQ
+    requires_audiometric_testing: true
+    rating_table: Table_VI
+    evidence_weight:
+      audiogram: 0.5
+      noise_exposure: 0.25
+      nexus: 0.25
+
+  depression:
+    name: Major Depressive Disorder
+    icd10_codes: [F32.9, F33.0, F33.1, F33.2]
+    dbq_required: MENTAL_DISORDERS_DBQ
+    often_secondary_to:
+      - chronic_pain
+      - ptsd
+      - tbi
+    evidence_weight:
+      diagnosis: 0.3
+      treatment_records: 0.35
+      functional_impact: 0.35
+
+  sleep_apnea:
+    name: Sleep Apnea
+    icd10_codes: [G47.33]
+    dbq_required: SLEEP_APNEA_DBQ
+    requires_sleep_study: true
+    requires_cpap: true
+    common_secondary_to:
+      - ptsd
+      - sinusitis
+      - deviated_septum
+    evidence_weight:
+      sleep_study: 0.4
+      cpap_prescription: 0.3
+      nexus: 0.3
+
+# Evidence Scoring Rules
+evidence_scoring:
+  document_types:
+    dd214:
+      base_score: 0.9
+      validates:
+        - service_dates
+        - deployments
+        - discharge_status
+        - awards
+        - mos
+
+    medical_record:
+      base_score: 0.8
+      bonus_for:
+        - diagnosis_codes: 0.1
+        - provider_credentials: 0.05
+        - contemporaneous: 0.1
+
+    nexus_letter:
+      base_score: 0.85
+      requirements:
+        - provider_credentials
+        - rationale_provided
+        - medical_literature_cited
+      bonus_for:
+        - specialist: 0.1
+        - detailed_rationale: 0.1
+
+    buddy_statement:
+      base_score: 0.6
+      bonus_for:
+        - witnessed_event: 0.2
+        - detailed_description: 0.1
+        - multiple_statements: 0.1
+
+    dbq:
+      base_score: 0.95
+      requirements:
+        - completed_fully
+        - examiner_credentials
+        - recent_date
+
+    service_treatment_record:
+      base_score: 0.9
+      validates:
+        - in_service_event
+        - complaints
+        - treatments
+
+  temporal_scoring:
+    current: # Within 1 year
+      multiplier: 1.0
+    recent: # 1-3 years
+      multiplier: 0.9
+    historical: # 3-5 years
+      multiplier: 0.8
+    old: # 5+ years
+      multiplier: 0.7
+    contemporaneous: # During service
+      multiplier: 1.1
+
+# Presumptive Conditions
+presumptive_conditions:
+  agent_orange:
+    qualifying_locations:
+      - vietnam
+      - korean_dmz
+      - thailand_bases
+    qualifying_dates:
+      start: 1962-01-09
+      end: 1975-05-07
+    conditions:
+      - diabetes_type_2
+      - ischemic_heart_disease
+      - parkinsons
+      - prostate_cancer
+      - respiratory_cancers
+      - soft_tissue_sarcomas
+      - peripheral_neuropathy
+
+  gulf_war:
+    qualifying_locations:
+      - iraq
+      - kuwait
+      - saudi_arabia
+      - bahrain
+      - qatar
+      - uae
+      - oman
+    qualifying_dates:
+      start: 1990-08-02
+      end: present
+    conditions:
+      - chronic_fatigue_syndrome
+      - fibromyalgia
+      - ibs
+      - undiagnosed_illnesses
+
+  burn_pits:
+    qualifying_locations:
+      - iraq
+      - afghanistan
+      - djibouti
+      - syria
+      - jordan
+    conditions:
+      - asthma
+      - sinusitis
+      - rhinitis
+      - respiratory_cancers
+      - constrictive_bronchiolitis
+
+# Analysis Algorithms
+algorithms:
+  evidence_strength:
+    formula: weighted_average
+    weights:
+      medical_evidence: 0.4
+      service_connection: 0.3
+      continuity: 0.2
+      severity: 0.1
+    minimum_threshold: 0.6
+
+  nexus_detection:
+    keywords:
+      strong:
+        - "more likely than not"
+        - "at least as likely as not"
+        - "directly related"
+        - "caused by"
+        - "due to"
+      weak:
+        - "may be related"
+        - "possible connection"
+        - "could be"
+    medical_opinion_weight: 0.8
+    lay_opinion_weight: 0.2
+
+  timeline_analysis:
+    continuity_window: 1_year
+    chronicity_period: 6_months
+    recurrence_threshold: 3_episodes
+
+  secondary_condition_detection:
+    confidence_threshold: 0.7
+    common_pairs:
+      - primary: ptsd
+        secondary: [sleep_apnea, depression, ibs, gerd]
+      - primary: back_pain
+        secondary: [radiculopathy, depression, hip_problems]
+      - primary: tbi
+        secondary: [headaches, ptsd, depression, tinnitus]
+
+# Recommendation Engine
+recommendations:
+  missing_evidence_priority:
+    high:
+      - nexus_letter
+      - diagnosis
+      - dbq
+    medium:
+      - treatment_records
+      - buddy_statements
+      - continuity_evidence
+    low:
+      - personal_statement
+      - internet_research
+      - photos
+
+  action_items:
+    immediate:
+      - file_intent_to_file
+      - request_c_file
+      - schedule_exams
+    short_term:
+      - gather_medical_records
+      - obtain_nexus_letters
+      - complete_dbqs
+    long_term:
+      - establish_treatment
+      - document_symptoms
+      - build_evidence
+
+# Quality Checks
+quality_assurance:
+  validation_rules:
+    - check_date_consistency
+    - verify_provider_credentials
+    - validate_icd_codes
+    - cross_reference_medications
+    - confirm_service_dates
+
+  red_flags:
+    - conflicting_diagnoses
+    - impossible_dates
+    - missing_signatures
+    - altered_documents
+    - inconsistent_narratives
+
+  confidence_adjustments:
+    multiple_consistent_sources: +0.1
+    specialist_opinion: +0.15
+    va_treatment: +0.1
+    conflicting_evidence: -0.2
+    missing_key_elements: -0.15
+
+# Export Templates
+export_formats:
+  vbms:
+    format: pdf
+    include_tabs: true
+    include_bookmarks: true
+    include_highlights: true
+    summary_page: true
+
+  examiner:
+    format: structured_json
+    include_evidence_links: true
+    include_timeline: true
+    include_recommendations: true
+
+  veteran:
+    format: simplified_pdf
+    language: plain_english
+    include_next_steps: true
+    include_resources: true
+
+# Performance Metrics
+performance:
+  target_processing_time: 30_seconds
+  max_document_size: 50_mb
+  concurrent_processing: 100
+  cache_duration: 24_hours
+  accuracy_target: 0.95
