@@ -83,7 +83,7 @@ async function migrateVeterans() {
       // Insert veteran
       const { data: insertedVeteran, error: veteranError } = await supabase
         .from('veterans')
-        .insert(veteranData)
+        .insert(veteranData as any)
         .select()
         .single();
 
