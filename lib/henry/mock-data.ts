@@ -1,6 +1,14 @@
 import { Veteran, Claim, Branch, DischargeStatus, ClaimType, ClaimStatus } from '@/types';
 import { getRankForBranch } from './military-data';
 
+// Generate realistic EDIPI (Electronic Data Interchange Personal Identifier)
+function generateEDIPI(): string {
+  // EDIPI is a 10-digit number, typically starting with 1 or 2
+  const prefix = Math.random() < 0.8 ? '1' : '2';
+  const remaining = Math.floor(Math.random() * 900000000) + 100000000;
+  return prefix + remaining.toString();
+}
+
 // Generate realistic mock veteran data with enhanced diversity and realism
 export function generateMockVeterans(count: number = 100): Veteran[] {
   const maleFirstNames = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Christopher', 'Charles', 'Daniel', 'Matthew', 'Anthony', 'Mark', 'Donald', 'Steven', 'Andrew', 'Kenneth', 'Paul'];
@@ -65,20 +73,67 @@ export function generateMockVeterans(count: number = 100): Veteran[] {
     const claimCount = eligibleForBenefits ? Math.floor(Math.random() * 3) + 2 : 0; // 2-4 claims for eligible, 0 for ineligible
     const disabilityRating = eligibleForBenefits ? Math.floor(Math.random() * 101) : 0;
     
+    const fullName = `${firstName} ${lastName}`;
+    const riskScore = Math.floor(Math.random() * 101);
+    let riskLevel: 'Minimal' | 'Low' | 'Moderate' | 'High' | 'Immediate';
+    if (riskScore >= 85) riskLevel = 'Immediate';
+    else if (riskScore >= 70) riskLevel = 'High';
+    else if (riskScore >= 50) riskLevel = 'Moderate';
+    else if (riskScore >= 25) riskLevel = 'Low';
+    else riskLevel = 'Minimal';
+    
+    // Generate compensation based on disability rating
+    const monthlyCompensation = disabilityRating >= 10 ? 
+      Math.floor((disabilityRating / 10) * 350) + Math.floor(Math.random() * 200) : 0;
+    
     veterans.push({
       id: `vet-${i + 1}`,
+      // Personal Information
       firstName,
       lastName,
+      name: fullName,
       ssn: `${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 90) + 10}-${Math.floor(Math.random() * 9000) + 1000}`,
+      edipi: generateEDIPI(), // PRIMARY SEARCH IDENTIFIER
       dateOfBirth: new Date(1950 + Math.floor(Math.random() * 50), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
+      gender: isFemale ? 'Female' : 'Male',
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@email.com`,
+      phone: `${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
+      
+      // Address (60% have complete address)
+      street: Math.random() > 0.4 ? `${Math.floor(Math.random() * 9999) + 1} ${['Main', 'Oak', 'Pine', 'Maple', 'Cedar'][Math.floor(Math.random() * 5)]} St` : undefined,
+      city: Math.random() > 0.4 ? ['Springfield', 'Madison', 'Georgetown', 'Franklin', 'Clinton'][Math.floor(Math.random() * 5)] : undefined,
+      state: Math.random() > 0.4 ? ['CA', 'TX', 'FL', 'NY', 'PA', 'IL', 'OH', 'GA', 'NC', 'MI'][Math.floor(Math.random() * 10)] : undefined,
+      zip: Math.random() > 0.4 ? `${Math.floor(Math.random() * 90000) + 10000}` : undefined,
+      
+      // Military Service
       serviceNumber: `SN${Math.floor(Math.random() * 9000000) + 1000000}`,
       branch,
       serviceStartDate: new Date(serviceStartYear, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
       serviceEndDate: new Date(serviceStartYear + serviceYears, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
       dischargeStatus,
+      rank: getRankForBranch(branch),
+      mos: occupation,
+      combatService: hasDeployment && Math.random() > 0.3,
+      
+      // Benefits
       disabilityRating,
-      claims: generateMockClaims(claimCount),
-      documents: [],
+      monthlyCompensation,
+      healthcarePriority: disabilityRating >= 50 ? Math.floor(Math.random() * 3) + 1 : Math.floor(Math.random() * 5) + 4,
+      enrolledVaHealthcare: disabilityRating >= 30 || Math.random() > 0.3,
+      
+      // Education Benefits
+      gibBillRemaining: Math.floor(Math.random() * 37), // 0-36 months
+      degreeProgram: Math.random() > 0.7 ? ['Computer Science', 'Business', 'Engineering', 'Nursing', 'Criminal Justice'][Math.floor(Math.random() * 5)] : undefined,
+      enrollmentStatus: Math.random() > 0.8 ? ['Full-time', 'Part-time', 'Not enrolled'][Math.floor(Math.random() * 3)] : undefined,
+      school: Math.random() > 0.8 ? ['State University', 'Community College', 'Technical Institute'][Math.floor(Math.random() * 3)] : undefined,
+      
+      // Risk Assessment (Henry Protocol)
+      riskScore,
+      riskLevel,
+      lastRiskAssessment: Math.random() > 0.3 ? new Date(Date.now() - Math.floor(Math.random() * 7776000000)) : undefined, // Within 3 months
+      cascadeRiskDetected: riskScore >= 70 && Math.random() > 0.7,
+      
+      // Sync Status
       vetProfileSyncStatus: {
         status: Math.random() > 0.03 ? 'success' : 'fallback',
         lastSync: new Date(Date.now() - Math.floor(Math.random() * 86400000)),
@@ -89,8 +144,41 @@ export function generateMockVeterans(count: number = 100): Veteran[] {
       },
       lastSyncDate: new Date(Date.now() - Math.floor(Math.random() * 86400000)),
       accuracy: 95 + Math.random() * 5,
+      syncAccuracy: 95 + Math.random() * 5,
+      fallbackToDD214: Math.random() < 0.03,
+      syncAttempts: Math.floor(Math.random() * 5) + 1,
+      
+      // Income
+      incomeVaDisability: monthlyCompensation,
+      incomeSsdi: Math.random() > 0.8 ? Math.floor(Math.random() * 2000) + 800 : 0,
+      incomePension: Math.random() > 0.9 ? Math.floor(Math.random() * 1500) + 500 : 0,
+      incomeEmployment: Math.random() > 0.4 ? Math.floor(Math.random() * 5000) + 2000 : 0,
+      
+      // Family
+      dependents: Math.floor(Math.random() * 4), // 0-3 dependents
+      spouseName: Math.random() > 0.6 ? `${isFemale ? maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)] : femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)]} ${lastName}` : undefined,
+      spouseDob: Math.random() > 0.6 ? new Date(1950 + Math.floor(Math.random() * 50), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)) : undefined,
+      
+      // Related Data
+      claims: generateMockClaims(claimCount),
+      documents: [],
+      deployments: hasDeployment ? [{
+        id: `dep-${i}-1`,
+        veteranId: `vet-${i + 1}`,
+        location: deploymentLocation!,
+        startDate: new Date(serviceStartYear + Math.floor(Math.random() * serviceYears), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
+        endDate: new Date(serviceStartYear + Math.floor(Math.random() * serviceYears) + 1, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
+        exposures: Math.random() > 0.7 ? ['Burn Pits', 'Agent Orange'][Math.floor(Math.random() * 2)] ? ['Burn Pits'] : ['Agent Orange'] : [],
+        combatZone: Math.random() > 0.4,
+        createdAt: new Date()
+      }] : undefined,
+      conditions: disabilityRating > 0 ? generateMockConditions(`vet-${i + 1}`, Math.floor(disabilityRating / 20) + 1) : undefined,
+      
+      // Metadata
       createdAt: new Date(Date.now() - Math.floor(Math.random() * 31536000000)),
-      updatedAt: new Date(Date.now() - Math.floor(Math.random() * 2592000000))
+      updatedAt: new Date(Date.now() - Math.floor(Math.random() * 2592000000)),
+      lastAccessed: Math.random() > 0.3 ? new Date(Date.now() - Math.floor(Math.random() * 2592000000)) : undefined,
+      profileCompleteness: Math.floor(Math.random() * 30) + 70 // 70-100%
     });
   }
   
@@ -130,6 +218,51 @@ function generateMockClaims(count: number): Claim[] {
   return claims;
 }
 
+// Generate mock medical conditions
+function generateMockConditions(veteranId: string, count: number) {
+  const conditions = [
+    { name: 'PTSD', icd10: 'F43.10', avgRating: 70 },
+    { name: 'Tinnitus', icd10: 'H93.11', avgRating: 10 },
+    { name: 'Hearing Loss', icd10: 'H90.3', avgRating: 0 },
+    { name: 'Lower Back Strain', icd10: 'M54.5', avgRating: 20 },
+    { name: 'Knee Condition', icd10: 'M25.561', avgRating: 10 },
+    { name: 'Depression', icd10: 'F32.9', avgRating: 30 },
+    { name: 'Anxiety', icd10: 'F41.9', avgRating: 30 },
+    { name: 'Sleep Apnea', icd10: 'G47.33', avgRating: 50 },
+    { name: 'Migraine Headaches', icd10: 'G43.909', avgRating: 30 },
+    { name: 'Shoulder Condition', icd10: 'M75.30', avgRating: 20 }
+  ];
+  
+  const selectedConditions = [];
+  const usedConditions = new Set();
+  
+  for (let i = 0; i < count && i < conditions.length; i++) {
+    let condition;
+    do {
+      condition = conditions[Math.floor(Math.random() * conditions.length)];
+    } while (usedConditions.has(condition.name));
+    
+    usedConditions.add(condition.name);
+    const rating = Math.max(0, Math.min(100, condition.avgRating + (Math.random() * 40) - 20));
+    
+    selectedConditions.push({
+      id: `cond-${veteranId}-${i}`,
+      veteranId,
+      name: condition.name,
+      icd10Code: condition.icd10,
+      rating: Math.floor(rating),
+      serviceConnected: Math.random() > 0.2, // 80% service connected
+      effectiveDate: new Date(Date.now() - Math.floor(Math.random() * 31536000000 * 5)), // Within 5 years
+      diagnosticCode: `${Math.floor(Math.random() * 9000) + 1000}`,
+      secondaryTo: i > 0 && Math.random() > 0.7 ? selectedConditions[0].name : undefined,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+  }
+  
+  return selectedConditions;
+}
+
 // Mock API functions
 export async function mockFetchVeterans(page: number = 1, limit: number = 20, filters?: any) {
   await new Promise(resolve => setTimeout(resolve, 300)); // Simulate network delay
@@ -141,8 +274,11 @@ export async function mockFetchVeterans(page: number = 1, limit: number = 20, fi
   if (filters?.search) {
     const search = filters.search.toLowerCase();
     filtered = filtered.filter(v => 
+      // EDIPI is the PRIMARY search identifier
+      v.edipi.includes(search) ||
       v.firstName.toLowerCase().includes(search) ||
       v.lastName.toLowerCase().includes(search) ||
+      v.name.toLowerCase().includes(search) ||
       v.ssn.includes(search) ||
       v.serviceNumber.toLowerCase().includes(search)
     );

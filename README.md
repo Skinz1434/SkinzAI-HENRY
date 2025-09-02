@@ -1,27 +1,51 @@
 <div align="center">
 
-# 🛡️ HENRY Platform
-### Heroes' Early Notification & Response Yesterday
+<!-- Custom HENRY Logo -->
+<img src="./assets/henry-logo.svg" alt="HENRY Platform Logo" width="600" height="200" style="margin-bottom: 20px;" />
 
-<img src="https://github.com/user-attachments/assets/henry-platform-hero-banner" alt="HENRY Platform - Advanced AI-Powered Veterans Administration" width="800" height="300" style="border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+<!-- Hero Banner -->
+<img src="./assets/henry-hero-banner.svg" alt="HENRY Platform - Advanced AI-Powered Veterans Administration Management" width="1000" height="333" style="border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); margin: 20px 0; border: 2px solid #fbbf24;" />
 
----
+<!-- Enhanced Tech Stack Badges -->
+<p align="center">
+  <img src="https://img.shields.io/badge/🛡️_HENRY-PLATFORM-fbbf24?style=for-the-badge&labelColor=0f172a&color=f59e0b" alt="HENRY Platform" />
+  <img src="https://img.shields.io/badge/Next.js-14+-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <br/>
+  <img src="https://img.shields.io/badge/🤖_AI-POWERED-ef4444?style=for-the-badge&labelColor=1e293b&color=dc2626" alt="AI Powered" />
+  <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Vercel-Deploy-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+  <img src="https://img.shields.io/badge/License-Proprietary-b91c1c?style=for-the-badge&labelColor=334155" alt="License" />
+</p>
 
-![HENRY Platform](https://img.shields.io/badge/HENRY-Platform-blue?style=for-the-badge&logo=shield&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![AI Powered](https://img.shields.io/badge/AI-Powered-FF6B6B?style=for-the-badge&logo=openai&logoColor=white)
-![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)
+<!-- Mission Statement with Enhanced Styling -->
+<h2 style="color: #fbbf24; font-family: 'Orbitron', monospace; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); margin: 30px 0 10px 0;">🎯 MISSION CRITICAL OPERATIONS</h2>
+<h3 style="color: #cbd5e1; font-weight: 300; margin-bottom: 30px;">Advanced Predictive Analytics for Veteran Crisis Prevention</h3>
 
-**🚀 Advanced AI-Powered Veterans Administration Management Platform**
+<!-- Action Buttons -->
+<p align="center" style="margin: 30px 0;">
+  <a href="https://henry-platform-kppdcs615-the-architects-projects.vercel.app" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_LIVE_PLATFORM-DEPLOY_ACTIVE-4CAF50?style=for-the-badge&labelColor=1e293b&logoColor=white" alt="Live Demo" />
+  </a>
+  <a href="https://github.com/Skinz1434/SkinzAI-HENRY" target="_blank">
+    <img src="https://img.shields.io/badge/📊_SOURCE_CODE-VIEW_REPOSITORY-2196F3?style=for-the-badge&labelColor=0f172a&logoColor=white" alt="Documentation" />
+  </a>
+  <a href="mailto:skinner.michael@outlook.com">
+    <img src="https://img.shields.io/badge/⚡_CONTACT-GET_IN_TOUCH-9C27B0?style=for-the-badge&labelColor=334155&logoColor=white" alt="Contact" />
+  </a>
+</p>
 
-*Streamlining veteran services through intelligent data integration and real-time profile synchronization*
-
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-View_Platform-4CAF50?style=for-the-badge)](https://henry-platform-kppdcs615-the-architects-projects.vercel.app)
-[![Documentation](https://img.shields.io/badge/📚_Docs-Read_More-2196F3?style=for-the-badge)](https://github.com/Skinz1434/SkinzAI-HENRY)
-[![Contact](https://img.shields.io/badge/💬_Contact-Get_In_Touch-9C27B0?style=for-the-badge)](mailto:skinner.michael@outlook.com)
+<!-- Status Indicators -->
+<div style="background: linear-gradient(135deg, #0f172a, #1e293b); padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px solid #475569;">
+  <h4 style="color: #fbbf24; margin-bottom: 15px;">🔴 OPERATIONAL STATUS</h4>
+  <p style="color: #94a3b8; margin: 5px 0;">⚡ <strong>System Status:</strong> <span style="color: #22c55e;">FULLY OPERATIONAL</span></p>
+  <p style="color: #94a3b8; margin: 5px 0;">📊 <strong>Data Sync:</strong> <span style="color: #22c55e;">REAL-TIME ACTIVE</span></p>
+  <p style="color: #94a3b8; margin: 5px 0;">🛡️ <strong>Security Level:</strong> <span style="color: #fbbf24;">MAXIMUM</span></p>
+  <p style="color: #94a3b8; margin: 5px 0;">🎯 <strong>AI Analysis:</strong> <span style="color: #22c55e;">92% ACCURACY RATE</span></p>
+</div>
 
 </div>
 

@@ -1,22 +1,80 @@
 export interface Veteran {
   id: string;
+  // Personal Information
   firstName: string;
   lastName: string;
-  ssn: string;
+  name: string; // Full name for display
+  ssn: string; // This will be encrypted in DB
+  edipi: string; // Electronic Data Interchange Personal Identifier - PRIMARY SEARCH KEY
   dateOfBirth: Date;
+  gender?: string;
+  email?: string;
+  phone?: string;
+  
+  // Address
+  street?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  
+  // Military Service
   serviceNumber: string;
   branch: Branch;
   serviceStartDate: Date;
   serviceEndDate: Date | null;
   dischargeStatus: DischargeStatus;
+  rank?: string;
+  mos?: string; // Military Occupational Specialty
+  combatService: boolean;
+  
+  // Benefits
   disabilityRating: number;
-  claims: Claim[];
-  documents: Document[];
+  monthlyCompensation: number;
+  healthcarePriority?: number;
+  enrolledVaHealthcare: boolean;
+  
+  // Education Benefits
+  gibBillRemaining: number;
+  degreeProgram?: string;
+  enrollmentStatus?: string;
+  school?: string;
+  
+  // Risk Assessment (Henry Protocol)
+  riskScore: number;
+  riskLevel: 'Minimal' | 'Low' | 'Moderate' | 'High' | 'Immediate';
+  lastRiskAssessment?: Date;
+  cascadeRiskDetected: boolean;
+  
+  // Sync Status
   vetProfileSyncStatus: VetProfileSyncStatus;
   lastSyncDate: Date | null;
   accuracy: number;
+  syncAccuracy: number;
+  fallbackToDD214: boolean;
+  syncAttempts: number;
+  
+  // Income
+  incomeVaDisability: number;
+  incomeSsdi: number;
+  incomePension: number;
+  incomeEmployment: number;
+  
+  // Family
+  dependents: number;
+  spouseName?: string;
+  spouseDob?: Date;
+  
+  // Related Data
+  claims: Claim[];
+  documents: Document[];
+  deployments?: Deployment[];
+  conditions?: MedicalCondition[];
+  
+  // Metadata
   createdAt: Date;
   updatedAt: Date;
+  lastAccessed?: Date;
+  profileCompleteness: number;
 }
 
 export interface Claim {
@@ -269,4 +327,64 @@ export interface GridOptions {
   exporting?: boolean;
   onRowClick?: (row: any) => void;
   onSelectionChange?: (selectedRows: any[]) => void;
+}
+
+// Additional interfaces for enhanced schema support
+export interface Deployment {
+  id: string;
+  veteranId: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+  exposures: string[];
+  combatZone: boolean;
+  createdAt: Date;
+}
+
+export interface MedicalCondition {
+  id: string;
+  veteranId: string;
+  name: string;
+  icd10Code?: string;
+  rating: number;
+  serviceConnected: boolean;
+  effectiveDate?: Date;
+  diagnosticCode?: string;
+  secondaryTo?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface RiskAssessment {
+  id: string;
+  veteranId: string;
+  assessmentDate: Date;
+  
+  // Risk Domains
+  medicalRisk: number;
+  mentalHealthRisk: number;
+  socialRisk: number;
+  economicRisk: number;
+  behavioralRisk: number;
+  environmentalRisk: number;
+  
+  // Overall Assessment
+  overallRiskScore: number;
+  riskLevel: 'Minimal' | 'Low' | 'Moderate' | 'High' | 'Immediate';
+  cascadeDetected: boolean;
+  
+  // Predictions
+  prediction30Day: number;
+  prediction60Day: number;
+  prediction90Day: number;
+  
+  // Recommendations
+  immediateActions: string[];
+  followUpRequired: boolean;
+  nextAssessmentDate?: Date;
+  
+  // Metadata
+  assessedBy?: string;
+  notes?: string;
+  interventionTriggered: boolean;
 }
