@@ -199,9 +199,8 @@ export default function DashboardFullPage() {
         />
       )}
       
-      {/* Background with gradient overlay */}
+      {/* Background */}
       <div className="min-h-screen bg-gray-900 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/10 to-purple-900/10 pointer-events-none" />
         
         {/* Scroll-based Fade Overlays */}
         <div 
@@ -287,7 +286,6 @@ export default function DashboardFullPage() {
 
         {/* Enhanced Tabs */}
         <div className="relative bg-gradient-to-r from-gray-800/90 via-gray-800/95 to-gray-800/90 backdrop-blur-sm border-b border-gray-700/50">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/5 via-transparent to-purple-900/5" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="flex space-x-1">
               {tabs.map(tab => {
