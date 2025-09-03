@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+
+    <radialGradient id="shieldGrad" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a"/>
+  
+  <!-- Main Shield -->
+  <path d="M90 50 L140 40 L140 120 C140 140, 115 160, 90 170 C65 160, 40 140, 40 120 L40 40 Z" 
+        fill="url(#shieldGrad)" 
+        stroke="url(#goldGrad)" 
+        stroke-width="2"/>
+  
+  <!-- Central Star -->
+  <polygon points="90,70 95,85 110,85 98,95 103,110 90,100 77,110 82,95 70,85 85,85" 
+           fill="url(#goldGrad)"/>
+  
+  <!-- Side Stars -->
+  <polygon points="65,75 67,80 72,80 68,83 70,88 65,85 60,88 62,83 58,80 63,80" 
+           fill="url(#goldGrad)" opacity="0.8"/>
+  
+  <polygon points="115,75 117,80 122,80 118,83 120,88 115,85 110,88 112,83 108,80 113,80" 
+           fill="url(#goldGrad)" opacity="0.8"/>
+  
+  <!-- AI Indicators (static) -->
+  <circle cx="75" cy="60" r="3" fill="url(#blueGrad)" opacity="0.8"/>
+  <circle cx="105" cy="60" r="3" fill="url(#blueGrad)" opacity="0.8"/>
+  
+  <!-- Connection Lines -->
+  <line x1="75" y1="60" x2="90" y2="70" stroke="url(#blueGrad)" stroke-width="1" opacity="0.5"/>
+  <line x1="105" y1="60" x2="90" y2="70" stroke="url(#blueGrad)" stroke-width="1" opacity="0.5"/>
+  
+  <!-- HENRY Text -->
+  <text x="180" y="80" font-family="Arial, sans-serif" font-size="48" font-weight="900" 
+        fill="url(#goldGrad)">HENRY</text>
+  
+  <!-- Subtitle -->
+  <text x="180" y="105" font-family="Arial, sans-serif" font-size="14" font-weight="600" 
+        fill="#94a3b8">HEROES' EARLY NOTIFICATION &amp; RESPONSE YESTERDAY</text>
+  
+  <!-- AI Badge -->
+  <rect x="180" y="115" width="60" height="20" rx="10" fill="#ef4444"/>
+  <text x="210" y="128" font-family="Arial, sans-serif" font-size="10" font-weight="700" 
+        fill="white" text-anchor="middle">AI POWERED</text>
+  
+  <!-- Mission Statement -->
+  <text x="180" y="145" font-family="Arial, sans-serif" font-size="11" font-weight="500" 
+        fill="#cbd5e1">Advanced Predictive Analytics for Veteran Crisis Prevention</text>
+  
+  <!-- Author Signature -->
+  <text x="180" y="170" font-family="Arial, sans-serif" font-size="9" font-weight="400" 
+        fill="#64748b">Engineered by Michael Skinner, USMC Veteran</text>
+        
+  <!-- Version Info -->
+  <text x="480" y="170" font-family="monospace" font-size="8" font-weight="500" 
+        fill="#475569">v2.1.0 | 28,734 LOC | 800+ dev hours</text>
+</svg>

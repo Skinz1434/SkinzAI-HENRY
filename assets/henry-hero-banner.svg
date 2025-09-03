@@ -1,12 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
   <defs>
-    <!-- Background Gradients -->
+    <!-- Enhanced Background Gradients -->
     <linearGradient id="heroBackground" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
-      <stop offset="25%" style="stop-color:#1e293b;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#334155;stop-opacity:1" />
-      <stop offset="75%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="20%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#334155;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#475569;stop-opacity:0.9" />
+      <stop offset="80%" style="stop-color:#1e293b;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Animated Background Gradient -->
+    <linearGradient id="animatedBg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1">
+        <animate attributeName="stop-color" values="#0f172a;#1e293b;#0f172a" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" style="stop-color:#334155;stop-opacity:0.8">
+        <animate attributeName="stop-color" values="#334155;#475569;#334155" dur="12s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1">
+        <animate attributeName="stop-color" values="#0f172a;#1e293b;#0f172a" dur="10s" repeatCount="indefinite"/>
+      </stop>
     </linearGradient>
     
     <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -48,8 +62,9 @@
     </pattern>
   </defs>
   
-  <!-- Background -->
+  <!-- Enhanced Animated Background -->
   <rect width="100%" height="100%" fill="url(#heroBackground)"/>
+  <rect width="100%" height="100%" fill="url(#animatedBg)" opacity="0.3"/>
   <rect width="100%" height="100%" fill="url(#grid)" opacity="0.2"/>
   <rect width="100%" height="100%" fill="url(#circuitBoard)" opacity="0.1"/>
   
@@ -74,9 +89,12 @@
     </circle>
   </g>
   
-  <!-- Main Title -->
-  <text x="200" y="180" font-family="'Orbitron', 'Arial Black', sans-serif" font-size="64" font-weight="900" 
-        fill="url(#goldGradient)" filter="url(#glow)">HENRY</text>
+  <!-- Main Title (Enhanced) -->
+  <text x="200" y="180" font-family="'Orbitron', 'Arial Black', Arial, sans-serif" font-size="64" font-weight="900" 
+        fill="url(#goldGradient)" filter="url(#glow)">
+    HENRY
+    <animate attributeName="opacity" values="0.95;1;0.95" dur="6s" repeatCount="indefinite"/>
+  </text>
   
   <!-- Platform Subtitle -->
   <text x="200" y="210" font-family="'Rajdhani', sans-serif" font-size="18" font-weight="600" 
@@ -166,23 +184,86 @@
           fill="#64748b">Last Sync: 2024-09-02 21:45:32</text>
   </g>
   
-  <!-- Floating Data Elements -->
-  <g opacity="0.6">
+  <!-- Enhanced Floating Data Elements -->
+  <g opacity="0.7">
     <!-- Binary Code Stream -->
     <text x="50" y="50" font-family="'JetBrains Mono', monospace" font-size="8" fill="#475569" opacity="0.4"
           transform="rotate(-15)">01001000 01000101 01001110 01010010 01011001</text>
     
-    <!-- Moving Particles -->
-    <circle cx="150" cy="350" r="2" fill="url(#blueGradient)" opacity="0.7">
+    <!-- Additional Binary Streams -->
+    <text x="1100" y="80" font-family="'JetBrains Mono', monospace" font-size="6" fill="#64748b" opacity="0.3"
+          transform="rotate(15)">11010001 10101100 01110010 01011001</text>
+    
+    <!-- Network Connection Lines -->
+    <line x1="100" y1="200" x2="700" y2="150" stroke="url(#blueGradient)" stroke-width="1" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite"/>
+    </line>
+    
+    <line x1="600" y1="300" x2="200" y2="350" stroke="url(#goldGradient)" stroke-width="1" opacity="0.2">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="6s" repeatCount="indefinite"/>
+    </line>
+    
+    <!-- Enhanced Moving Particles -->
+    <circle cx="150" cy="350" r="2" fill="url(#blueGradient)" opacity="0.8">
       <animateTransform attributeName="transform" type="translate" 
                         values="0,0; 1000,0; 0,0" dur="15s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2;3;2" dur="3s" repeatCount="indefinite"/>
     </circle>
     
-    <circle cx="300" cy="30" r="1.5" fill="url(#goldGradient)" opacity="0.6">
+    <circle cx="300" cy="30" r="1.5" fill="url(#goldGradient)" opacity="0.7">
       <animateTransform attributeName="transform" type="translate" 
                         values="0,0; -200,300; 0,0" dur="20s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Additional Particle Effects -->
+    <circle cx="50" cy="200" r="1" fill="url(#redGradient)" opacity="0.6">
+      <animateTransform attributeName="transform" type="translate" 
+                        values="0,0; 800,100; 0,0" dur="12s" repeatCount="indefinite"/>
+    </circle>
+    
+    <circle cx="1050" cy="250" r="2" fill="url(#blueGradient)" opacity="0.5">
+      <animateTransform attributeName="transform" type="translate" 
+                        values="0,0; -600,-150; 0,0" dur="18s" repeatCount="indefinite"/>
     </circle>
   </g>
+  
+  <!-- Enhanced Dashboard Elements -->
+  <g transform="translate(750, 80)" opacity="0.9">
+    <!-- Additional Progress Bars -->
+    <rect x="20" y="55" width="120" height="4" rx="2" fill="#1e293b"/>
+    <rect x="20" y="55" width="85" height="4" rx="2" fill="url(#goldGradient)" opacity="0.8">
+      <animate attributeName="width" values="85;95;85" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    
+    <rect x="160" y="55" width="80" height="4" rx="2" fill="#1e293b"/>
+    <rect x="160" y="55" width="60" height="4" rx="2" fill="url(#blueGradient)" opacity="0.7">
+      <animate attributeName="width" values="60;70;60" dur="6s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Enhanced Chart Elements -->
+    <g transform="translate(200, 85)">
+      <!-- Additional Chart Bars -->
+      <rect x="10" y="50" width="6" height="20" fill="url(#goldGradient)" opacity="0.6">
+        <animate attributeName="height" values="20;35;20" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="25" y="45" width="6" height="25" fill="url(#blueGradient)" opacity="0.6">
+        <animate attributeName="height" values="25;40;25" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="40" y="40" width="6" height="30" fill="url(#redGradient)" opacity="0.6">
+        <animate attributeName="height" values="30;45;30" dur="5s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    
+    <!-- Status Indicator Lights -->
+    <circle cx="350" cy="35" r="3" fill="#22c55e">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="365" cy="35" r="3" fill="url(#goldGradient)">
+      <animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
   
   <!-- Bottom Attribution -->
   <text x="50" y="380" font-family="'Inter', sans-serif" font-size="10" font-weight="400" 
