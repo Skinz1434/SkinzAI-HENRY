@@ -36,12 +36,15 @@
     <!-- Professional colors: no bright yellow/blue -->
     
     <!-- Arrow Marker -->
-    <defs>
-      <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-              refX="9" refY="3.5" orient="auto">
-        <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" opacity="0.8" />
-      </marker>
-    </defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" opacity="0.8" />
+    </marker>
+    
+    <!-- Background Grid Pattern -->
+    <pattern id="bgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3b82f6" stroke-width="0.5"/>
+    </pattern>
   </defs>
   
   <!-- Enhanced Background -->
@@ -184,11 +187,6 @@
   
   <!-- Subtle Background Grid -->
   <g opacity="0.02">
-    <defs>
-      <pattern id="bgGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3b82f6" stroke-width="0.5"/>
-      </pattern>
-    </defs>
     <rect width="1000" height="400" fill="url(#bgGrid)"/>
   </g>
 </svg>

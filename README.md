@@ -456,10 +456,8 @@ CASE-FILE-HENRY/
 ### 🔍 Digital Evidence Chain
 
 <div align="center">
-  <img src="./assets/henry-banner.svg?v=2.0" alt="HENRY Protocol Digital Evidence Chain - Professional Architecture" width="1000" height="400" style="margin: 20px 0; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" />
+  <img src="./assets/henry-banner.svg" alt="HENRY Protocol Digital Evidence Chain" width="1000" height="400" />
 </div>
-
-**Enhanced Architecture Diagram**: *The diagram above features professional dark gradients and high-contrast text for optimal readability. All components use enterprise-grade color schemes with no bright yellow or blue backgrounds that impede text visibility.*
 
 ### 🕵️ Investigative Data Flow Protocol
 
