@@ -451,27 +451,13 @@ CASE-FILE-HENRY/
 
 ## 🏗️ SYSTEM ARCHITECTURE: THE INVESTIGATION NETWORK
 
-**ARCHITECTURAL ANALYSIS**: *This isn't just a system diagram - it's a forensic map of how evidence flows from detection to intervention. Every connection represents a potential life saved.*
+**ARCHITECTURAL ANALYSIS**: *The enhanced digital evidence chain diagram above shows the professional-grade data flow architecture of the HENRY Protocol. Each component represents a critical security and processing layer designed to protect veteran data while enabling life-saving analysis.*
 
 ### 🔍 Digital Evidence Chain
-```mermaid
-graph TB
-    A[📱 Investigator's Browser] -->|Encrypted HTTPS| B[🔍 Next.js Detection Interface]
-    B --> C[⚡ Vercel Global Edge Network]
-    C --> D[🔧 API Investigation Routes]
-    D --> E[📊 Supabase Evidence Vault]
-    E --> F[(💾 PostgreSQL Case Database)]
-    E --> G[🔐 Row-Level Security Protocols]
-    E --> H[📁 Encrypted Document Storage]
-    D --> I[🤖 AI Analysis Engines]
-    I --> J[🗨️ OpenAI/Claude Interrogation]
-    D --> K[🏢 VA System Integration]
-    K --> L[📊 VistA/VBMS Evidence Feeds]
-    
-    style F fill:#ff6b6b,stroke:#fff,stroke-width:2px
-    style G fill:#4ecdc4,stroke:#fff,stroke-width:2px
-    style I fill:#ffe66d,stroke:#fff,stroke-width:2px
-```
+
+<div align="center">
+  <img src="./assets/henry-banner.svg" alt="HENRY Protocol Digital Evidence Chain" width="1000" height="400" style="margin: 20px 0; border-radius: 8px;" />
+</div>
 
 ### 🕵️ Investigative Data Flow Protocol
 
