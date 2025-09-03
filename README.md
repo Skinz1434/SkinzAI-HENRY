@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Enhanced HENRY Header -->
-<img src="./assets/images/sloppy version.jpeg" alt="HENRY Protocol - AI-Powered Veteran Crisis Prevention" width="1200" height="300" style="margin-bottom: 30px;" />
+<img src="./assets/images/henry-hero-professional.svg" alt="HENRY Protocol - AI-Powered Veteran Crisis Prevention" width="1400" height="680" style="margin-bottom: 30px;" />
 
 <!-- Action Buttons -->
 <p style="margin: 20px 0;">
