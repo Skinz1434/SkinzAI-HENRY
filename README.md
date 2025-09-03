@@ -456,7 +456,7 @@ CASE-FILE-HENRY/
 ### 🔍 Digital Evidence Chain
 
 <div align="center">
-  <img src="./assets/henry-banner.svg" alt="HENRY Protocol Digital Evidence Chain" width="1000" height="400" />
+  <img src="./assets/henry-banner-simple.svg" alt="HENRY Protocol Digital Evidence Chain" width="1000" height="400" />
 </div>
 
 ### 🕵️ Investigative Data Flow Protocol
