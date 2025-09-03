@@ -1,10 +1,10 @@
 <div align="center">
 
-<!-- Professional HENRY Platform Logo -->
-<img src="./assets/henry-master-logo.svg" alt="HENRY Platform - AI-Powered Veteran Crisis Prevention" width="800" height="280" />
+<!-- HENRY Platform Logo -->
+<img src="./assets/henry-logo.svg" alt="HENRY Platform - AI-Powered Veteran Crisis Prevention" width="800" height="180" />
 
-<!-- Comprehensive Platform Banner -->
-<img src="./assets/henry-platform-banner.svg" alt="HENRY Platform Architecture and Capabilities" width="1000" height="400" style="margin-top: 20px;" />
+<!-- Platform Banner -->
+<img src="./assets/henry-banner.svg" alt="HENRY Platform Features and Capabilities" width="1000" height="300" style="margin-top: 20px;" />
 
 <!-- Streamlined Mission Focus -->
 <p align="center" style="margin: 30px 0 20px 0;">
