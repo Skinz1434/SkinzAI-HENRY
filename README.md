@@ -1,10 +1,10 @@
 <div align="center">
 
-<!-- Custom HENRY Logo -->
-<img src="./assets/henry-logo.svg" alt="HENRY Platform Logo" width="600" height="200" style="margin-bottom: 20px;" />
+<!-- Enhanced HENRY Logo -->
+<img src="./assets/henry-logo-github.svg" alt="HENRY Platform Logo" width="600" height="200" />
 
-<!-- Hero Banner -->
-<img src="./assets/henry-hero-banner.svg" alt="HENRY Platform - Advanced AI-Powered Veterans Administration Management" width="1000" height="333" style="border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); margin: 20px 0; border: 2px solid #fbbf24;" />
+<!-- Enhanced Hero Banner -->
+<img src="./assets/henry-hero-github.svg" alt="HENRY Platform - Advanced AI-Powered Veterans Administration Management" width="1200" height="400" />
 
 <!-- Enhanced Tech Stack Badges -->
 <p align="center">
@@ -38,14 +38,6 @@
   </a>
 </p>
 
-<!-- Status Indicators -->
-<div style="background: linear-gradient(135deg, #0f172a, #1e293b); padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px solid #475569;">
-  <h4 style="color: #fbbf24; margin-bottom: 15px;">🔴 OPERATIONAL STATUS</h4>
-  <p style="color: #94a3b8; margin: 5px 0;">⚡ <strong>System Status:</strong> <span style="color: #22c55e;">FULLY OPERATIONAL</span></p>
-  <p style="color: #94a3b8; margin: 5px 0;">📊 <strong>Data Sync:</strong> <span style="color: #22c55e;">REAL-TIME ACTIVE</span></p>
-  <p style="color: #94a3b8; margin: 5px 0;">🛡️ <strong>Security Level:</strong> <span style="color: #fbbf24;">MAXIMUM</span></p>
-  <p style="color: #94a3b8; margin: 5px 0;">🎯 <strong>AI Analysis:</strong> <span style="color: #22c55e;">92% ACCURACY RATE</span></p>
-</div>
 
 </div>
 
@@ -100,7 +92,7 @@ This isn't your typical SaaS solution. This is what happens when someone with de
 - 🔍 **500+ Detailed Profiles** - Complete Veteran records with multi-domain analysis
 - 📊 **HENRY Protocol Algorithm** - Proprietary pattern recognition and risk scoring
 - 🔄 **VA System Integration** - Real-time data synchronization with government databases
-- 📈 **92% F2 Accuracy Rate** - Validated predictive performance metrics
+- 📈 **92% F1 Accuracy Rate** - Validated predictive performance metrics
 - 🎯 **Cascade Detection Engine** - Multi-factor risk correlation analysis
 - 🚨 **Early Warning System** - 30-60 day predictive alerting
 - 🔐 **Enterprise Security** - SSN encryption, audit logging, compliance-ready
@@ -384,7 +376,7 @@ CASE-FILE-HENRY/
       </td>
       <td align="center">
         <h3>92%</h3>
-        <p><strong>Pattern Detection F2 Score</strong></p>
+        <p><strong>Pattern Detection F1 Score</strong></p>
         <sub>Validated against historical crisis events</sub>
       </td>
       <td align="center">
@@ -553,7 +545,7 @@ Caching Strategy → Response Optimization → Client Delivery → Audit Logging
 - [x] **VA Claims AI Forensics** - Document processing algorithms deployed
 - [x] **Security Protocol Implementation** - Military-grade protection active
 - [x] **Production Deployment** - Live system operational since September
-- [x] **Initial Pattern Recognition** - 92% F2 accuracy rate achieved
+- [x] **Initial Pattern Recognition** - 92% F1 accuracy rate achieved
 
 **PHASE 1 EVIDENCE**: *8 months, 800+ hours, 28,734 lines of code. Foundation is solid.*
 

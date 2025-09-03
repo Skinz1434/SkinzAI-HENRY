@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+  <defs>
+    <!-- Enhanced Background Gradients -->
+    <linearGradient id="heroBackground" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="20%" stop-color="#1e293b"/>
+      <stop offset="40%" stop-color="#334155"/>
+      <stop offset="60%" stop-color="#475569" stop-opacity="0.9"/>
+      <stop offset="80%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    
+    <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    
+    <!-- Enhanced Glow Filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#334155" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+    
+    <!-- Circuit Pattern -->
+    <pattern id="circuitBoard" width="100" height="100" patternUnits="userSpaceOnUse">
+      <circle cx="50" cy="50" r="2" fill="#475569" opacity="0.4"/>
+      <circle cx="15" cy="15" r="1" fill="#64748b" opacity="0.3"/>
+      <circle cx="85" cy="85" r="1" fill="#64748b" opacity="0.3"/>
+      <line x1="50" y1="48" x2="50" y2="30" stroke="#475569" stroke-width="1" opacity="0.2"/>
+      <line x1="48" y1="50" x2="30" y2="50" stroke="#475569" stroke-width="1" opacity="0.2"/>
+    </pattern>
+    
+    <!-- Data Flow Pattern -->
+    <pattern id="dataFlow" width="200" height="20" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="10" x2="200" y2="10" stroke="#3b82f6" stroke-width="1" opacity="0.2"/>
+      <circle cx="20" cy="10" r="2" fill="#3b82f6" opacity="0.4"/>
+      <circle cx="100" cy="10" r="1.5" fill="#fbbf24" opacity="0.3"/>
+      <circle cx="180" cy="10" r="1" fill="#ef4444" opacity="0.3"/>
+    </pattern>
+  </defs>
+  
+  <!-- Enhanced Background -->
+  <rect width="100%" height="100%" fill="url(#heroBackground)"/>
+  <rect width="100%" height="100%" fill="url(#grid)" opacity="0.15"/>
+  <rect width="100%" height="100%" fill="url(#circuitBoard)" opacity="0.08"/>
+  <rect width="100%" height="100%" fill="url(#dataFlow)" opacity="0.1"/>
+  
+  <!-- Left Shield Logo -->
+  <g transform="translate(80, 100)">
+    <path d="M0 0 L50 -10 L50 70 C50 85, 25 100, 0 105 C-25 100, -50 85, -50 70 L-50 -10 Z" 
+          fill="#1e293b" 
+          stroke="url(#goldGradient)" 
+          stroke-width="3" 
+          filter="url(#glow)"/>
+    
+    <polygon points="0,15 7,30 25,30 13,40 18,55 0,45 -18,55 -13,40 -25,30 -7,30" 
+             fill="url(#goldGradient)" 
+             filter="url(#glow)"/>
+             
+    <!-- AI Elements (static) -->
+    <circle cx="-20" cy="10" r="3" fill="url(#blueGradient)" opacity="0.9"/>
+    <circle cx="20" cy="10" r="3" fill="url(#blueGradient)" opacity="0.9"/>
+    <line x1="-20" y1="10" x2="0" y2="20" stroke="url(#blueGradient)" stroke-width="1" opacity="0.4"/>
+    <line x1="20" y1="10" x2="0" y2="20" stroke="url(#blueGradient)" stroke-width="1" opacity="0.4"/>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="200" y="180" font-family="Arial, sans-serif" font-size="64" font-weight="900" 
+        fill="url(#goldGradient)" filter="url(#glow)">HENRY</text>
+  
+  <!-- Platform Subtitle -->
+  <text x="200" y="210" font-family="Arial, sans-serif" font-size="18" font-weight="600" 
+        fill="#cbd5e1">PLATFORM</text>
+  
+  <!-- Mission Statement -->
+  <text x="200" y="240" font-family="Arial, sans-serif" font-size="16" font-weight="500" 
+        fill="#94a3b8">Advanced AI-Powered Veterans Administration Management</text>
+  
+  <!-- Enhanced Status Badges -->
+  <g transform="translate(200, 260)">
+    <rect x="0" y="0" width="85" height="25" rx="12" fill="url(#redGradient)"/>
+    <text x="42" y="17" font-family="Arial, sans-serif" font-size="11" font-weight="700" 
+          fill="white" text-anchor="middle">AI POWERED</text>
+    
+    <rect x="95" y="0" width="105" height="25" rx="12" fill="url(#blueGradient)"/>
+    <text x="147" y="17" font-family="Arial, sans-serif" font-size="11" font-weight="700" 
+          fill="white" text-anchor="middle">CRISIS PREVENTION</text>
+          
+    <rect x="210" y="0" width="85" height="25" rx="12" fill="url(#goldGradient)"/>
+    <text x="252" y="17" font-family="Arial, sans-serif" font-size="11" font-weight="700" 
+          fill="#0f172a" text-anchor="middle">PREDICTIVE</text>
+          
+    <rect x="305" y="0" width="75" height="25" rx="12" fill="#22c55e"/>
+    <text x="342" y="17" font-family="Arial, sans-serif" font-size="11" font-weight="700" 
+          fill="white" text-anchor="middle">ACTIVE</text>
+  </g>
+  
+  <!-- Enhanced Stats Section -->
+  <g transform="translate(200, 310)">
+    <rect x="-10" y="-10" width="480" height="50" rx="8" fill="#1e293b" opacity="0.6"/>
+    
+    <!-- Stat 1 -->
+    <text x="0" y="0" font-family="monospace" font-size="24" font-weight="700" 
+          fill="url(#goldGradient)">500+</text>
+    <text x="0" y="18" font-family="Arial, sans-serif" font-size="10" font-weight="500" 
+          fill="#64748b">Veterans Monitored</text>
+    
+    <!-- Stat 2 -->
+    <text x="120" y="0" font-family="monospace" font-size="24" font-weight="700" 
+          fill="url(#blueGradient)">92%</text>
+    <text x="120" y="18" font-family="Arial, sans-serif" font-size="10" font-weight="500" 
+          fill="#64748b">F2 Accuracy Rate</text>
+    
+    <!-- Stat 3 -->
+    <text x="220" y="0" font-family="monospace" font-size="24" font-weight="700" 
+          fill="url(#redGradient)">30-60</text>
+    <text x="220" y="18" font-family="Arial, sans-serif" font-size="10" font-weight="500" 
+          fill="#64748b">Day Prediction Window</text>
+          
+    <!-- Stat 4 -->
+    <text x="360" y="0" font-family="monospace" font-size="24" font-weight="700" 
+          fill="url(#goldGradient)">24/7</text>
+    <text x="360" y="18" font-family="Arial, sans-serif" font-size="10" font-weight="500" 
+          fill="#64748b">Continuous Monitoring</text>
+  </g>
+  
+  <!-- Enhanced Dashboard Preview -->
+  <g transform="translate(750, 60)">
+    <!-- Main Dashboard Container -->
+    <rect x="0" y="0" width="420" height="280" rx="20" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="10" y="10" width="400" height="260" rx="15" fill="#1e293b" opacity="0.3"/>
+    
+    <!-- Header Bar -->
+    <rect x="20" y="30" width="380" height="35" rx="8" fill="#1e293b"/>
+    <circle cx="40" cy="47" r="10" fill="url(#goldGradient)" opacity="0.8"/>
+    <rect x="65" y="42" width="120" height="10" rx="5" fill="url(#blueGradient)" opacity="0.7"/>
+    <rect x="300" y="38" width="80" height="18" rx="9" fill="url(#redGradient)"/>
+    <text x="340" y="49" font-family="Arial, sans-serif" font-size="10" font-weight="700" 
+          fill="white" text-anchor="middle">HIGH RISK</text>
+    
+    <!-- System Status Indicators -->
+    <circle cx="360" cy="47" r="4" fill="#22c55e"/>
+    <circle cx="375" cy="47" r="4" fill="url(#goldGradient)"/>
+    <circle cx="390" cy="47" r="4" fill="url(#blueGradient)"/>
+    
+    <!-- Charts Section -->
+    <rect x="20" y="80" width="180" height="90" rx="10" fill="#1e293b" opacity="0.8"/>
+    <rect x="220" y="80" width="180" height="90" rx="10" fill="#1e293b" opacity="0.8"/>
+    
+    <!-- Chart 1 - Line Chart -->
+    <polyline points="35,150 55,130 75,140 95,120 115,110 135,100 155,95 175,90" 
+              fill="none" stroke="url(#goldGradient)" stroke-width="3" opacity="0.9"/>
+    <circle cx="95" cy="120" r="4" fill="url(#goldGradient)"/>
+    <circle cx="135" cy="100" r="4" fill="url(#goldGradient)"/>
+    
+    <!-- Chart 2 - Bar Chart -->
+    <rect x="235" y="130" width="8" height="30" fill="url(#blueGradient)" opacity="0.8"/>
+    <rect x="250" y="125" width="8" height="35" fill="url(#goldGradient)" opacity="0.8"/>
+    <rect x="265" y="120" width="8" height="40" fill="url(#redGradient)" opacity="0.8"/>
+    <rect x="280" y="115" width="8" height="45" fill="url(#blueGradient)" opacity="0.8"/>
+    <rect x="295" y="135" width="8" height="25" fill="url(#goldGradient)" opacity="0.8"/>
+    
+    <!-- Progress Bars -->
+    <rect x="20" y="190" width="150" height="6" rx="3" fill="#334155"/>
+    <rect x="20" y="190" width="110" height="6" rx="3" fill="url(#goldGradient)"/>
+    
+    <rect x="180" y="190" width="120" height="6" rx="3" fill="#334155"/>
+    <rect x="180" y="190" width="85" height="6" rx="3" fill="url(#blueGradient)"/>
+    
+    <rect x="310" y="190" width="90" height="6" rx="3" fill="#334155"/>
+    <rect x="310" y="190" width="70" height="6" rx="3" fill="url(#redGradient)"/>
+    
+    <!-- Data Points -->
+    <circle cx="250" cy="120" r="5" fill="url(#redGradient)" opacity="0.9"/>
+    <circle cx="280" cy="130" r="4" fill="url(#blueGradient)" opacity="0.8"/>
+    <circle cx="310" cy="115" r="3" fill="url(#goldGradient)" opacity="0.9"/>
+    
+    <!-- Bottom Status Panel -->
+    <rect x="20" y="210" width="380" height="50" rx="10" fill="#1e293b" opacity="0.6"/>
+    <text x="35" y="225" font-family="Arial, sans-serif" font-size="8" font-weight="600" 
+          fill="#94a3b8">REAL-TIME MONITORING STATUS</text>
+    <text x="35" y="240" font-family="monospace" font-size="10" font-weight="500" 
+          fill="url(#goldGradient)">✓ All Systems Operational</text>
+    <text x="35" y="252" font-family="monospace" font-size="8" font-weight="400" 
+          fill="#64748b">Last Sync: 2024-09-03 12:25:18 | Accuracy: 98.7%</text>
+          
+    <!-- Right Panel Indicators -->
+    <text x="250" y="240" font-family="Arial, sans-serif" font-size="8" font-weight="500" 
+          fill="#cbd5e1">Active Alerts: 3 | Processing: 12</text>
+    <text x="250" y="252" font-family="Arial, sans-serif" font-size="8" font-weight="500" 
+          fill="#22c55e">System Health: Excellent</text>
+  </g>
+  
+  <!-- Data Flow Elements -->
+  <g opacity="0.6">
+    <!-- Network Lines -->
+    <line x1="130" y1="200" x2="750" y2="180" stroke="url(#blueGradient)" stroke-width="1" opacity="0.4"/>
+    <line x1="600" y1="320" x2="250" y2="350" stroke="url(#goldGradient)" stroke-width="1" opacity="0.3"/>
+    
+    <!-- Data Nodes -->
+    <circle cx="150" cy="350" r="3" fill="url(#blueGradient)" opacity="0.8"/>
+    <circle cx="300" cy="50" r="2" fill="url(#goldGradient)" opacity="0.7"/>
+    <circle cx="550" cy="200" r="2" fill="url(#redGradient)" opacity="0.6"/>
+    <circle cx="1050" cy="280" r="3" fill="url(#blueGradient)" opacity="0.5"/>
+    
+    <!-- Binary Code Streams -->
+    <text x="50" y="60" font-family="monospace" font-size="8" fill="#475569" opacity="0.4"
+          transform="rotate(-10)">01001000 01000101 01001110 01010010 01011001</text>
+    
+    <text x="1000" y="100" font-family="monospace" font-size="6" fill="#64748b" opacity="0.3"
+          transform="rotate(12)">11010001 10101100 01110010</text>
+  </g>
+  
+  <!-- Bottom Attribution -->
+  <text x="50" y="380" font-family="Arial, sans-serif" font-size="10" font-weight="400" 
+        fill="#475569" opacity="0.8">© 2024 Michael Skinner, USMC Veteran | Built for those who served our nation</text>
+  
+  <!-- Tech Stack Indicator -->
+  <text x="950" y="380" font-family="monospace" font-size="8" font-weight="500" 
+        fill="#64748b" opacity="0.7">Next.js • TypeScript • Supabase • AI-Powered</text>
+</svg>
