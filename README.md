@@ -1,116 +1,51 @@
 <div align="center">
 
-<!-- Enhanced HENRY Platform Logo -->
-<img src="./assets/henry-logo.svg" alt="HENRY Protocol - AI-Powered Veteran Crisis Prevention Platform" width="900" height="200" style="margin-bottom: 20px;" />
+<!-- Clean HENRY Logo -->
+<img src="./assets/henry-logo.svg" alt="HENRY Protocol - AI-Powered Veteran Crisis Prevention" width="800" height="160" style="margin-bottom: 30px;" />
 
-<!-- Platform Banner with Enhanced Features -->
-<img src="./assets/henry-banner.svg" alt="HENRY Protocol Features and Capabilities" width="1000" height="300" style="margin-bottom: 30px;" />
-
-<!-- Mission Statement -->
-<div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); padding: 25px; border-radius: 12px; margin: 20px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
-  <p style="font-size: 18px; color: #e2e8f0; font-weight: 600; margin: 0 0 10px 0;">
-    🎖️ Heroes' Early Notification & Response Yesterday
-  </p>
-  <p style="font-size: 24px; color: #06b6d4; font-weight: bold; margin: 0 0 15px 0;">
-    Transforming VA Care from Reactive to Proactive
-  </p>
-  <p style="font-size: 14px; color: #94a3b8; line-height: 1.6; margin: 0;">
-    Every 65 minutes, another veteran dies by suicide. The HENRY Protocol identifies at-risk veterans <br/>
-    30-60 days before crisis events occur, because waiting for crisis is not an option.
-  </p>
-</div>
-
-<!-- Performance Metrics -->
-<div style="display: flex; justify-content: center; gap: 20px; margin: 30px 0; flex-wrap: wrap;">
-  <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 15px 25px; border-radius: 8px; border: 2px solid #3b82f6; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);">
-    <div style="font-size: 28px; font-weight: bold; color: #ffffff;">92%</div>
-    <div style="font-size: 12px; color: #94a3b8;">F2 Accuracy</div>
-  </div>
-  <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 15px 25px; border-radius: 8px; border: 2px solid #10b981; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);">
-    <div style="font-size: 28px; font-weight: bold; color: #ffffff;">30s</div>
-    <div style="font-size: 12px; color: #94a3b8;">Processing</div>
-  </div>
-  <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 15px 25px; border-radius: 8px; border: 2px solid #f97316; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2);">
-    <div style="font-size: 28px; font-weight: bold; color: #ffffff;">500+</div>
-    <div style="font-size: 12px; color: #94a3b8;">Veterans</div>
-  </div>
-  <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 15px 25px; border-radius: 8px; border: 2px solid #8b5cf6; box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);">
-    <div style="font-size: 28px; font-weight: bold; color: #ffffff;">24/7</div>
-    <div style="font-size: 12px; color: #94a3b8;">Monitoring</div>
-  </div>
-</div>
-
-<!-- Enhanced Action Buttons -->
-<p align="center" style="margin: 30px 0;">
-  <a href="https://henry-platform-kppdcs615-the-architects-projects.vercel.app" target="_blank" style="text-decoration: none; margin: 0 10px;">
-    <img src="https://img.shields.io/badge/🚀_LIVE_PLATFORM-OPERATIONAL-00ff88?style=for-the-badge&labelColor=0f172a&logoColor=white&logo=vercel" alt="Live Platform" style="margin: 5px;" />
+<!-- Action Buttons -->
+<p style="margin: 20px 0;">
+  <a href="https://henry-platform-kppdcs615-the-architects-projects.vercel.app" target="_blank" style="margin: 0 8px;">
+    <img src="https://img.shields.io/badge/🚀_LIVE_PLATFORM-OPERATIONAL-10b981?style=for-the-badge&labelColor=0a0b0d&logoColor=white" alt="Live Platform" />
   </a>
-  <a href="https://github.com/Skinz1434/SkinzAI-HENRY" target="_blank" style="text-decoration: none; margin: 0 10px;">
-    <img src="https://img.shields.io/badge/📊_SOURCE_CODE-REPOSITORY-2196F3?style=for-the-badge&labelColor=0f172a&logoColor=white&logo=github" alt="Source Code" style="margin: 5px;" />
+  <a href="https://github.com/Skinz1434/SkinzAI-HENRY" target="_blank" style="margin: 0 8px;">
+    <img src="https://img.shields.io/badge/📊_SOURCE_CODE-REPOSITORY-3b82f6?style=for-the-badge&labelColor=0a0b0d&logoColor=white" alt="Source Code" />
   </a>
-  <a href="mailto:skinner.michael@outlook.com" style="text-decoration: none; margin: 0 10px;">
-    <img src="https://img.shields.io/badge/⚡_CONTACT-DEVELOPER-9C27B0?style=for-the-badge&labelColor=0f172a&logoColor=white&logo=protonmail" alt="Contact" style="margin: 5px;" />
+  <a href="mailto:skinner.michael@outlook.com" style="margin: 0 8px;">
+    <img src="https://img.shields.io/badge/⚡_CONTACT-DEVELOPER-f59e0b?style=for-the-badge&labelColor=0a0b0d&logoColor=white" alt="Contact" />
   </a>
 </p>
 
-<!-- Comprehensive Technology Stack -->
-<div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 25px; border-radius: 12px; margin: 20px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.4);">
-  <h3 style="color: #e2e8f0; margin: 0 0 20px 0; font-size: 18px;">🛠️ Technology Stack & Architecture</h3>
+<!-- Accurate Technology Stack -->
+<div style="background: linear-gradient(135deg, #0a0b0d 0%, #13151a 100%); padding: 20px; border-radius: 8px; margin: 20px auto; max-width: 700px; border: 1px solid #1a1d23;">
+  <h3 style="color: #e2e8f0; margin: 0 0 15px 0; font-size: 16px; text-align: center;">🛠️ Technology Stack</h3>
   
-  <!-- Frontend Technologies -->
-  <div style="margin-bottom: 20px;">
-    <h4 style="color: #06b6d4; margin: 0 0 10px 0; font-size: 14px;">Frontend & UI</h4>
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-      <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js" />
-      <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react" alt="React" />
-      <img src="https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
-      <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS" />
-      <img src="https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square&logo=framer" alt="Framer Motion" />
-      <img src="https://img.shields.io/badge/Lucide_React-0.294-F56565?style=flat-square&logo=lucide" alt="Lucide React" />
-      <img src="https://img.shields.io/badge/Radix_UI-Latest-161618?style=flat-square&logo=radix-ui" alt="Radix UI" />
-      <img src="https://img.shields.io/badge/React_Hook_Form-7.0-EC5990?style=flat-square&logo=reacthookform" alt="React Hook Form" />
-    </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 15px;">
+    <img src="https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js" alt="Next.js" />
+    <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react" alt="React" />
+    <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat&logo=tailwind-css" alt="Tailwind" />
   </div>
   
-  <!-- Backend & Database -->
-  <div style="margin-bottom: 20px;">
-    <h4 style="color: #10b981; margin: 0 0 10px 0; font-size: 14px;">Backend & Database</h4>
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-      <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
-      <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-      <img src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white" alt="Prisma" />
-      <img src="https://img.shields.io/badge/TanStack_Query-FF4154?style=flat-square&logo=react-query&logoColor=white" alt="TanStack Query" />
-      <img src="https://img.shields.io/badge/Zustand-2D3748?style=flat-square&logo=react&logoColor=white" alt="Zustand" />
-      <img src="https://img.shields.io/badge/Zod-3E67B1?style=flat-square&logo=zod&logoColor=white" alt="Zod" />
-    </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 15px;">
+    <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white" alt="Supabase" />
+    <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+    <img src="https://img.shields.io/badge/TanStack_Query-FF4154?style=flat&logo=react-query&logoColor=white" alt="TanStack Query" />
+    <img src="https://img.shields.io/badge/Zustand-2D3748?style=flat&logo=react&logoColor=white" alt="Zustand" />
   </div>
   
-  <!-- AI & Machine Learning -->
-  <div style="margin-bottom: 20px;">
-    <h4 style="color: #f97316; margin: 0 0 10px 0; font-size: 14px;">AI & Machine Learning</h4>
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-      <img src="https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI" />
-      <img src="https://img.shields.io/badge/Claude_3.5-8A63D2?style=flat-square&logo=anthropic&logoColor=white" alt="Claude" />
-      <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow" />
-      <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
-      <img src="https://img.shields.io/badge/Scikit_Learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white" alt="Scikit-Learn" />
-      <img src="https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white" alt="NumPy" />
-      <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="Pandas" />
-    </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 15px;">
+    <img src="https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white" alt="OpenAI" />
+    <img src="https://img.shields.io/badge/Radix_UI-161618?style=flat&logo=radix-ui&logoColor=white" alt="Radix UI" />
+    <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer" alt="Framer Motion" />
+    <img src="https://img.shields.io/badge/Lucide-F56565?style=flat&logo=lucide" alt="Lucide" />
   </div>
   
-  <!-- DevOps & Deployment -->
-  <div style="margin-bottom: 15px;">
-    <h4 style="color: #8b5cf6; margin: 0 0 10px 0; font-size: 14px;">DevOps & Deployment</h4>
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-      <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel" />
-      <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white" alt="GitHub Actions" />
-      <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
-      <img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white" alt="ESLint" />
-      <img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black" alt="Prettier" />
-      <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git" />
-      <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub" />
-    </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;">
+    <img src="https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white" alt="Vercel" />
+    <img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white" alt="ESLint" />
+    <img src="https://img.shields.io/badge/Zod-3E67B1?style=flat&logo=zod&logoColor=white" alt="Zod" />
+    <img src="https://img.shields.io/badge/Recharts-FF6B6B?style=flat&logo=recharts&logoColor=white" alt="Recharts" />
   </div>
 </div>
 
