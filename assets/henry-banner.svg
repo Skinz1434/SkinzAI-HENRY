@@ -32,6 +32,9 @@
       </feMerge>
     </filter>
     
+    <!-- Cache buster comment - v2.0 -->
+    <!-- Professional colors: no bright yellow/blue -->
+    
     <!-- Arrow Marker -->
     <defs>
       <marker id="arrowhead" markerWidth="10" markerHeight="7" 
