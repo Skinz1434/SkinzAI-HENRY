@@ -1,29 +1,16 @@
 <div align="center">
 
-<!-- Enhanced HENRY Logo -->
-<img src="./assets/henry-logo-github.svg" alt="HENRY Platform Logo" width="600" height="200" />
+<!-- Professional HENRY Platform Logo -->
+<img src="./assets/henry-master-logo.svg" alt="HENRY Platform - AI-Powered Veteran Crisis Prevention" width="800" height="280" />
 
-<!-- Enhanced Hero Banner -->
-<img src="./assets/henry-hero-github.svg" alt="HENRY Platform - Advanced AI-Powered Veterans Administration Management" width="1200" height="400" />
+<!-- Comprehensive Platform Banner -->
+<img src="./assets/henry-platform-banner.svg" alt="HENRY Platform Architecture and Capabilities" width="1000" height="400" style="margin-top: 20px;" />
 
-<!-- Enhanced Tech Stack Badges -->
-<p align="center">
-  <img src="https://img.shields.io/badge/🛡️_HENRY-PLATFORM-fbbf24?style=for-the-badge&labelColor=0f172a&color=f59e0b" alt="HENRY Platform" />
-  <img src="https://img.shields.io/badge/Next.js-14+-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
-  <img src="https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
-  <img src="https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
-  <br/>
-  <img src="https://img.shields.io/badge/🤖_AI-POWERED-ef4444?style=for-the-badge&labelColor=1e293b&color=dc2626" alt="AI Powered" />
-  <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/Vercel-Deploy-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
-  <img src="https://img.shields.io/badge/License-Proprietary-b91c1c?style=for-the-badge&labelColor=334155" alt="License" />
+<!-- Streamlined Mission Focus -->
+<p align="center" style="margin: 30px 0 20px 0;">
+  <strong style="font-size: 18px; color: #3b82f6;">AI-Powered Veteran Crisis Prevention Platform</strong><br/>
+  <em style="color: #6b7280; font-size: 14px;">Identifying crisis patterns 30-60 days before traditional methods detect them</em>
 </p>
-
-<!-- Mission Statement with Enhanced Styling -->
-<h2 style="color: #fbbf24; font-family: 'Orbitron', monospace; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); margin: 30px 0 10px 0;">🎯 MISSION CRITICAL OPERATIONS</h2>
-<h3 style="color: #cbd5e1; font-weight: 300; margin-bottom: 30px;">Advanced Predictive Analytics for Veteran Crisis Prevention</h3>
 
 <!-- Action Buttons -->
 <p align="center" style="margin: 30px 0;">
