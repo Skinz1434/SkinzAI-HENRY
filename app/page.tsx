@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Shield, Brain, Activity, ArrowRight, Zap } from 'lucide-react';
+import { Shield, Brain, Activity, ArrowRight, Zap, FileText } from 'lucide-react';
 
 export default function Home() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function Home() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* HVEC Rheumatology Card */}
           <div 
             onClick={() => window.location.href = '/hvec'}
@@ -141,6 +141,48 @@ export default function Home() {
             </ul>
             <div className="flex items-center gap-2 text-purple-400 group-hover:text-purple-300 transition-colors">
               <span className="font-semibold">Launch AI Review</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* CODDA Card */}
+          <div 
+            onClick={() => window.location.href = '/codda'}
+            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-8 border border-gray-700 hover:border-teal-500/50 transition-all cursor-pointer group relative overflow-hidden z-10"
+            style={{ pointerEvents: 'auto' }}
+          >
+            <div className="absolute top-0 right-0 px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-bold rounded-bl-lg">
+              NEW
+            </div>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
+                <FileText className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white">CODDA</h2>
+            </div>
+            <p className="text-gray-400 mb-6">
+              AI-powered Character of Discharge Determination Assistant with IDE-style workspace and QBit integration.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
+                Evidence gap detection & analysis
+              </li>
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
+                QBit AI assistant integration
+              </li>
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
+                IPR workflow automation
+              </li>
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
+                Bias guard & quality assurance
+              </li>
+            </ul>
+            <div className="flex items-center gap-2 text-teal-400 group-hover:text-teal-300 transition-colors">
+              <span className="font-semibold">Launch CODDA</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
