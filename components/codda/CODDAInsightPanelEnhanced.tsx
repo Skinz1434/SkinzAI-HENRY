@@ -498,18 +498,25 @@ export default function CODDAInsightPanelEnhanced({
             <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
               <h4 className="font-medium text-gray-800 mb-3">Evidence Actions</h4>
               <div className="space-y-2">
-                <button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm">
-                  <Search className="w-4 h-4" />
-                  Run Evidence Gap Scan
-                </button>
-                <button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm">
-                  <Download className="w-4 h-4" />
-                  Request Missing Evidence
-                </button>
-                <button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm">
-                  <Upload className="w-4 h-4" />
-                  Upload New Evidence
-                </button>
+                              <button 
+                onClick={() => {
+                  // Trigger advanced evidence viewer
+                  const event = new CustomEvent('openEvidenceViewer');
+                  window.dispatchEvent(event);
+                }}
+                className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
+              >
+                <Search className="w-4 h-4" />
+                Advanced Evidence Viewer
+              </button>
+              <button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm">
+                <Download className="w-4 h-4" />
+                Request Missing Evidence
+              </button>
+              <button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm">
+                <Upload className="w-4 h-4" />
+                Upload New Evidence
+              </button>
               </div>
             </div>
           </div>
