@@ -111,7 +111,15 @@
       "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
       "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
       "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
-      "Bash(timeout 30 npm run build:*)"
+      "Bash(timeout 30 npm run build:*)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)"
     ],
     "deny": [],
     "ask": []

@@ -37,7 +37,7 @@ import {
   CascadeRiskAnalysis,
   PredictiveHealthScore
 } from '../../components/hvec/RiskPredictionModels';
-import { DiagnosticsChartJS } from '../../components/hvec/DiagnosticsChartJS';
+import { DiagnosticsAdvanced } from '../../components/hvec/DiagnosticsAdvanced';
 import { AIInsightsEnhanced } from '../../components/hvec/AIInsightsEnhanced';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -989,7 +989,7 @@ export default function HVECEnhanced() {
 
                     {/* Enhanced Diagnostics Tab */}
                     {activeTab === 'diagnostics' && selectedVeteran && currentAssessment && (
-                      <DiagnosticsChartJS 
+                      <DiagnosticsAdvanced 
                         veteran={selectedVeteran}
                         assessment={currentAssessment}
                       />
