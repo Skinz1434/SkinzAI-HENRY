@@ -1,5 +1,6 @@
 import { Veteran, Claim, Branch, DischargeStatus, ClaimType, ClaimStatus } from '@/types';
 import { getRankForBranch } from './military-data';
+import generateEnhancedMockVeterans from './enhanced-mock-data';
 
 // Generate realistic EDIPI (Electronic Data Interchange Personal Identifier)
 function generateEDIPI(): string {
@@ -10,7 +11,14 @@ function generateEDIPI(): string {
 }
 
 // Generate realistic mock veteran data with enhanced diversity and realism
+// Uses enhanced generator with proper VA ratings
 export function generateMockVeterans(count: number = 100): Veteran[] {
+  // Use enhanced generator for realistic VA ratings and medical records
+  return generateEnhancedMockVeterans(count);
+}
+
+// Legacy function for compatibility (now improved)
+export function generateMockVeteransLegacy(count: number = 100): Veteran[] {
   const maleFirstNames = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Christopher', 'Charles', 'Daniel', 'Matthew', 'Anthony', 'Mark', 'Donald', 'Steven', 'Andrew', 'Kenneth', 'Paul'];
   const femaleFirstNames = ['Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth', 'Barbara', 'Susan', 'Jessica', 'Sarah', 'Karen', 'Nancy', 'Lisa', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle'];
   const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson'];
