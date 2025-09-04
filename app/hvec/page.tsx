@@ -26,7 +26,8 @@ import {
   Filter,
   RefreshCw
 } from 'lucide-react';
-import { veteranDataService, VeteranProfile } from '../../lib/henry/veteran-data-service';
+import { mockFetchVeterans } from '../../lib/henry/mock-data';
+import { Veteran } from '../../types';
 import { generateVeteranDetails } from '../../lib/henry/veteran-details';
 import { generateVeteranProfileEnhanced, VeteranProfileEnhanced } from '../../lib/henry/veteran-profile-enhanced';
 
@@ -143,16 +144,31 @@ const RHEUMATOLOGY_CONDITIONS = {
 };
 
 export default function HVECClinicalIntelligence() {
-  const [selectedVeteran, setSelectedVeteran] = useState<VeteranProfile | null>(null);
+  const [selectedVeteran, setSelectedVeteran] = useState<Veteran | null>(null);
   const [veteranDetails, setVeteranDetails] = useState<VeteranProfileEnhanced | null>(null);
   const [activeTab, setActiveTab] = useState<'assessment' | 'history' | 'diagnostics' | 'documentation'>('assessment');
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentAssessment, setCurrentAssessment] = useState<ClinicalAssessment | null>(null);
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
+  const [veterans, setVeterans] = useState<Veteran[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
-  // Get all veterans from the service
-  const veterans = veteranDataService.getAllVeterans();
+  // Load veterans data on mount
+  useEffect(() => {
+    const loadVeterans = async () => {
+      setDataLoading(true);
+      try {
+        const result = await mockFetchVeterans(1, 500); // Load all 500 veterans
+        setVeterans(result.data);
+      } catch (error) {
+        console.error('Failed to load veterans:', error);
+      } finally {
+        setDataLoading(false);
+      }
+    };
+    loadVeterans();
+  }, []);
   
   // Filter veterans based on search
   const filteredVeterans = useMemo(() => {
@@ -160,27 +176,61 @@ export default function HVECClinicalIntelligence() {
     const query = searchQuery.toLowerCase();
     return veterans.filter(v => 
       v.name.toLowerCase().includes(query) ||
-      v.conditions?.some(c => c.name.toLowerCase().includes(query))
+      v.firstName?.toLowerCase().includes(query) ||
+      v.lastName?.toLowerCase().includes(query) ||
+      v.edipi?.includes(query) ||
+      v.claims?.some(c => c.description?.toLowerCase().includes(query))
     );
   }, [veterans, searchQuery]);
+
+  // Convert Veteran to format expected by other functions
+  const convertVeteranFormat = (veteran: Veteran): any => {
+    return {
+      ...veteran,
+      dob: veteran.dateOfBirth ? new Date(veteran.dateOfBirth).toLocaleDateString() : '',
+      conditions: veteran.claims?.map(claim => ({
+        name: claim.description || claim.type,
+        rating: claim.rating || 0,
+        serviceConnected: true,
+        effectiveDate: claim.filingDate ? new Date(claim.filingDate).toLocaleDateString() : '',
+        diagnosticCode: '',
+        status: claim.status === 'APPROVED' ? 'active' : 'pending'
+      })) || [],
+      deployments: [],
+      pendingClaims: veteran.claims?.filter(c => c.status === 'PENDING') || [],
+      medications: [],
+      appointments: [],
+      surgeries: [],
+      allergies: [],
+      documents: [],
+      flags: [],
+      notes: []
+    };
+  };
 
   // Load veteran details when selected
   useEffect(() => {
     if (selectedVeteran) {
       setLoading(true);
-      // Generate enhanced profile with additional details
-      const details = generateVeteranDetails(selectedVeteran);
-      const enhanced = generateVeteranProfileEnhanced(details);
-      setVeteranDetails(enhanced);
-      
-      // Generate comprehensive clinical assessment
-      generateClinicalAssessment(selectedVeteran);
-      setLoading(false);
+      try {
+        // Convert and generate enhanced profile
+        const convertedVeteran = convertVeteranFormat(selectedVeteran);
+        const details = generateVeteranDetails(convertedVeteran);
+        const enhanced = generateVeteranProfileEnhanced(details);
+        setVeteranDetails(enhanced);
+        
+        // Generate comprehensive clinical assessment
+        generateClinicalAssessment(selectedVeteran);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error processing veteran:', error);
+        setLoading(false);
+      }
     }
   }, [selectedVeteran]);
 
   // Generate comprehensive clinical assessment based on veteran data
-  const generateClinicalAssessment = (veteran: VeteranProfile) => {
+  const generateClinicalAssessment = (veteran: Veteran) => {
     // Determine primary specialty based on conditions
     const primarySpecialty = determinePrimarySpecialty(veteran);
     
@@ -201,14 +251,14 @@ export default function HVECClinicalIntelligence() {
 
   // Helper functions for assessment generation
   // Helper function to determine primary specialty based on conditions
-  const determinePrimarySpecialty = (veteran: VeteranProfile): 'rheumatology' | 'cardiology' | 'neurology' | 'psychiatry' | 'pulmonology' | 'general' => {
-    if (!veteran.conditions || veteran.conditions.length === 0) return 'general';
+  const determinePrimarySpecialty = (veteran: Veteran): 'rheumatology' | 'cardiology' | 'neurology' | 'psychiatry' | 'pulmonology' | 'general' => {
+    if (!veteran.claims || veteran.claims.length === 0) return 'general';
     
     // Count conditions by specialty
     const specialtyCounts: Record<string, number> = {};
-    veteran.conditions.forEach(condition => {
+    veteran.claims.forEach(claim => {
       const medCondition = Object.entries(MEDICAL_CONDITIONS).find(([name]) => 
-        condition.name.toLowerCase().includes(name.toLowerCase())
+        claim.description?.toLowerCase().includes(name.toLowerCase())
       );
       if (medCondition) {
         const specialty = medCondition[1].specialty;
@@ -222,18 +272,18 @@ export default function HVECClinicalIntelligence() {
   };
   
   // Extract primary symptoms from veteran data
-  const extractPrimarySymptoms = (veteran: VeteranProfile): string[] => {
+  const extractPrimarySymptoms = (veteran: Veteran): string[] => {
     const symptoms: string[] = [];
     
-    // Extract from conditions
-    if (veteran.conditions) {
-      veteran.conditions.forEach(c => {
-        if (c.name.toLowerCase().includes('pain')) symptoms.push('Pain');
-        if (c.name.toLowerCase().includes('anxiety')) symptoms.push('Anxiety');
-        if (c.name.toLowerCase().includes('depression')) symptoms.push('Depression');
-        if (c.name.toLowerCase().includes('ptsd')) symptoms.push('PTSD symptoms');
-        if (c.name.toLowerCase().includes('tbi')) symptoms.push('Cognitive difficulties');
-        if (c.name.toLowerCase().includes('joint')) symptoms.push('Joint problems');
+    // Extract from claims
+    if (veteran.claims) {
+      veteran.claims.forEach(c => {
+        if (c.description?.toLowerCase().includes('pain')) symptoms.push('Pain');
+        if (c.description?.toLowerCase().includes('anxiety')) symptoms.push('Anxiety');
+        if (c.description?.toLowerCase().includes('depression')) symptoms.push('Depression');
+        if (c.description?.toLowerCase().includes('ptsd')) symptoms.push('PTSD symptoms');
+        if (c.description?.toLowerCase().includes('tbi')) symptoms.push('Cognitive difficulties');
+        if (c.description?.toLowerCase().includes('joint')) symptoms.push('Joint problems');
       });
     }
     
@@ -241,19 +291,19 @@ export default function HVECClinicalIntelligence() {
   };
   
   // Generate comprehensive systems review
-  const generateSystemsReview = (veteran: VeteranProfile, specialty: string) => {
+  const generateSystemsReview = (veteran: Veteran, specialty: string) => {
     const review: any = {};
     
     // Add musculoskeletal review if relevant
-    if (specialty === 'rheumatology' || veteran.conditions?.some(c => 
-      c.name.toLowerCase().includes('joint') || c.name.toLowerCase().includes('arthritis')
+    if (specialty === 'rheumatology' || veteran.claims?.some(c => 
+      c.description?.toLowerCase().includes('joint') || c.description?.toLowerCase().includes('arthritis')
     )) {
       review.musculoskeletal = analyzeJointInvolvement(veteran);
     }
     
     // Add cardiovascular review if relevant
-    if (specialty === 'cardiology' || veteran.conditions?.some(c => 
-      c.name.toLowerCase().includes('heart') || c.name.toLowerCase().includes('hypertension')
+    if (specialty === 'cardiology' || veteran.claims?.some(c => 
+      c.description?.toLowerCase().includes('heart') || c.description?.toLowerCase().includes('hypertension')
     )) {
       review.cardiovascular = {
         symptoms: ['chest pain', 'dyspnea', 'palpitations'],
@@ -262,8 +312,8 @@ export default function HVECClinicalIntelligence() {
     }
     
     // Add neurological review if relevant
-    if (specialty === 'neurology' || veteran.conditions?.some(c => 
-      c.name.toLowerCase().includes('tbi') || c.name.toLowerCase().includes('headache')
+    if (specialty === 'neurology' || veteran.claims?.some(c => 
+      c.description?.toLowerCase().includes('tbi') || c.description?.toLowerCase().includes('headache')
     )) {
       review.neurological = {
         symptoms: ['headaches', 'dizziness', 'memory issues'],
@@ -272,8 +322,8 @@ export default function HVECClinicalIntelligence() {
     }
     
     // Add psychiatric review if relevant
-    if (specialty === 'psychiatry' || veteran.conditions?.some(c => 
-      c.name.toLowerCase().includes('ptsd') || c.name.toLowerCase().includes('depression')
+    if (specialty === 'psychiatry' || veteran.claims?.some(c => 
+      c.description?.toLowerCase().includes('ptsd') || c.description?.toLowerCase().includes('depression')
     )) {
       review.psychiatric = {
         symptoms: ['mood changes', 'sleep disturbance', 'hypervigilance'],
@@ -284,21 +334,21 @@ export default function HVECClinicalIntelligence() {
     return review;
   };
   
-  const extractChiefComplaint = (veteran: VeteranProfile): string => {
-    const musculoskeletalConditions = veteran.conditions?.filter(c => 
-      c.name.toLowerCase().includes('joint') || 
-      c.name.toLowerCase().includes('arthritis') ||
-      c.name.toLowerCase().includes('pain')
+  const extractChiefComplaint = (veteran: Veteran): string => {
+    const musculoskeletalConditions = veteran.claims?.filter(c => 
+      c.description?.toLowerCase().includes('joint') || 
+      c.description?.toLowerCase().includes('arthritis') ||
+      c.description?.toLowerCase().includes('pain')
     );
     return musculoskeletalConditions?.length > 0 
-      ? musculoskeletalConditions[0].name 
+      ? musculoskeletalConditions[0].description 
       : 'Joint pain and stiffness';
   };
 
-  const analyzeJointInvolvement = (veteran: VeteranProfile): any => {
-    // Simulate joint involvement analysis based on conditions
-    const hasMultipleJointConditions = veteran.conditions?.filter(c => 
-      c.name.toLowerCase().includes('joint')
+  const analyzeJointInvolvement = (veteran: Veteran): any => {
+    // Simulate joint involvement analysis based on claims
+    const hasMultipleJointConditions = veteran.claims?.filter(c => 
+      c.description?.toLowerCase().includes('joint')
     ).length > 2;
     
     return {
@@ -309,7 +359,7 @@ export default function HVECClinicalIntelligence() {
     };
   };
 
-  const generateInflammatoryMarkers = (veteran: VeteranProfile) => {
+  const generateInflammatoryMarkers = (veteran: Veteran) => {
     // Generate realistic inflammatory markers based on disability rating
     const severity = veteran.disabilityRating / 100;
     return {
@@ -321,7 +371,7 @@ export default function HVECClinicalIntelligence() {
     };
   };
 
-  const generateDifferentialDiagnosis = (veteran: VeteranProfile): DiagnosisHypothesis[] => {
+  const generateDifferentialDiagnosis = (veteran: Veteran): DiagnosisHypothesis[] => {
     const diagnoses: DiagnosisHypothesis[] = [];
     
     // Generate differential based on conditions and service history
@@ -346,7 +396,7 @@ export default function HVECClinicalIntelligence() {
     }
 
     // Add rheumatoid arthritis if multiple joints affected
-    if (veteran.conditions?.some(c => c.name.toLowerCase().includes('multiple'))) {
+    if (veteran.claims?.some(c => c.description?.toLowerCase().includes('multiple'))) {
       diagnoses.push({
         condition: 'Rheumatoid Arthritis',
         icd10: MEDICAL_CONDITIONS['Rheumatoid Arthritis'].icd10,
@@ -369,7 +419,7 @@ export default function HVECClinicalIntelligence() {
     return diagnoses;
   };
 
-  const generateClinicalRecommendations = (veteran: VeteranProfile): ClinicalRecommendation[] => {
+  const generateClinicalRecommendations = (veteran: Veteran): ClinicalRecommendation[] => {
     const recommendations: ClinicalRecommendation[] = [];
 
     // Diagnostic recommendations
@@ -406,18 +456,18 @@ export default function HVECClinicalIntelligence() {
     return recommendations;
   };
 
-  const analyzeServiceConnection = (veteran: VeteranProfile): ServiceConnectionAnalysis => {
+  const analyzeServiceConnection = (veteran: Veteran): ServiceConnectionAnalysis => {
     const analysis: ServiceConnectionAnalysis = {
       conditions: []
     };
 
-    // Analyze each condition for service connection
-    veteran.conditions?.forEach(condition => {
-      const exposures = veteran.deployments?.flatMap(d => d.exposures) || [];
+    // Analyze each claim for service connection
+    veteran.claims?.forEach(claim => {
+      const militaryExposures: string[] = []; // Will be populated from deployment history when available
       analysis.conditions.push({
-        condition: condition.name,
-        connectionLikelihood: condition.serviceConnected ? 'high' : 'moderate',
-        militaryExposures: exposures,
+        condition: claim.description || claim.type,
+        connectionLikelihood: claim.status === 'APPROVED' ? 'high' : 'moderate',
+        militaryExposures: militaryExposures,
         evidenceBasis: [
           'In-service medical records',
           'Deployment history',
@@ -507,7 +557,17 @@ export default function HVECClinicalIntelligence() {
 
               {/* Patient List */}
               <div className="space-y-2 max-h-[600px] overflow-y-auto">
-                {filteredVeterans.map(veteran => (
+                {dataLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <RefreshCw className="w-6 h-6 text-gray-400 animate-spin" />
+                    <span className="ml-2 text-gray-500">Loading veterans...</span>
+                  </div>
+                ) : filteredVeterans.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    No veterans found
+                  </div>
+                ) : (
+                  filteredVeterans.map(veteran => (
                   <button
                     key={veteran.id}
                     onClick={() => setSelectedVeteran(veteran)}
@@ -524,10 +584,10 @@ export default function HVECClinicalIntelligence() {
                       {veteran.branch} • {veteran.disabilityRating}%
                     </div>
                     <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                      {veteran.conditions?.length || 0} conditions
+                      {veteran.claims?.length || 0} claims
                     </div>
                   </button>
-                ))}
+                )))}
               </div>
             </div>
           </div>
@@ -544,8 +604,8 @@ export default function HVECClinicalIntelligence() {
                         {selectedVeteran.name}
                       </h2>
                       <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
-                        <div>DOB: {selectedVeteran.dob} • {selectedVeteran.gender}</div>
-                        <div>{selectedVeteran.branch} • {selectedVeteran.rank} • {selectedVeteran.serviceYears}</div>
+                        <div>DOB: {selectedVeteran.dateOfBirth ? new Date(selectedVeteran.dateOfBirth).toLocaleDateString() : 'N/A'} • {selectedVeteran.gender || 'N/A'}</div>
+                        <div>{selectedVeteran.branch} • {selectedVeteran.rank || 'N/A'} • Service: {selectedVeteran.serviceStartDate ? new Date(selectedVeteran.serviceStartDate).getFullYear() : 'N/A'}-{selectedVeteran.serviceEndDate ? new Date(selectedVeteran.serviceEndDate).getFullYear() : 'Present'}</div>
                         <div className="flex items-center gap-4 mt-2">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                             {selectedVeteran.disabilityRating}% SC
@@ -841,26 +901,26 @@ export default function HVECClinicalIntelligence() {
                         {/* Conditions */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                            Service-Connected Conditions
+                            Claims & Conditions
                           </h3>
                           <div className="space-y-2">
-                            {selectedVeteran.conditions?.map((condition, idx) => (
+                            {selectedVeteran.claims?.map((claim, idx) => (
                               <div key={idx} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                 <div className="flex items-start justify-between">
                                   <div>
                                     <div className="font-medium text-gray-900 dark:text-white">
-                                      {condition.name}
+                                      {claim.description}
                                     </div>
                                     <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                      Code: {condition.diagnosticCode} • Effective: {condition.effectiveDate}
+                                      Type: {claim.type} • Filed: {claim.filingDate ? new Date(claim.filingDate).toLocaleDateString() : 'N/A'}
                                     </div>
                                   </div>
                                   <div className="text-right">
                                     <div className="font-semibold text-lg text-blue-600 dark:text-blue-400">
-                                      {condition.rating}%
+                                      {claim.rating || 0}%
                                     </div>
                                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                                      {condition.status}
+                                      {claim.status}
                                     </div>
                                   </div>
                                 </div>
@@ -893,28 +953,41 @@ export default function HVECClinicalIntelligence() {
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-                                {selectedVeteran.medications?.map((med, idx) => (
+                                {(() => {
+                                  const meds = veteranDetails?.mpd?.medications;
+                                  if (meds && meds.length > 0) {
+                                    return meds.map((med, idx) => (
                                   <tr key={idx}>
                                     <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                                       {med.name}
                                     </td>
                                     <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
-                                      {med.dosage}
+                                      {med.dosage} - {med.frequency}
                                     </td>
                                     <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
-                                      {med.prescriber}
+                                      {med.prescribedBy}
                                     </td>
                                     <td className="px-4 py-3">
                                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                                        med.activeRx
+                                        med.status === 'Active'
                                           ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                                           : 'bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200'
                                       }`}>
-                                        {med.activeRx ? 'Active' : 'Inactive'}
+                                        {med.status}
                                       </span>
                                     </td>
                                   </tr>
-                                ))}
+                                ));
+                                  } else {
+                                    return (
+                                      <tr>
+                                        <td colSpan={4} className="px-4 py-8 text-center text-sm text-gray-500">
+                                          No medications recorded
+                                        </td>
+                                      </tr>
+                                    );
+                                  }
+                                })()}
                               </tbody>
                             </table>
                           </div>
@@ -1037,7 +1110,7 @@ export default function HVECClinicalIntelligence() {
                                 Current specialty focus: {currentAssessment?.specialty}. Primary symptoms include: {currentAssessment?.primarySymptoms.join(', ')}.
                               </p>
                               <p className="text-gray-700 dark:text-gray-300">
-                                <strong>Military History:</strong> Served {selectedVeteran.serviceYears} with {selectedVeteran.combatService ? 'combat' : 'non-combat'} service. 
+                                <strong>Military History:</strong> Served from {selectedVeteran.serviceStartDate ? new Date(selectedVeteran.serviceStartDate).getFullYear() : 'N/A'} to {selectedVeteran.serviceEndDate ? new Date(selectedVeteran.serviceEndDate).getFullYear() : 'Present'} with {selectedVeteran.combatService ? 'combat' : 'non-combat'} service. 
                                 Deployment history includes potential exposure to {selectedVeteran.deployments?.flatMap(d => d.exposures).join(', ') || 'standard military environments'}.
                               </p>
                               <p className="text-gray-700 dark:text-gray-300">
