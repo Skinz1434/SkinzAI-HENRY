@@ -199,7 +199,7 @@ export function generateSTRs(veteran: Veteran, conditions: any[]): ServiceTreatm
     records.push({
       date: examDate,
       location: `${veteran.branch} Medical Clinic`,
-      unit: (veteran as any).unit || '1st Battalion',
+      unit: '1st Battalion', // Default unit since not in Veteran interface
       provider: 'Military Medical Officer',
       type: 'annual_exam',
       content: `Annual Periodic Health Assessment. Service member in good general health. 
@@ -217,7 +217,7 @@ export function generateSTRs(veteran: Veteran, conditions: any[]): ServiceTreatm
     records.push({
       date: onsetDate,
       location: `${veteran.branch} Medical Clinic`,
-      unit: (veteran as any).unit || '1st Battalion',
+      unit: '1st Battalion', // Default unit since not in Veteran interface
       provider: 'PA Johnson',
       type: 'sick_call',
       content: generateSickCallNote(condition.name),
@@ -239,7 +239,7 @@ export function generateSTRs(veteran: Veteran, conditions: any[]): ServiceTreatm
   records.push({
     date: new Date(veteran.serviceEndDate || new Date()),
     location: `${veteran.branch} Medical Center`,
-    unit: veteran.unit || '1st Battalion',
+    unit: '1st Battalion', // Default unit since not in Veteran interface
     provider: 'Dr. Thompson, MD',
     type: 'separation_exam',
     content: `Separation Health Assessment completed. Member reports: ${conditions.map(c => c.name).join(', ')}. 

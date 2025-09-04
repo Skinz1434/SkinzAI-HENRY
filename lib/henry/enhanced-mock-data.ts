@@ -139,7 +139,7 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
     else riskLevel = 'Minimal';
     const dateOfBirth = new Date(1950 + Math.floor(Math.random() * 50), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28));
     
-    // Create veteran object
+    // Create veteran object with proper Veteran interface
     const veteran: Veteran = {
       id: `vet-${i + 1}`,
       // Personal Information
@@ -153,12 +153,19 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@email.com`,
       phone: `${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
       
-      // Service Information
+      // Address
+      street: `${Math.floor(Math.random() * 9999) + 1} Main St`,
+      city: ['Washington', 'Arlington', 'Alexandria', 'Richmond', 'Norfolk'][Math.floor(Math.random() * 5)],
+      state: ['DC', 'VA', 'MD'][Math.floor(Math.random() * 3)],
+      zip: `${20000 + Math.floor(Math.random() * 999)}`,
+      
+      // Military Service
+      serviceNumber: generateEDIPI(),
       branch,
-      rank: typeof rank === 'string' ? rank : rank.rank,
       serviceStartDate: new Date(serviceStartYear, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
       serviceEndDate: new Date(serviceStartYear + serviceYears, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
       dischargeStatus,
+      rank: typeof rank === 'string' ? rank : rank.rank,
       combatService,
       
       // Benefits
@@ -166,18 +173,16 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       monthlyCompensation,
       enrolledVaHealthcare: eligibleForBenefits && (disabilityRating >= 50 || Math.random() > 0.3),
       
+      // Education Benefits
+      gibBillRemaining: Math.floor(Math.random() * 36),
+      
       // Risk Assessment
       riskScore,
       riskLevel,
+      cascadeRiskDetected: riskScore >= 70,
       
-      // Sync Information
-      syncStatus: 'success',
-      syncStatusDetails: {
-        mpr: { status: 'success', lastSync: new Date(), accuracy: 99, errorMessage: null },
-        mpd: { status: 'success', lastSync: new Date(), accuracy: 98, errorMessage: null },
-        vbms: { status: 'success', lastSync: new Date(), accuracy: 97, errorMessage: null },
-        cdw: { status: 'success', lastSync: new Date(), accuracy: 96, errorMessage: null }
-      },
+      // Sync Status
+      vetProfileSyncStatus: 'success' as any, // This needs proper typing
       lastSyncDate: new Date(),
       accuracy: 95 + Math.random() * 5,
       syncAccuracy: 95 + Math.random() * 5,
@@ -191,7 +196,7 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       incomeEmployment: disabilityRating < 100 ? Math.floor(Math.random() * 3000) + 2000 : 0,
       
       // Family
-      dependents: Math.floor(Math.random() * 3),
+      dependents: dependents,
       
       // Related Data
       claims,
@@ -204,7 +209,7 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
                                   Math.floor(Math.random() * 12), 
                                   Math.floor(Math.random() * 28)),
         lastTreated: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000)
-      })),
+      })) as any, // This needs proper MedicalCondition typing
       
       // Metadata
       createdAt: new Date(Date.now() - Math.floor(Math.random() * 365) * 24 * 60 * 60 * 1000),
