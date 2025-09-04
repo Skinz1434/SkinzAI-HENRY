@@ -25,7 +25,6 @@ import {
   Undo,
   Redo,
   Copy,
-  Paste,
   Scissors,
   AlignCenter,
   AlignRight,
