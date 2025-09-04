@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   AreaChart, Area, BarChart, Bar, Cell, PieChart, Pie,
-  ComposedChart, ReferenceLine, Brush, ScatterChart, Scatter,
-  RadialBarChart, RadialBar
+  ComposedChart, ReferenceLine, ScatterChart, Scatter
 } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -27,13 +26,222 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
   const [timeRange, setTimeRange] = useState<'3m' | '6m' | '1y' | 'all'>('6m');
   const [showPredictions, setShowPredictions] = useState(true);
 
-  // Generate comprehensive biomarker data
-  const biomarkerData = generateBiomarkerData(veteran);
-  const diagnosticPathways = generateDiagnosticPathways(veteran);
-  const labTrends = generateLabTrends(veteran, timeRange);
-  const correlationMatrix = generateCorrelationMatrix(veteran);
-  const clinicalScores = generateClinicalScores(veteran);
-  const riskStratification = generateRiskStratification(veteran);
+  // Generate comprehensive biomarker data with proper structure
+  const biomarkerData = useMemo(() => {
+    const severity = veteran?.disabilityRating >= 70 ? 'high' : 'medium';
+    return {
+      inflammatory: {
+        esr: severity === 'high' ? 45 : 25,
+        crp: severity === 'high' ? 12 : 5,
+        il6: severity === 'high' ? 8.5 : 3.2,
+        tnfAlpha: severity === 'high' ? 15 : 7
+      },
+      metabolic: {
+        glucose: 95 + Math.random() * 30,
+        hba1c: 5.5 + Math.random() * 2,
+        lipidPanel: {
+          ldl: 100 + Math.random() * 50,
+          hdl: 40 + Math.random() * 20,
+          triglycerides: 150 + Math.random() * 100
+        }
+      },
+      organ: {
+        liver: { ast: 25, alt: 30, bilirubin: 0.8 },
+        kidney: { creatinine: 0.9, bun: 18, egfr: 90 }
+      }
+    };
+  }, [veteran]);
+
+  // Generate diagnostic pathways
+  const diagnosticPathways = useMemo(() => {
+    const pathways = [];
+    
+    if (veteran?.disabilityRating >= 70) {
+      pathways.push({
+        id: '1',
+        diagnosis: 'Inflammatory Arthritis',
+        icd10: 'M06.9',
+        confidence: 85,
+        evidence: ['Elevated ESR/CRP', 'Morning stiffness > 1hr', 'Symmetric joint involvement'],
+        nextSteps: ['Rheumatology referral', 'Anti-CCP testing', 'Joint imaging']
+      });
+    }
+    
+    if (veteran?.combatService) {
+      pathways.push({
+        id: '2',
+        diagnosis: 'PTSD with Physical Manifestations',
+        icd10: 'F43.10',
+        confidence: 72,
+        evidence: ['Combat exposure', 'Sleep disturbance', 'Hypervigilance markers'],
+        nextSteps: ['Mental health eval', 'Sleep study', 'Stress biomarkers']
+      });
+    }
+    
+    pathways.push({
+      id: '3',
+      diagnosis: 'Metabolic Syndrome',
+      icd10: 'E88.81',
+      confidence: 65,
+      evidence: ['BMI > 30', 'Elevated glucose', 'Dyslipidemia'],
+      nextSteps: ['Nutrition consult', 'Exercise program', 'Metformin consideration']
+    });
+    
+    return pathways;
+  }, [veteran]);
+
+  // Generate lab trends data
+  const labTrends = useMemo(() => {
+    const months = timeRange === '3m' ? 3 : timeRange === '6m' ? 6 : timeRange === '1y' ? 12 : 24;
+    const data = [];
+    
+    for (let i = 0; i < months; i++) {
+      data.push({
+        month: `M${i + 1}`,
+        inflammation: Math.floor(30 + Math.random() * 40 + ((veteran?.disabilityRating || 0) / 2)),
+        metabolic: Math.floor(60 + Math.random() * 20),
+        predicted: Math.floor(35 + Math.random() * 30 + (i * 2)),
+        interventions: Math.floor(Math.random() * 3)
+      });
+    }
+    
+    return data;
+  }, [veteran, timeRange]);
+
+  // Generate correlation matrix data
+  const correlationMatrix = useMemo(() => {
+    const disabilityRating = veteran?.disabilityRating || 0;
+    return {
+      systemHealth: [
+        { system: 'Musculoskeletal', current: Math.max(0, 100 - disabilityRating), predicted: Math.max(0, 100 - disabilityRating - 10) },
+        { system: 'Cardiovascular', current: Math.floor(75 + Math.random() * 15), predicted: Math.floor(70 + Math.random() * 15) },
+        { system: 'Neurological', current: Math.floor(80 + Math.random() * 10), predicted: Math.floor(75 + Math.random() * 10) },
+        { system: 'Metabolic', current: Math.floor(70 + Math.random() * 20), predicted: Math.floor(65 + Math.random() * 20) },
+        { system: 'Immune', current: Math.floor(65 + Math.random() * 25), predicted: Math.floor(60 + Math.random() * 25) },
+        { system: 'Respiratory', current: Math.floor(85 + Math.random() * 10), predicted: Math.floor(80 + Math.random() * 10) }
+      ]
+    };
+  }, [veteran]);
+
+  // Generate clinical scores
+  const clinicalScores = useMemo(() => {
+    const disabilityRating = veteran?.disabilityRating || 0;
+    const severity = disabilityRating >= 70 ? 'critical' : 
+                    disabilityRating >= 40 ? 'warning' : 'normal';
+    
+    return [
+      {
+        name: 'FRAX Score',
+        value: severity === 'critical' ? '18%' : severity === 'warning' ? '12%' : '7%',
+        percentage: severity === 'critical' ? 75 : severity === 'warning' ? 50 : 25,
+        status: severity === 'critical' ? 'critical' : severity === 'warning' ? 'warning' : 'normal',
+        icon: Heart
+      },
+      {
+        name: 'PHQ-9',
+        value: severity === 'critical' ? '15' : severity === 'warning' ? '10' : '5',
+        percentage: severity === 'critical' ? 65 : severity === 'warning' ? 45 : 20,
+        status: severity === 'critical' ? 'warning' : 'normal',
+        icon: Brain
+      },
+      {
+        name: 'GAD-7',
+        value: severity === 'critical' ? '12' : severity === 'warning' ? '8' : '3',
+        percentage: severity === 'critical' ? 60 : severity === 'warning' ? 40 : 15,
+        status: severity === 'critical' ? 'warning' : severity === 'warning' ? 'normal' : 'normal',
+        icon: AlertCircle
+      },
+      {
+        name: 'Pain Scale',
+        value: severity === 'critical' ? '7/10' : severity === 'warning' ? '5/10' : '3/10',
+        percentage: severity === 'critical' ? 70 : severity === 'warning' ? 50 : 30,
+        status: severity,
+        icon: Gauge
+      }
+    ];
+  }, [veteran]);
+
+  // Generate risk stratification data
+  const riskStratification = useMemo(() => {
+    const disabilityRating = veteran?.disabilityRating || 0;
+    const combatService = veteran?.combatService || false;
+    
+    const conditions = [
+      {
+        condition: 'Cardiovascular Disease',
+        likelihood: Math.min(100, 45 + disabilityRating / 2),
+        impact: 80,
+        riskLevel: disabilityRating >= 70 ? 'critical' : 'high'
+      },
+      {
+        condition: 'Diabetes Progression',
+        likelihood: Math.min(100, 35 + disabilityRating / 3),
+        impact: 60,
+        riskLevel: disabilityRating >= 50 ? 'high' : 'medium'
+      },
+      {
+        condition: 'Mental Health Crisis',
+        likelihood: combatService ? 65 : 30,
+        impact: 90,
+        riskLevel: combatService ? 'critical' : 'medium'
+      },
+      {
+        condition: 'Mobility Decline',
+        likelihood: Math.min(100, disabilityRating),
+        impact: 70,
+        riskLevel: disabilityRating >= 70 ? 'high' : 'medium'
+      },
+      {
+        condition: 'Chronic Pain Syndrome',
+        likelihood: Math.min(100, 50 + disabilityRating / 2),
+        impact: 65,
+        riskLevel: disabilityRating >= 50 ? 'high' : 'medium'
+      }
+    ];
+
+    const recommendations = [
+      {
+        action: 'Initiate Preventive Cardiology Protocol',
+        rationale: 'Multiple cardiovascular risk factors identified',
+        urgency: disabilityRating >= 70 ? 'immediate' : 'urgent',
+        expectedOutcome: '30% reduction in CV event risk',
+        icon: Heart
+      },
+      {
+        action: 'Mental Health Integration',
+        rationale: 'Combat exposure with physical comorbidities',
+        urgency: combatService ? 'urgent' : 'routine',
+        expectedOutcome: 'Improved quality of life scores',
+        icon: Brain
+      },
+      {
+        action: 'Pain Management Optimization',
+        rationale: 'High pain scores affecting function',
+        urgency: disabilityRating >= 50 ? 'urgent' : 'routine',
+        expectedOutcome: 'Reduced opioid dependence risk',
+        icon: Pill
+      }
+    ];
+
+    return { conditions, recommendations };
+  }, [veteran]);
+
+  // Custom tooltip for charts
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload[0]) {
+      return (
+        <div className="bg-gray-900 text-white p-2 rounded-lg border border-gray-700">
+          <p className="text-sm font-semibold">{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} className="text-xs" style={{ color: entry.color }}>
+              {entry.name}: {entry.value}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="space-y-6">
@@ -70,7 +278,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
         </div>
 
         {/* Key Diagnostic Metrics */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {clinicalScores.map((score, idx) => (
             <motion.div
               key={score.name}
@@ -138,6 +346,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                   />
                 )}
                 <Legend />
+                <Tooltip content={<CustomTooltip />} />
               </RadarChart>
             </ResponsiveContainer>
           </div>
@@ -153,13 +362,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                 <XAxis dataKey="month" stroke="#9CA3AF" fontSize={11} />
                 <YAxis yAxisId="left" stroke="#9CA3AF" fontSize={11} />
                 <YAxis yAxisId="right" orientation="right" stroke="#9CA3AF" fontSize={11} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1F2937',
-                    border: '1px solid #374151',
-                    borderRadius: '8px'
-                  }}
-                />
+                <Tooltip content={<CustomTooltip />} />
                 <Legend />
                 <Area
                   yAxisId="left"
@@ -194,7 +397,6 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                   fill="#F59E0B"
                   name="Interventions"
                 />
-                <ReferenceLine y={50} stroke="#10B981" strokeDasharray="5 5" label="Target" />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -272,7 +474,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
             Risk Stratification Analysis
           </h3>
           <ResponsiveContainer width="100%" height={350}>
-            <ScatterChart>
+            <ScatterChart margin={{ top: 20, right: 20, bottom: 40, left: 40 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
               <XAxis 
                 dataKey="likelihood" 
@@ -290,27 +492,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                 fontSize={11}
                 label={{ value: 'Impact Score', angle: -90, position: 'insideLeft' }}
               />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#1F2937',
-                  border: '1px solid #374151',
-                  borderRadius: '8px'
-                }}
-                content={({ active, payload }) => {
-                  if (active && payload && payload[0]) {
-                    const data = payload[0].payload;
-                    return (
-                      <div className="p-2 text-white">
-                        <p className="font-semibold">{data.condition}</p>
-                        <p className="text-xs">Likelihood: {data.likelihood}%</p>
-                        <p className="text-xs">Impact: {data.impact}</p>
-                        <p className="text-xs">Risk Level: {data.riskLevel}</p>
-                      </div>
-                    );
-                  }
-                  return null;
-                }}
-              />
+              <Tooltip content={<CustomTooltip />} />
               <Scatter name="Conditions" data={riskStratification.conditions} fill="#8884d8">
                 {riskStratification.conditions.map((entry: any, index: number) => (
                   <Cell 
@@ -324,9 +506,6 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                   />
                 ))}
               </Scatter>
-              {/* Risk Zones */}
-              <ReferenceLine x={50} stroke="#9CA3AF" strokeDasharray="3 3" />
-              <ReferenceLine y={50} stroke="#9CA3AF" strokeDasharray="3 3" />
             </ScatterChart>
           </ResponsiveContainer>
         </div>
@@ -349,228 +528,72 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                   'border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-900'
                 }`}
               >
-                <div className="flex items-start justify-between">
+                <div className="flex items-start gap-3">
+                  <rec.icon className="w-5 h-5 text-gray-600 dark:text-gray-400 mt-0.5" />
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <rec.icon className="w-4 h-4 text-gray-600" />
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        {rec.action}
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                    <h4 className="font-medium text-gray-900 dark:text-white mb-1">
+                      {rec.action}
+                    </h4>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
                       {rec.rationale}
                     </p>
+                    <div className="flex items-center justify-between">
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        rec.urgency === 'immediate' ? 'bg-red-100 text-red-700' :
+                        rec.urgency === 'urgent' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-gray-100 text-gray-700'
+                      }`}>
+                        {rec.urgency}
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Expected: {rec.expectedOutcome}
+                      </span>
+                    </div>
                   </div>
-                  <span className={`px-2 py-1 text-xs rounded-full ${
-                    rec.urgency === 'immediate' ? 'bg-red-100 text-red-700' :
-                    rec.urgency === 'urgent' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-blue-100 text-blue-700'
-                  }`}>
-                    {rec.urgency}
-                  </span>
                 </div>
-                {rec.expectedOutcome && (
-                  <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
-                    <p className="text-xs text-green-600 dark:text-green-400">
-                      Expected outcome: {rec.expectedOutcome}
-                    </p>
-                  </div>
-                )}
               </motion.div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Laboratory Results Summary */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+          <TestTube className="w-5 h-5 text-green-500" />
+          Laboratory Results Summary
+        </h3>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">ESR</div>
+            <div className="text-xl font-bold text-gray-900 dark:text-white">
+              {biomarkerData.inflammatory.esr}
+            </div>
+            <div className="text-xs text-gray-400">mm/hr (0-20)</div>
+          </div>
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">CRP</div>
+            <div className="text-xl font-bold text-gray-900 dark:text-white">
+              {biomarkerData.inflammatory.crp}
+            </div>
+            <div className="text-xs text-gray-400">mg/L (&lt;3.0)</div>
+          </div>
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Glucose</div>
+            <div className="text-xl font-bold text-gray-900 dark:text-white">
+              {Math.floor(biomarkerData.metabolic.glucose)}
+            </div>
+            <div className="text-xs text-gray-400">mg/dL (70-100)</div>
+          </div>
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">HbA1c</div>
+            <div className="text-xl font-bold text-gray-900 dark:text-white">
+              {biomarkerData.metabolic.hba1c.toFixed(1)}%
+            </div>
+            <div className="text-xs text-gray-400">(&lt;5.7%)</div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-// Helper functions
-function generateBiomarkerData(veteran: any) {
-  const severity = veteran.disabilityRating >= 70 ? 'high' : 'medium';
-  return {
-    inflammatory: {
-      esr: severity === 'high' ? 45 : 25,
-      crp: severity === 'high' ? 12 : 5,
-      il6: severity === 'high' ? 8.5 : 3.2,
-      tnfAlpha: severity === 'high' ? 15 : 7
-    },
-    metabolic: {
-      glucose: 110 + Math.random() * 30,
-      hba1c: 5.5 + Math.random() * 2,
-      lipidPanel: {
-        ldl: 100 + Math.random() * 50,
-        hdl: 40 + Math.random() * 20,
-        triglycerides: 150 + Math.random() * 100
-      }
-    },
-    organ: {
-      liver: { ast: 25, alt: 30, bilirubin: 0.8 },
-      kidney: { creatinine: 0.9, bun: 18, egfr: 90 }
-    }
-  };
-}
-
-function generateDiagnosticPathways(veteran: any) {
-  const pathways = [];
-  
-  if (veteran.disabilityRating >= 70) {
-    pathways.push({
-      id: '1',
-      diagnosis: 'Inflammatory Arthritis',
-      icd10: 'M06.9',
-      confidence: 85,
-      evidence: ['Elevated ESR/CRP', 'Morning stiffness > 1hr', 'Symmetric joint involvement'],
-      nextSteps: ['Rheumatology referral', 'Anti-CCP testing', 'Joint imaging']
-    });
-  }
-  
-  if (veteran.combatService) {
-    pathways.push({
-      id: '2',
-      diagnosis: 'PTSD with Physical Manifestations',
-      icd10: 'F43.10',
-      confidence: 72,
-      evidence: ['Combat exposure', 'Sleep disturbance', 'Hypervigilance markers'],
-      nextSteps: ['Mental health eval', 'Sleep study', 'Stress biomarkers']
-    });
-  }
-  
-  pathways.push({
-    id: '3',
-    diagnosis: 'Metabolic Syndrome',
-    icd10: 'E88.81',
-    confidence: 65,
-    evidence: ['BMI > 30', 'Elevated glucose', 'Dyslipidemia'],
-    nextSteps: ['Nutrition consult', 'Exercise program', 'Metformin consideration']
-  });
-  
-  return pathways;
-}
-
-function generateLabTrends(veteran: any, timeRange: string) {
-  const months = timeRange === '3m' ? 3 : timeRange === '6m' ? 6 : timeRange === '1y' ? 12 : 24;
-  const data = [];
-  
-  for (let i = 0; i < months; i++) {
-    data.push({
-      month: `M${i + 1}`,
-      inflammation: 30 + Math.random() * 40 + (veteran.disabilityRating / 2),
-      metabolic: 60 + Math.random() * 20,
-      predicted: 35 + Math.random() * 30 + (i * 2),
-      interventions: Math.floor(Math.random() * 3)
-    });
-  }
-  
-  return data;
-}
-
-function generateCorrelationMatrix(veteran: any) {
-  return {
-    systemHealth: [
-      { system: 'Musculoskeletal', current: 100 - veteran.disabilityRating, predicted: 100 - veteran.disabilityRating - 10 },
-      { system: 'Cardiovascular', current: 75 + Math.random() * 15, predicted: 70 + Math.random() * 15 },
-      { system: 'Neurological', current: 80 + Math.random() * 10, predicted: 75 + Math.random() * 10 },
-      { system: 'Metabolic', current: 70 + Math.random() * 20, predicted: 65 + Math.random() * 20 },
-      { system: 'Immune', current: 65 + Math.random() * 25, predicted: 60 + Math.random() * 25 },
-      { system: 'Respiratory', current: 85 + Math.random() * 10, predicted: 80 + Math.random() * 10 }
-    ]
-  };
-}
-
-function generateClinicalScores(veteran: any) {
-  const severity = veteran.disabilityRating >= 70 ? 'critical' : 
-                  veteran.disabilityRating >= 40 ? 'warning' : 'normal';
-  
-  return [
-    {
-      name: 'FRAX Score',
-      value: severity === 'critical' ? '18%' : severity === 'warning' ? '12%' : '7%',
-      percentage: severity === 'critical' ? 75 : severity === 'warning' ? 50 : 25,
-      status: severity === 'critical' ? 'critical' : severity === 'warning' ? 'warning' : 'normal',
-      icon: Heart
-    },
-    {
-      name: 'PHQ-9',
-      value: severity === 'critical' ? '15' : severity === 'warning' ? '10' : '5',
-      percentage: severity === 'critical' ? 65 : severity === 'warning' ? 45 : 20,
-      status: severity === 'critical' ? 'warning' : 'normal',
-      icon: Brain
-    },
-    {
-      name: 'VR-12 PCS',
-      value: severity === 'critical' ? '35' : severity === 'warning' ? '42' : '50',
-      percentage: 100 - veteran.disabilityRating,
-      status: severity,
-      icon: Activity
-    },
-    {
-      name: 'AUDIT-C',
-      value: severity === 'critical' ? '8' : severity === 'warning' ? '4' : '2',
-      percentage: severity === 'critical' ? 80 : severity === 'warning' ? 40 : 20,
-      status: severity === 'critical' ? 'warning' : 'normal',
-      icon: AlertTriangle
-    }
-  ];
-}
-
-function generateRiskStratification(veteran: any) {
-  const conditions = [
-    {
-      condition: 'Cardiovascular Disease',
-      likelihood: 45 + veteran.disabilityRating / 2,
-      impact: 80,
-      riskLevel: veteran.disabilityRating >= 70 ? 'critical' : 'high'
-    },
-    {
-      condition: 'Diabetes Progression',
-      likelihood: 35 + veteran.disabilityRating / 3,
-      impact: 60,
-      riskLevel: veteran.disabilityRating >= 50 ? 'high' : 'medium'
-    },
-    {
-      condition: 'Mental Health Crisis',
-      likelihood: veteran.combatService ? 65 : 30,
-      impact: 90,
-      riskLevel: veteran.combatService ? 'critical' : 'medium'
-    },
-    {
-      condition: 'Mobility Decline',
-      likelihood: veteran.disabilityRating,
-      impact: 70,
-      riskLevel: veteran.disabilityRating >= 70 ? 'high' : 'medium'
-    },
-    {
-      condition: 'Chronic Pain Syndrome',
-      likelihood: 50 + veteran.disabilityRating / 2,
-      impact: 65,
-      riskLevel: veteran.disabilityRating >= 50 ? 'high' : 'medium'
-    }
-  ];
-
-  const recommendations = [
-    {
-      action: 'Initiate Preventive Cardiology Protocol',
-      rationale: 'Multiple cardiovascular risk factors identified',
-      urgency: veteran.disabilityRating >= 70 ? 'immediate' : 'urgent',
-      expectedOutcome: '30% reduction in CV event risk',
-      icon: Heart
-    },
-    {
-      action: 'Mental Health Integration',
-      rationale: 'Combat exposure with physical comorbidities',
-      urgency: veteran.combatService ? 'urgent' : 'routine',
-      expectedOutcome: 'Improved quality of life scores',
-      icon: Brain
-    },
-    {
-      action: 'Pain Management Optimization',
-      rationale: 'Chronic pain affecting multiple domains',
-      urgency: veteran.disabilityRating >= 50 ? 'urgent' : 'routine',
-      expectedOutcome: 'Enhanced functional capacity',
-      icon: Pill
-    }
-  ];
-
-  return { conditions, recommendations };
-}
