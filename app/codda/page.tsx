@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { HelpCircle } from 'lucide-react';
 import { CODCase, NavigationItem, ChatMessage, CODDASettings } from '@/types/codda';
 import CODDAHeader from '@/components/codda/CODDAHeader';
-import CODDANavigatorEnhanced from '@/components/codda/CODDANavigatorEnhanced';
-import CODDAEditorEnhanced from '@/components/codda/CODDAEditorEnhanced';
-import CODDAInsightPanel from '@/components/codda/CODDAInsightPanel';
+import CODDANavigatorFunctional from '@/components/codda/CODDANavigatorFunctional';
+import CODDADocumentEditor from '@/components/codda/CODDADocumentEditor';
+import CODDAInsightPanelEnhanced from '@/components/codda/CODDAInsightPanelEnhanced';
 import CODDAFooter from '@/components/codda/CODDAFooter';
+import CODDAInstructionsModal from '@/components/codda/CODDAInstructionsModal';
 import { getDemoCaseById } from '@/lib/codda/demo-data';
 import { createExportService, defaultMSGraphConfig } from '@/lib/codda/export-service';
 
@@ -73,6 +75,7 @@ export default function CODDAPage() {
     showLineNumbers: true,
     wordWrap: true
   });
+  const [showInstructions, setShowInstructions] = useState(false);
 
   // Initialize export service
   const exportService = createExportService(defaultMSGraphConfig);
@@ -144,8 +147,17 @@ export default function CODDAPage() {
     }
   }, [currentCase, exportService]);
 
+  // Show instructions on first visit
+  useEffect(() => {
+    const hasSeenInstructions = localStorage.getItem('codda-instructions-seen');
+    if (!hasSeenInstructions) {
+      setShowInstructions(true);
+      localStorage.setItem('codda-instructions-seen', 'true');
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gray-100">
       <CODDAHeader 
         currentCase={currentCase}
         leftPanelOpen={leftPanelOpen}
@@ -156,7 +168,7 @@ export default function CODDAPage() {
 
       <div className="flex h-[calc(100vh-80px)]">
         {leftPanelOpen && (
-          <CODDANavigatorEnhanced 
+          <CODDANavigatorFunctional 
             currentCase={currentCase}
             onCaseSelect={(caseId) => {
               const newCase = getDemoCaseById(caseId);
@@ -168,19 +180,17 @@ export default function CODDAPage() {
           />
         )}
 
-        <div className="flex-1">
-          <CODDAEditorEnhanced 
-            currentCase={currentCase}
-            settings={settings}
-            onCaseUpdate={setCurrentCase}
-            onExportPDF={handleExportPDF}
-            onExportWord={handleExportWord}
-            onSendForReview={handleSendForReview}
-          />
-        </div>
+        <CODDADocumentEditor 
+          currentCase={currentCase}
+          settings={settings}
+          onCaseUpdate={setCurrentCase}
+          onExportPDF={handleExportPDF}
+          onExportWord={handleExportWord}
+          onSendForReview={handleSendForReview}
+        />
 
         {rightPanelOpen && (
-          <CODDAInsightPanel
+          <CODDAInsightPanelEnhanced
             currentCase={currentCase}
             activeTab={activeRightTab}
             onTabChange={setActiveRightTab}
@@ -189,6 +199,21 @@ export default function CODDAPage() {
       </div>
 
       <CODDAFooter currentCase={currentCase} />
+      
+      {/* Instructions Modal */}
+      <CODDAInstructionsModal
+        isOpen={showInstructions}
+        onClose={() => setShowInstructions(false)}
+      />
+      
+      {/* Help Button */}
+      <button
+        onClick={() => setShowInstructions(true)}
+        className="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-50"
+        title="Show Instructions"
+      >
+        <HelpCircle className="w-6 h-6" />
+      </button>
     </div>
   );
 }
