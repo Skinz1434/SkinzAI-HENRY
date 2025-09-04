@@ -240,6 +240,8 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
 
   // Generate lab trends data with realistic progression
   const labTrends = useMemo(() => {
+    if (!veteran) return [];
+    
     const months = timeRange === '3m' ? 3 : timeRange === '6m' ? 6 : timeRange === '1y' ? 12 : 24;
     const data = [];
     const disabilityRating = veteran?.disabilityRating || 0;
@@ -265,6 +267,8 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
 
   // Generate correlation matrix data
   const correlationMatrix = useMemo(() => {
+    if (!veteran) return { systemHealth: [] };
+    
     const disabilityRating = veteran?.disabilityRating || 0;
     const combatMultiplier = veteran?.combatService ? 0.85 : 1;
     
@@ -571,7 +575,8 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
               <Target className="w-4 h-4 text-purple-500" />
               System-Wide Health Radar
             </h4>
-            <ResponsiveContainer width="100%" height={300}>
+            <div style={{ width: '100%', height: 300 }}>
+            <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={correlationMatrix?.systemHealth || []}>
                 <PolarGrid stroke="#374151" />
                 <PolarAngleAxis dataKey="system" stroke="#9CA3AF" fontSize={11} />
@@ -603,6 +608,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                 <Tooltip content={<EnhancedTooltip />} />
               </RadarChart>
             </ResponsiveContainer>
+            </div>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
@@ -610,7 +616,8 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
               <Activity className="w-4 h-4 text-green-500" />
               Biomarker Trends & Interventions
             </h4>
-            <ResponsiveContainer width="100%" height={300}>
+            <div style={{ width: '100%', height: 300 }}>
+            <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={labTrends || []}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
                 <XAxis dataKey="month" stroke="#9CA3AF" fontSize={11} />
@@ -663,6 +670,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                 <ReferenceLine y={50} stroke="#10B981" strokeDasharray="5 5" label="Target Range" />
               </ComposedChart>
             </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>
@@ -744,8 +752,9 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
             <AlertOctagon className="w-5 h-5 text-red-500" />
             Risk Stratification Analysis
           </h3>
-          <ResponsiveContainer width="100%" height={350}>
-            <ScatterChart data={riskStratification?.conditions || []} margin={{ top: 20, right: 20, bottom: 40, left: 40 }}>
+          <div style={{ width: '100%', height: 350 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <ScatterChart margin={{ top: 20, right: 20, bottom: 40, left: 40 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
               <XAxis 
                 dataKey="likelihood" 
@@ -802,6 +811,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
               <ReferenceLine y={50} stroke="#9CA3AF" strokeDasharray="3 3" />
             </ScatterChart>
           </ResponsiveContainer>
+          </div>
           
           {/* Risk Legend */}
           <div className="mt-4 grid grid-cols-2 gap-2">
