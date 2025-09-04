@@ -104,7 +104,14 @@
       "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
       "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
       "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
-      "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)"
+      "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "WebFetch(domain:github.com)",
+      "Read(/Z:\\SkinzAI HENRY/**)",
+      "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
+      "Bash(timeout 30 npm run build:*)"
     ],
     "deny": [],
     "ask": []
