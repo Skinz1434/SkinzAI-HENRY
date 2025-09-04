@@ -11,7 +11,7 @@ import { motion } from 'framer-motion';
 import {
   Brain, Activity, Target, TrendingUp, TrendingDown, AlertTriangle, 
   Sparkles, Network, Zap, Shield, Heart, Clock, Users, Layers, 
-  ChartBar, GitBranch, Cpu, Microscope, FlaskConical, Lightbulb,
+  BarChart3, GitBranch, Cpu, Microscope, FlaskRound, Lightbulb,
   AlertCircle, CheckCircle, Info, ArrowUpRight, ArrowDownRight
 } from 'lucide-react';
 
@@ -134,7 +134,7 @@ export const AIInsightsEnhanced: React.FC<AIInsightsEnhancedProps> = ({ veteran,
         severity: 'moderate',
         timeframe: '3-6 months',
         recommendedAction: 'Adjust medication dosing and timing',
-        icon: FlaskConical,
+        icon: FlaskRound,
         impact: 'Medium'
       },
       {

@@ -33,7 +33,20 @@
       "Bash(cd:*)",
       "Bash(timeout 10 npm run dev)",
       "Bash(timeout 5 npm run dev)",
-      "Bash(npm run type-check:*)"
+      "Bash(npm run type-check:*)",
+      "Read(/Z:\\SkinzAI HENRY\\config/**)",
+      "Read(/Z:\\SkinzAI HENRY\\docs/**)",
+      "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)",
+      "Read(/Z:\\SkinzAI HENRY\\components\\hvec/**)"
     ],
     "deny": [],
     "ask": []

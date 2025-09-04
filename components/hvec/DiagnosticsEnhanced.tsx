@@ -175,7 +175,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       });
     }
     
-    if (biomarkerData.metabolic.hba1c.value > 5.7) {
+    if (parseFloat(biomarkerData.metabolic.hba1c.value) > 5.7) {
       pathways.push({
         id: '3',
         diagnosis: 'Prediabetes/Metabolic Syndrome',
@@ -368,9 +368,9 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       },
       {
         condition: 'Type 2 Diabetes',
-        likelihood: Math.min(90, 25 + (disabilityRating * 0.35) + (biomarkerData.metabolic.hba1c.value > 5.7 ? 20 : 0)),
+        likelihood: Math.min(90, 25 + (disabilityRating * 0.35) + (parseFloat(biomarkerData.metabolic.hba1c.value) > 5.7 ? 20 : 0)),
         impact: 70,
-        riskLevel: biomarkerData.metabolic.hba1c.value > 6.0 ? 'high' : 'medium',
+        riskLevel: parseFloat(biomarkerData.metabolic.hba1c.value) > 6.0 ? 'high' : 'medium',
         timeframe: '3 years',
         modifiable: true,
         interventions: ['Weight loss', 'Metformin', 'Diet modification']
@@ -404,7 +404,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       },
       {
         condition: 'Kidney Disease',
-        likelihood: Math.min(70, 20 + (disabilityRating * 0.25) + (biomarkerData.renal.creatinine.value > 1.2 ? 15 : 0)),
+        likelihood: Math.min(70, 20 + (disabilityRating * 0.25) + (parseFloat(biomarkerData.renal.creatinine.value) > 1.2 ? 15 : 0)),
         impact: 80,
         riskLevel: biomarkerData.renal.egfr.value < 60 ? 'high' : 'low',
         timeframe: '5 years',
@@ -441,7 +441,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       {
         action: 'Preventive Metabolic Intervention',
         rationale: 'Prediabetic range with multiple metabolic risk factors',
-        urgency: biomarkerData.metabolic.hba1c.value > 5.7 ? 'urgent' : 'routine',
+        urgency: parseFloat(biomarkerData.metabolic.hba1c.value) > 5.7 ? 'urgent' : 'routine',
         expectedOutcome: 'Prevent diabetes progression, 5% weight loss',
         icon: Activity,
         metrics: ['HbA1c <5.7%', 'Weight -5%', 'Lipids normalized']
