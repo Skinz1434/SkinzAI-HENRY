@@ -31,7 +31,7 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
   
   const veterans: Veteran[] = [];
   
-  console.log(`🔧 Enhanced Mock Data Generator: Creating ${count} veterans with proper VA ratings`);
+  console.log(`🔧 Enhanced Mock Data Generator v2.1: Creating ${count} veterans with proper VA ratings`);
   
   for (let i = 0; i < count; i++) {
     // Gender distribution (15% female veterans)
