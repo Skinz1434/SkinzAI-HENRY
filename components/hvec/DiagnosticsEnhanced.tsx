@@ -5,7 +5,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   AreaChart, Area, BarChart, Bar, Cell, PieChart, Pie,
-  ComposedChart, ReferenceLine, ScatterChart, Scatter
+  ComposedChart, ReferenceLine, ScatterChart, Scatter, ZAxis
 } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -66,6 +66,9 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
   const [timeRange, setTimeRange] = useState<'3m' | '6m' | '1y' | 'all'>('6m');
   const [showPredictions, setShowPredictions] = useState(true);
   const [selectedLabCategory, setSelectedLabCategory] = useState<'inflammatory' | 'metabolic' | 'cardiac' | 'hepatic' | 'renal' | 'hematology'>('inflammatory');
+  
+  // Debug logging
+  console.log('DiagnosticsEnhanced render:', { veteran, assessment });
   
   // Early return if no veteran data
   if (!veteran) {
@@ -368,7 +371,15 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
 
   // Generate coherent risk stratification data
   const riskStratification = useMemo(() => {
-    if (!veteran || !biomarkerData) return { conditions: [], recommendations: [] };
+    // Always return valid structure
+    const defaultData = { 
+      conditions: [
+        { condition: 'Loading...', likelihood: 50, impact: 50, riskLevel: 'medium', timeframe: '1 year', modifiable: true, interventions: [] }
+      ], 
+      recommendations: [] 
+    };
+    
+    if (!veteran || !biomarkerData) return defaultData;
     
     const disabilityRating = veteran?.disabilityRating || 0;
     const combatService = veteran?.combatService || false;
@@ -466,7 +477,9 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       }
     ];
 
-    return { conditions, recommendations };
+    const result = { conditions, recommendations };
+    console.log('Risk stratification data:', result);
+    return result;
   }, [veteran, biomarkerData]);
 
   // Lab category selector component
@@ -757,56 +770,71 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
             <ScatterChart margin={{ top: 20, right: 20, bottom: 40, left: 40 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
               <XAxis 
-                dataKey="likelihood" 
                 type="number" 
+                dataKey="likelihood"
+                name="Likelihood"
                 domain={[0, 100]} 
                 stroke="#9CA3AF" 
                 fontSize={11}
                 label={{ value: 'Likelihood (%)', position: 'insideBottom', offset: -5 }}
               />
               <YAxis 
-                dataKey="impact" 
                 type="number" 
+                dataKey="impact"
+                name="Impact"
                 domain={[0, 100]} 
                 stroke="#9CA3AF" 
                 fontSize={11}
                 label={{ value: 'Impact Score', angle: -90, position: 'insideLeft' }}
               />
+              <ZAxis range={[60, 400]} />
               <Tooltip content={({ active, payload }) => {
-                if (active && payload && payload[0]) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="bg-gray-900/95 backdrop-blur-sm text-white p-3 rounded-lg border border-gray-700 shadow-2xl">
-                      <p className="font-bold text-blue-400">{data.condition}</p>
-                      <p className="text-xs mt-1">Likelihood: {data.likelihood.toFixed(1)}%</p>
-                      <p className="text-xs">Impact: {data.impact}</p>
-                      <p className="text-xs">Risk Level: <span className={
-                        data.riskLevel === 'critical' ? 'text-red-400' :
-                        data.riskLevel === 'high' ? 'text-yellow-400' :
-                        'text-green-400'
-                      }>{data.riskLevel}</span></p>
-                      <p className="text-xs">Timeframe: {data.timeframe}</p>
-                      {data.modifiable && (
-                        <p className="text-xs text-green-400 mt-1">✓ Modifiable risk</p>
-                      )}
-                    </div>
-                  );
-                }
-                return null;
+                if (!active || !payload || !payload[0]) return null;
+                const data = payload[0].payload;
+                if (!data) return null;
+                
+                return (
+                  <div className="bg-gray-900/95 backdrop-blur-sm text-white p-3 rounded-lg border border-gray-700 shadow-2xl">
+                    <p className="font-bold text-blue-400">{data.condition || 'Unknown'}</p>
+                    <p className="text-xs mt-1">Likelihood: {(data.likelihood || 0).toFixed(1)}%</p>
+                    <p className="text-xs">Impact: {data.impact || 0}</p>
+                    <p className="text-xs">Risk Level: <span className={
+                      data.riskLevel === 'critical' ? 'text-red-400' :
+                      data.riskLevel === 'high' ? 'text-yellow-400' :
+                      'text-green-400'
+                    }>{data.riskLevel || 'unknown'}</span></p>
+                    <p className="text-xs">Timeframe: {data.timeframe || 'N/A'}</p>
+                    {data.modifiable && (
+                      <p className="text-xs text-green-400 mt-1">✓ Modifiable risk</p>
+                    )}
+                  </div>
+                );
               }} />
-              <Scatter name="Health Conditions" data={riskStratification?.conditions || []} fill="#8884d8">
-                {(riskStratification?.conditions || []).map((entry: any, index: number) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={
-                      entry.riskLevel === 'critical' ? '#EF4444' :
-                      entry.riskLevel === 'high' ? '#F59E0B' :
-                      entry.riskLevel === 'medium' ? '#3B82F6' :
-                      '#10B981'
-                    }
-                  />
-                ))}
-              </Scatter>
+              <Scatter 
+                name="Health Conditions" 
+                data={riskStratification?.conditions || []} 
+                fill="#8884d8"
+                shape={(props: any) => {
+                  const { cx, cy, payload } = props;
+                  if (!cx || !cy || !payload) return null;
+                  
+                  const color = payload.riskLevel === 'critical' ? '#EF4444' :
+                               payload.riskLevel === 'high' ? '#F59E0B' :
+                               payload.riskLevel === 'medium' ? '#3B82F6' :
+                               '#10B981';
+                  return (
+                    <circle 
+                      cx={cx} 
+                      cy={cy} 
+                      r={6} 
+                      fill={color} 
+                      fillOpacity={0.8}
+                      stroke={color}
+                      strokeWidth={2}
+                    />
+                  );
+                }}
+              />
               <ReferenceLine x={50} stroke="#9CA3AF" strokeDasharray="3 3" />
               <ReferenceLine y={50} stroke="#9CA3AF" strokeDasharray="3 3" />
             </ScatterChart>
