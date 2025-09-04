@@ -45,6 +45,14 @@ export function generatePersonalizedAIInsights(veteran: Veteran): {
   ).length || 0;
   const approvedClaims = veteran.claims?.filter(c => c.status === 'APPROVED').length || 0;
   
+  // Calculate age and service details for more personalized insights
+  const age = veteran.dateOfBirth ? 
+    Math.floor((Date.now() - new Date(veteran.dateOfBirth).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : 
+    null;
+  const serviceStartYear = new Date(veteran.serviceStartDate).getFullYear();
+  const serviceEndYear = veteran.serviceEndDate ? new Date(veteran.serviceEndDate).getFullYear() : new Date().getFullYear();
+  const yearsOfService = serviceEndYear - serviceStartYear;
+  
   // Risk-based insights
   if (disabilityRating >= 70) {
     insights.push({
@@ -112,27 +120,179 @@ export function generatePersonalizedAIInsights(veteran: Veteran): {
     }
   }
 
-  // Age and service-related insights
-  const age = veteran.dateOfBirth ? 
-    Math.floor((Date.now() - new Date(veteran.dateOfBirth).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : 
-    null;
-    
-  if (age && age > 65) {
+  // Personalized benefits optimization insights
+  if (disabilityRating >= 30 && !veteran.enrolledVaHealthcare) {
+    insights.push({
+      type: 'opportunity',
+      priority: 'high',
+      title: 'Untapped Healthcare Benefits Detected',
+      description: `${veteran.firstName} is eligible for VA healthcare with ${disabilityRating}% rating but not enrolled. This could save significant medical costs.`,
+      confidence: 0.95,
+      dataPoints: [
+        `Disability rating: ${disabilityRating}% (eligible for Priority Group ${disabilityRating >= 50 ? '1' : disabilityRating >= 30 ? '2' : '3'})`,
+        'Current healthcare enrollment: No',
+        `Estimated annual savings: $${disabilityRating >= 50 ? '8,000-15,000' : '3,000-8,000'}`
+      ],
+      actionItems: [
+        'Complete VA healthcare enrollment application',
+        'Schedule initial health assessment',
+        'Transfer existing prescriptions to VA pharmacy'
+      ]
+    });
+  }
+
+  // Service era specific insights with accurate historical context
+  const serviceEra = serviceStartYear >= 2001 ? 'OIF/OEF' : 
+                    serviceStartYear >= 1990 ? 'Gulf War' : 
+                    serviceStartYear >= 1975 ? 'Post-Vietnam' : 
+                    serviceStartYear >= 1964 ? 'Vietnam' : 'Pre-Vietnam';
+
+  if (serviceEra === 'OIF/OEF' && veteran.combatService) {
+    insights.push({
+      type: 'pattern',
+      priority: 'medium',
+      title: 'Post-9/11 Combat Veteran Profile Match',
+      description: `Analysis shows ${veteran.firstName} matches high-risk profile for IED exposure conditions. Burn pit registry enrollment recommended.`,
+      confidence: 0.87,
+      dataPoints: [
+        `Service era: ${serviceEra} (${serviceStartYear}-${serviceEndYear})`,
+        `Combat service: Confirmed`,
+        `Years of service: ${yearsOfService}`,
+        `Branch: ${veteran.branch}`
+      ],
+      actionItems: [
+        'Register with Airborne Hazards and Open Burn Pit Registry',
+        'Screen for respiratory conditions',
+        'Document all deployment locations'
+      ],
+      relatedConditions: ['Respiratory conditions', 'TBI', 'PTSD', 'Hearing loss']
+    });
+  }
+
+  if (serviceEra === 'Gulf War') {
+    insights.push({
+      type: 'pattern',
+      priority: 'medium', 
+      title: 'Gulf War Syndrome Presumptive Conditions',
+      description: `As a Gulf War veteran, ${veteran.firstName} may qualify for presumptive service connection for unexplained chronic symptoms.`,
+      confidence: 0.82,
+      dataPoints: [
+        'Gulf War service confirmed',
+        'Deployment presumptions apply',
+        'Multiple symptom tracking beneficial'
+      ],
+      actionItems: [
+        'Document any chronic unexplained symptoms',
+        'Review 38 CFR 3.317 presumptive conditions',
+        'Consider Gulf War Registry health exam'
+      ]
+    });
+  }
+
+  // Age-specific personalized insights
+  if (age && age < 35 && veteran.gibBillRemaining > 0) {
+    insights.push({
+      type: 'opportunity',
+      priority: 'medium',
+      title: 'Educational Benefits Optimization Window',
+      description: `${veteran.firstName} has ${veteran.gibBillRemaining} months of GI Bill benefits. Early career timing optimal for degree advancement.`,
+      confidence: 0.91,
+      dataPoints: [
+        `Age: ${age} (optimal education timing)`,
+        `GI Bill remaining: ${veteran.gibBillRemaining} months`,
+        'Post-9/11 GI Bill housing allowance available',
+        `Current employment status: ${veteran.incomeEmployment > 0 ? 'Employed' : 'Status unknown'}`
+      ],
+      actionItems: [
+        'Research high-ROI degree programs',
+        'Calculate housing allowance benefits',
+        'Consider vocational rehabilitation if service-connected'
+      ]
+    });
+  }
+
+  if (age && age > 55) {
+    insights.push({
+      type: 'recommendation',
+      priority: 'medium',
+      title: 'Pre-Retirement Benefits Planning',
+      description: `${veteran.firstName} approaching retirement age should optimize VA benefits coordination with Social Security and Medicare.`,
+      confidence: 0.89,
+      dataPoints: [
+        `Age: ${age} (pre-retirement phase)`,
+        `VA disability compensation: $${veteran.monthlyCompensation}/month`,
+        'Medicare coordination potential',
+        `Dependency status: ${veteran.dependents} dependents`
+      ],
+      actionItems: [
+        'Review Medicare Part B enrollment strategy',
+        'Plan VA/Social Security coordination',
+        'Evaluate survivor benefit options'
+      ]
+    });
+  }
+
+  // Claims pattern analysis with specific recommendations
+  if (approvedClaims > 0 && pendingClaims === 0 && disabilityRating < 100) {
+    insights.push({
+      type: 'opportunity',
+      priority: 'low',
+      title: 'Secondary Service Connection Potential',
+      description: `${veteran.firstName}'s successful claims history (${approvedClaims} approved) suggests good documentation practices. Secondary conditions may be viable.`,
+      confidence: 0.76,
+      dataPoints: [
+        `Claims approval rate: ${Math.round((approvedClaims / claimsCount) * 100)}%`,
+        `Current rating: ${disabilityRating}%`,
+        'No pending claims (good timing for new submissions)'
+      ],
+      actionItems: [
+        'Research secondary service connections',
+        'Document progression of existing conditions',
+        'Consider medical opinion linking secondary conditions'
+      ]
+    });
+  }
+
+  // Gender-specific health insights
+  const isLikelyFemale = veteran.firstName && ['Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth', 'Barbara', 'Susan', 'Jessica', 'Sarah', 'Karen', 'Nancy', 'Lisa', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle', 'Laura', 'Kimberly', 'Deborah', 'Dorothy', 'Amy', 'Angela', 'Ashley', 'Brenda', 'Emma', 'Olivia', 'Cynthia', 'Marie', 'Janet', 'Catherine', 'Frances', 'Christine', 'Samantha', 'Debra', 'Rachel', 'Carolyn', 'Virginia', 'Maria', 'Heather', 'Diane', 'Julie', 'Joyce', 'Victoria', 'Kelly', 'Christina', 'Joan', 'Evelyn', 'Lauren', 'Judith', 'Megan', 'Cheryl', 'Andrea', 'Hannah', 'Jacqueline'].includes(veteran.firstName);
+
+  if (isLikelyFemale) {
+    insights.push({
+      type: 'recommendation',
+      priority: 'medium',
+      title: 'Women Veteran Specialized Care Recommended',
+      description: `${veteran.firstName} should consider women-specific VA programs and services designed for female veterans' unique health needs.`,
+      confidence: 0.88,
+      dataPoints: [
+        'Women veteran status identified',
+        'Gender-specific health programs available',
+        'Specialized care coordinators accessible'
+      ],
+      actionItems: [
+        'Connect with Women Veterans Program Manager',
+        'Schedule comprehensive women\'s health exam',
+        'Review childcare services if applicable'
+      ]
+    });
+  }
+
+  // Medicare coordination for older veterans (avoiding duplicate)
+  if (age && age > 65 && !insights.some(i => i.title.includes('Medicare'))) {
     insights.push({
       type: 'opportunity',
       priority: 'medium',
       title: 'Medicare/VA Healthcare Coordination Opportunity',
-      description: 'Veteran is eligible for Medicare. Coordinating VA and Medicare benefits can maximize coverage.',
+      description: `${veteran.firstName} is Medicare-eligible. Coordinating VA and Medicare benefits can maximize coverage and minimize costs.`,
       confidence: 0.95,
       dataPoints: [
-        `Age: ${age} years`,
+        `Age: ${age} years (Medicare eligible)`,
         `VA healthcare enrollment: ${veteran.enrolledVaHealthcare ? 'Yes' : 'No'}`,
-        `Healthcare priority group: ${veteran.healthcarePriority || 'Not assigned'}`
+        `Current disability compensation: $${veteran.monthlyCompensation}/month`
       ],
       actionItems: [
-        'Review Medicare Part B enrollment',
-        'Coordinate VA/Medicare benefits',
-        'Evaluate prescription coverage options'
+        'Review Medicare Part B enrollment timing',
+        'Coordinate VA/Medicare prescription benefits',
+        'Understand Medicare/VA dual coverage rules'
       ]
     });
   }

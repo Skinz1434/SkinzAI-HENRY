@@ -3,20 +3,19 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Activity, User, AlertTriangle, AlertCircle, FileText, Calendar, TrendingUp, Search,
-  ChevronRight, BarChart3, Target, Clock, Database, Shield, Brain, Stethoscope,
+  BarChart3, Target, Clock, Database, Shield, Brain, Stethoscope,
   ClipboardCheck, LineChart, Info, Download, CheckCircle, Filter, RefreshCw, Heart,
-  Microscope, Pill, ThermometerSun, Zap, BookOpen, Link2, MessageSquare, Share2,
-  Printer, Mail, Sparkles, TrendingDown, AlertOctagon, Award, Beaker, BrainCircuit,
+  Microscope, Pill, Zap, BookOpen, MessageSquare, Share2,
+  Printer, Mail, Sparkles, TrendingDown, Award, Beaker, BrainCircuit,
   HeartPulse, Layers, Network, Workflow, ChevronDown, ChevronUp, ExternalLink,
-  TestTube, ArrowRight, PlayCircle, PauseCircle, CheckSquare, XCircle, Copy,
+  TestTube, PlayCircle, PauseCircle, CheckSquare, Copy,
   CheckCheck, Settings, HelpCircle, Lightbulb, GitBranch, ArrowUpRight, ArrowDownRight,
   Gauge, Menu, X, Bell, Sun, Moon, Home, Users, FileSearch, CreditCard, LogOut,
-  MoreVertical, Eye, EyeOff, Lock, Unlock, Hash, DollarSign, Percent, TrendingUp as TrendUp
+  MoreVertical, Eye, Lock, Unlock, Hash, Percent
 } from 'lucide-react';
 import { mockFetchVeterans } from '../../lib/henry/mock-data';
 import { Veteran } from '../../types';
 import { generateVeteranDetails } from '../../lib/henry/veteran-details';
-import { generateVeteranProfileEnhanced, VeteranProfileEnhanced } from '../../lib/henry/veteran-profile-enhanced';
 import { generatePersonalizedAIInsights } from '../../lib/henry/ai-insights-generator';
 import { TooltipModal } from '../../components/hvec/TooltipModal';
 import { generateClinicalAssessment, ClinicalAssessment } from '../../lib/henry/clinical-assessment-generator';
@@ -99,17 +98,49 @@ interface SearchFilters {
   sortBy: string;
 }
 
+// Medication interface
+interface Medication {
+  name: string;
+  dosage: string;
+  frequency: string;
+  prescribedBy: string;
+  status: string;
+}
+
+// Veteran Details interface
+interface VeteranDetails {
+  conditions?: string[];
+  mpd?: {
+    medications: Medication[];
+  };
+}
+
+// AI Insights interface
+interface AIInsights {
+  insights?: Array<{
+    type: string;
+    confidence: number;
+    title: string;
+    description: string;
+    actionItems?: string[];
+  }>;
+  riskPredictions?: Array<{
+    condition: string;
+    risk90Day: number;
+  }>;
+}
+
 export default function HVECEnhanced() {
   const [veterans, setVeterans] = useState<Veteran[]>([]);
   const [selectedVeteran, setSelectedVeteran] = useState<Veteran | null>(null);
-  const [veteranDetails, setVeteranDetails] = useState<any>(null);
+  const [veteranDetails, setVeteranDetails] = useState<VeteranDetails | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'assessment' | 'history' | 'diagnostics' | 'insights' | 'documentation' | 'collaboration'>('assessment');
   const [dataLoading, setDataLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [aiInsights, setAiInsights] = useState<any>(null);
+  const [aiInsights, setAiInsights] = useState<AIInsights | null>(null);
   const [currentAssessment, setCurrentAssessment] = useState<ClinicalAssessment | null>(null);
   const [showWelcomeModal, setShowWelcomeModal] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -138,13 +169,6 @@ export default function HVECEnhanced() {
     sortBy: 'name'
   });
 
-  // Tooltip content for various features
-  const tooltips = {
-    riskScore: "AI-calculated risk score based on multiple health factors including disability rating, claim history, and service-connected conditions.",
-    syncStatus: "Real-time synchronization status with VA databases. Green indicates successful sync within last 24 hours.",
-    cascadeRisk: "Predictive model identifying potential for cascading health events based on condition combinations.",
-    serviceConnection: "Probability of establishing service connection based on medical evidence and VA precedent cases."
-  };
 
   // Load veterans data
   useEffect(() => {
@@ -188,7 +212,7 @@ export default function HVECEnhanced() {
 
   // Enhanced filtering logic
   const filteredVeterans = useMemo(() => {
-    let result = veterans.filter(veteran => {
+    const result = veterans.filter(veteran => {
       // Enhanced search query
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -1307,18 +1331,103 @@ export default function HVECEnhanced() {
                         <h3 className="font-semibold text-purple-900 dark:text-purple-100">AI Quick Insights</h3>
                       </div>
                       {aiInsights && aiInsights.insights && aiInsights.insights.length > 0 ? (
-                        <div className="space-y-2">
-                          <div className="text-sm text-purple-700 dark:text-purple-300">
-                            <span className="font-medium">Primary Risk:</span> {aiInsights.insights[0].title}
+                        <div className="space-y-3">
+                          {/* Primary Insight */}
+                          <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-3 border border-purple-200/50 dark:border-purple-700/50">
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="flex items-center gap-2">
+                                {aiInsights.insights[0].type === 'risk' && <AlertTriangle className="w-4 h-4 text-red-500" />}
+                                {aiInsights.insights[0].type === 'alert' && <AlertCircle className="w-4 h-4 text-orange-500" />}
+                                {aiInsights.insights[0].type === 'opportunity' && <TrendingUp className="w-4 h-4 text-green-500" />}
+                                {aiInsights.insights[0].type === 'pattern' && <Activity className="w-4 h-4 text-blue-500" />}
+                                <span className="text-xs font-medium text-purple-900 dark:text-purple-100">
+                                  {aiInsights.insights[0].type.toUpperCase()}
+                                </span>
+                              </div>
+                              <div className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                                <span className="text-xs font-medium text-purple-700 dark:text-purple-300">
+                                  {(aiInsights.insights[0].confidence * 100).toFixed(0)}% confidence
+                                </span>
+                              </div>
+                            </div>
+                            <h4 className="font-medium text-purple-900 dark:text-purple-100 mb-1 text-sm">
+                              {aiInsights.insights[0].title}
+                            </h4>
+                            <p className="text-xs text-purple-700 dark:text-purple-300 line-clamp-2">
+                              {aiInsights.insights[0].description}
+                            </p>
+                            {aiInsights.insights[0].actionItems && aiInsights.insights[0].actionItems.length > 0 && (
+                              <div className="mt-2">
+                                <div className="text-xs font-medium text-purple-800 dark:text-purple-200 mb-1">
+                                  Recommended Actions:
+                                </div>
+                                <div className="text-xs text-purple-600 dark:text-purple-300">
+                                  • {aiInsights.insights[0].actionItems[0]}
+                                  {aiInsights.insights[0].actionItems.length > 1 && ` (+${aiInsights.insights[0].actionItems.length - 1} more)`}
+                                </div>
+                              </div>
+                            )}
                           </div>
-                          <div className="text-sm text-purple-700 dark:text-purple-300">
-                            <span className="font-medium">Confidence:</span> {(aiInsights.insights[0].confidence * 100).toFixed(0)}%
+
+                          {/* Risk Predictions Summary */}
+                          {aiInsights.riskPredictions && aiInsights.riskPredictions.length > 0 && (
+                            <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/10 dark:to-orange-900/10 rounded-lg p-3 border border-red-200/50 dark:border-red-700/50">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Gauge className="w-4 h-4 text-red-600 dark:text-red-400" />
+                                <span className="text-xs font-medium text-red-900 dark:text-red-100">
+                                  90-Day Risk Assessment
+                                </span>
+                              </div>
+                              <div className="space-y-1">
+                                {aiInsights.riskPredictions.slice(0, 2).map((risk: { condition: string; risk90Day: number }, idx: number) => (
+                                  <div key={idx} className="flex items-center justify-between">
+                                    <span className="text-xs text-red-700 dark:text-red-300">{risk.condition}</span>
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-16 h-1.5 bg-red-100 dark:bg-red-900/30 rounded-full overflow-hidden">
+                                        <div 
+                                          className="h-full bg-gradient-to-r from-red-400 to-red-600" 
+                                          style={{ width: `${Math.min(risk.risk90Day * 100, 100)}%` }}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-medium text-red-800 dark:text-red-200">
+                                        {(risk.risk90Day * 100).toFixed(0)}%
+                                      </span>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Key Profile Metrics */}
+                          <div className="grid grid-cols-2 gap-2">
+                            <div className="bg-white/30 dark:bg-gray-800/30 rounded-lg p-2 border border-purple-200/30 dark:border-purple-700/30">
+                              <div className="text-xs text-purple-600 dark:text-purple-400">Claims Status</div>
+                              <div className="font-medium text-sm text-purple-900 dark:text-purple-100">
+                                {selectedVeteran.claims?.filter(c => c.status === 'APPROVED').length || 0} approved,{' '}
+                                {selectedVeteran.claims?.filter(c => c.status === 'PENDING').length || 0} pending
+                              </div>
+                            </div>
+                            <div className="bg-white/30 dark:bg-gray-800/30 rounded-lg p-2 border border-purple-200/30 dark:border-purple-700/30">
+                              <div className="text-xs text-purple-600 dark:text-purple-400">Service Era</div>
+                              <div className="font-medium text-sm text-purple-900 dark:text-purple-100">
+                                {(() => {
+                                  const serviceYear = new Date(selectedVeteran.serviceStartDate).getFullYear();
+                                  if (serviceYear >= 2000) return 'OIF/OEF';
+                                  if (serviceYear >= 1990) return 'Gulf War';
+                                  if (serviceYear >= 1975) return 'Post-Vietnam';
+                                  if (serviceYear >= 1965) return 'Vietnam';
+                                  return 'Pre-Vietnam';
+                                })()}
+                              </div>
+                            </div>
                           </div>
+
                           <button
                             onClick={() => setActiveTab('insights')}
-                            className="mt-2 text-xs text-purple-600 hover:text-purple-700 dark:text-purple-400 underline"
+                            className="w-full mt-3 px-3 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-medium rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200"
                           >
-                            View Full Analysis →
+                            View Complete AI Analysis →
                           </button>
                         </div>
                       ) : (
@@ -1366,12 +1475,69 @@ export default function HVECEnhanced() {
                     {/* Clinical Assessment Tab */}
                     {activeTab === 'assessment' && currentAssessment && (
                       <div className="space-y-6">
+                        {/* Enhanced Clinical Metrics Dashboard */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
+                          {/* Disease Activity Gauge */}
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Gauge className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                              <h4 className="font-semibold text-gray-900 dark:text-white">Disease Activity</h4>
+                            </div>
+                            <DiseaseActivityGauge 
+                              score={currentAssessment?.differentialDiagnosis?.[0]?.probability ? 
+                                currentAssessment.differentialDiagnosis[0].probability * 10 : 3.2}
+                              trend="stable"
+                              components={{
+                                tjc: 8,
+                                sjc: 6,
+                                vas: 45,
+                                esr: 28
+                              }}
+                            />
+                          </div>
+
+                          {/* Joint Assessment Radar */}
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Target className="w-5 h-5 text-green-600 dark:text-green-400" />
+                              <h4 className="font-semibold text-gray-900 dark:text-white">Joint Assessment</h4>
+                            </div>
+                            <JointAssessmentRadar 
+                              data={[
+                                { joint: 'Shoulders', pain: 6, swelling: 4, stiffness: 7, function: 5 },
+                                { joint: 'Elbows', pain: 3, swelling: 2, stiffness: 4, function: 8 },
+                                { joint: 'Wrists', pain: 8, swelling: 7, stiffness: 8, function: 3 },
+                                { joint: 'Knees', pain: 9, swelling: 8, stiffness: 9, function: 2 },
+                                { joint: 'Ankles', pain: 5, swelling: 3, stiffness: 6, function: 6 }
+                              ]}
+                            />
+                          </div>
+
+                          {/* Inflammatory Trend Chart */}
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                            <div className="flex items-center gap-2 mb-3">
+                              <LineChart className="w-5 h-5 text-red-600 dark:text-red-400" />
+                              <h4 className="font-semibold text-gray-900 dark:text-white">Inflammatory Markers</h4>
+                            </div>
+                            <InflammatoryTrendChart 
+                              data={[
+                                { date: '2024-01', esr: 45, crp: 12.3, rf: 85 },
+                                { date: '2024-02', esr: 38, crp: 9.8, rf: 82 },
+                                { date: '2024-03', esr: 42, crp: 11.1, rf: 88 },
+                                { date: '2024-04', esr: 35, crp: 8.5, rf: 79 },
+                                { date: '2024-05', esr: 29, crp: 6.2, rf: 75 }
+                              ]}
+                            />
+                          </div>
+                        </div>
+
                         {/* Chief Complaint */}
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                            <ClipboardCheck className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                             Chief Complaint
                           </h3>
-                          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
                             <p className="text-gray-700 dark:text-gray-300">
                               {currentAssessment.chiefComplaint}
                             </p>
@@ -1537,9 +1703,96 @@ export default function HVECEnhanced() {
                     {/* Medical History Tab */}
                     {activeTab === 'history' && veteranDetails && (
                       <div className="space-y-6">
+                        {/* Enhanced Medical Timeline */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                            Clinical Timeline
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <ClinicalTimeline 
+                              events={[
+                                {
+                                  id: '1',
+                                  date: new Date('2024-01-15'),
+                                  type: 'diagnosis',
+                                  title: 'Initial Diagnosis',
+                                  description: 'Rheumatoid Arthritis confirmed',
+                                  severity: 'high',
+                                  icon: Heart,
+                                  color: '#EF4444'
+                                },
+                                {
+                                  id: '2',
+                                  date: new Date('2024-02-20'),
+                                  type: 'medication',
+                                  title: 'Started Methotrexate',
+                                  description: '15mg weekly dose initiated',
+                                  severity: 'medium',
+                                  icon: Pill,
+                                  color: '#10B981'
+                                },
+                                {
+                                  id: '3',
+                                  date: new Date('2024-03-10'),
+                                  type: 'treatment',
+                                  title: 'Physical Therapy',
+                                  description: 'Joint mobility program started',
+                                  severity: 'low',
+                                  icon: Stethoscope,
+                                  color: '#3B82F6'
+                                }
+                              ]}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Military Service Timeline */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Award className="w-5 h-5 text-green-600 dark:text-green-400" />
+                            Military Service Timeline
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <MilitaryServiceTimeline 
+                              deployments={[
+                                {
+                                  id: '1',
+                                  location: 'Iraq',
+                                  startDate: new Date(selectedVeteran.serviceStartDate),
+                                  endDate: selectedVeteran.serviceEndDate ? new Date(selectedVeteran.serviceEndDate) : new Date(),
+                                  branch: selectedVeteran.branch,
+                                  unit: '1st Infantry Division',
+                                  exposures: ['Burn Pits', 'Chemical Exposure'],
+                                  combatService: selectedVeteran.combatService || false
+                                }
+                              ]}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Medication Adherence Chart */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Pill className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                            Medication Adherence
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <MedicationAdherenceChart 
+                              data={[
+                                { medication: 'Methotrexate', prescribed: 100, taken: 85, adherence: 85 },
+                                { medication: 'Prednisone', prescribed: 100, taken: 92, adherence: 92 },
+                                { medication: 'Folic Acid', prescribed: 100, taken: 78, adherence: 78 },
+                                { medication: 'Hydroxychloroquine', prescribed: 100, taken: 89, adherence: 89 }
+                              ]}
+                            />
+                          </div>
+                        </div>
+
                         {/* Service History */}
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                            <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                             Military Service History
                           </h3>
                           <div className="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 p-4">
@@ -1621,7 +1874,7 @@ export default function HVECEnhanced() {
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-                                  {veteranDetails.mpd.medications.map((med: any, idx: number) => (
+                                  {veteranDetails.mpd.medications.map((med: Medication, idx: number) => (
                                     <tr key={idx}>
                                       <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{med.name}</td>
                                       <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{med.dosage} - {med.frequency}</td>
@@ -1653,18 +1906,276 @@ export default function HVECEnhanced() {
                     
                     {/* Enhanced AI Insights Tab */}
                     {activeTab === 'insights' && selectedVeteran && aiInsights && (
-                      <AIInsightsEnhanced 
-                        veteran={selectedVeteran}
-                        insights={aiInsights}
-                      />
+                      <div className="space-y-6">
+                        {/* Risk Prediction Dashboard */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <BrainCircuit className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                            Risk Prediction Dashboard
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <RiskPredictionDashboard 
+                              predictions={[
+                                {
+                                  category: 'Mental Health',
+                                  current: 45,
+                                  predicted30: 52,
+                                  predicted60: 58,
+                                  predicted90: 62,
+                                  factors: ['PTSD history', 'Sleep disorders', 'Social isolation'],
+                                  interventions: ['Counseling', 'Peer support', 'Medication review'],
+                                  confidence: 0.85
+                                },
+                                {
+                                  category: 'Musculoskeletal',
+                                  current: 65,
+                                  predicted30: 68,
+                                  predicted60: 72,
+                                  predicted90: 75,
+                                  factors: ['Joint inflammation', 'Limited mobility', 'Pain levels'],
+                                  interventions: ['Physical therapy', 'Anti-inflammatory treatment', 'Exercise program'],
+                                  confidence: 0.92
+                                }
+                              ]}
+                              veteranId={selectedVeteran.id}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Cascade Risk Analysis */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Workflow className="w-5 h-5 text-red-600 dark:text-red-400" />
+                            Cascade Risk Analysis
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <CascadeRiskAnalysis 
+                              primaryCondition="Rheumatoid Arthritis"
+                              cascadeRisks={[
+                                {
+                                  condition: 'Cardiovascular Disease',
+                                  probability: 0.35,
+                                  timeframe: '2-3 years',
+                                  severity: 'high',
+                                  preventable: true
+                                },
+                                {
+                                  condition: 'Osteoporosis',
+                                  probability: 0.28,
+                                  timeframe: '1-2 years',
+                                  severity: 'medium',
+                                  preventable: true
+                                },
+                                {
+                                  condition: 'Depression',
+                                  probability: 0.42,
+                                  timeframe: '6-12 months',
+                                  severity: 'high',
+                                  preventable: true
+                                }
+                              ]}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Predictive Health Score */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
+                            Predictive Health Score
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <PredictiveHealthScore 
+                              currentScore={72}
+                              projections={{
+                                optimistic: [
+                                  { month: 'Jan', score: 72 },
+                                  { month: 'Feb', score: 75 },
+                                  { month: 'Mar', score: 78 },
+                                  { month: 'Apr', score: 82 },
+                                  { month: 'May', score: 85 },
+                                  { month: 'Jun', score: 88 }
+                                ],
+                                realistic: [
+                                  { month: 'Jan', score: 72 },
+                                  { month: 'Feb', score: 73 },
+                                  { month: 'Mar', score: 75 },
+                                  { month: 'Apr', score: 76 },
+                                  { month: 'May', score: 78 },
+                                  { month: 'Jun', score: 79 }
+                                ],
+                                pessimistic: [
+                                  { month: 'Jan', score: 72 },
+                                  { month: 'Feb', score: 70 },
+                                  { month: 'Mar', score: 68 },
+                                  { month: 'Apr', score: 65 },
+                                  { month: 'May', score: 63 },
+                                  { month: 'Jun', score: 60 }
+                                ]
+                              }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Functional Assessment Chart */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <BarChart3 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                            Functional Assessment
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <FunctionalAssessmentChart 
+                              data={[
+                                { activity: 'Dressing', baseline: 3, current: 6, target: 8 },
+                                { activity: 'Walking', baseline: 4, current: 5, target: 9 },
+                                { activity: 'Grip Strength', baseline: 2, current: 4, target: 7 },
+                                { activity: 'Climbing Stairs', baseline: 3, current: 4, target: 8 },
+                                { activity: 'Fine Motor', baseline: 5, current: 6, target: 9 }
+                              ]}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Comorbidity Network */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Network className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                            Comorbidity Network Analysis
+                          </h3>
+                          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <ComorbidityNetwork 
+                              conditions={[
+                                { name: 'Rheumatoid Arthritis', severity: 8, connections: ['PTSD', 'Sleep Disorder'] },
+                                { name: 'PTSD', severity: 6, connections: ['Depression', 'Sleep Disorder'] },
+                                { name: 'Sleep Disorder', severity: 5, connections: ['Depression', 'Chronic Pain'] },
+                                { name: 'Depression', severity: 4, connections: ['Chronic Pain'] },
+                                { name: 'Chronic Pain', severity: 7, connections: ['Rheumatoid Arthritis'] }
+                              ]}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Enhanced AI Insights Component */}
+                        <AIInsightsEnhanced 
+                          veteran={selectedVeteran}
+                          insights={aiInsights}
+                        />
+                      </div>
                     )}
                     
                     {/* Enhanced Documentation Tab with Working Links */}
                     {activeTab === 'documentation' && (
                       <div className="space-y-6">
+                        {/* Quick Actions Panel */}
+                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+                          <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2">
+                            <Zap className="w-5 h-5" />
+                            Quick Documentation Actions
+                          </h4>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button 
+                              onClick={() => openModal('Data Refresh', 
+                                <div className="space-y-4">
+                                  <div className="flex items-center gap-3">
+                                    <RefreshCw className="w-6 h-6 text-blue-600 animate-spin" />
+                                    <div>
+                                      <h4 className="font-medium text-gray-900 dark:text-white">Refreshing Data</h4>
+                                      <p className="text-sm text-gray-500">Syncing with VA databases...</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-blue-200 dark:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                            >
+                              <RefreshCw className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Refresh Data</span>
+                            </button>
+                            <button 
+                              onClick={() => openModal('Data Validation', 
+                                <div className="space-y-4">
+                                  <div className="flex items-center gap-3">
+                                    <CheckCheck className="w-6 h-6 text-green-600" />
+                                    <div>
+                                      <h4 className="font-medium text-gray-900 dark:text-white">Validation Complete</h4>
+                                      <p className="text-sm text-gray-500">All data integrity checks passed</p>
+                                    </div>
+                                  </div>
+                                  <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
+                                    <div className="flex items-center gap-2 text-sm text-green-700 dark:text-green-300">
+                                      <CheckCheck className="w-4 h-4" />
+                                      <span>Medical records validated</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm text-green-700 dark:text-green-300 mt-1">
+                                      <CheckCheck className="w-4 h-4" />
+                                      <span>Claims data verified</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-green-200 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors"
+                            >
+                              <CheckCheck className="w-4 h-4 text-green-600 dark:text-green-400" />
+                              <span className="text-sm font-medium text-green-700 dark:text-green-300">Validate</span>
+                            </button>
+                            <button 
+                              onClick={() => openModal('Version Control', 
+                                <div className="space-y-4">
+                                  <div className="flex items-center gap-3">
+                                    <GitBranch className="w-6 h-6 text-purple-600" />
+                                    <div>
+                                      <h4 className="font-medium text-gray-900 dark:text-white">Version History</h4>
+                                      <p className="text-sm text-gray-500">Track changes and revisions</p>
+                                    </div>
+                                  </div>
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
+                                      <span className="text-sm">v2.1.3 - Current</span>
+                                      <span className="text-xs text-gray-500">Today</span>
+                                    </div>
+                                    <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
+                                      <span className="text-sm">v2.1.2</span>
+                                      <span className="text-xs text-gray-500">Yesterday</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-purple-200 dark:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-colors"
+                            >
+                              <GitBranch className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                              <span className="text-sm font-medium text-purple-700 dark:text-purple-300">Version</span>
+                            </button>
+                            <button 
+                              onClick={() => openModal('Database Sync', 
+                                <div className="space-y-4">
+                                  <div className="flex items-center gap-3">
+                                    <Database className="w-6 h-6 text-orange-600" />
+                                    <div>
+                                      <h4 className="font-medium text-gray-900 dark:text-white">Database Synchronization</h4>
+                                      <p className="text-sm text-gray-500">Real-time sync with VA systems</p>
+                                    </div>
+                                  </div>
+                                  <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded-lg">
+                                    <div className="text-sm text-orange-700 dark:text-orange-300">
+                                      Last sync: 5 minutes ago
+                                    </div>
+                                    <div className="text-xs text-orange-600 dark:text-orange-400 mt-1">
+                                      Next sync: In 25 minutes
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-orange-200 dark:border-orange-700 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors"
+                            >
+                              <Database className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                              <span className="text-sm font-medium text-orange-700 dark:text-orange-300">Sync</span>
+                            </button>
+                          </div>
+                        </div>
+
                         {/* Medical Reference Links */}
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                             Medical Guidelines & References
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1827,6 +2338,116 @@ export default function HVECEnhanced() {
                           </div>
                         </div>
                         
+                        {/* Enhanced Collaboration Tools */}
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                            Advanced Collaboration Tools
+                          </h3>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                            <button
+                              onClick={() => openModal('Video Conference', 
+                                <div className="space-y-4">
+                                  <p>Start a secure video conference with team members.</p>
+                                  <div className="space-y-3">
+                                    <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                      <PlayCircle className="w-5 h-5" />
+                                      Start Conference
+                                    </button>
+                                    <button className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                                      <PauseCircle className="w-4 h-4" />
+                                      Schedule Later
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors"
+                            >
+                              <PlayCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                              <span className="text-sm font-medium text-green-700 dark:text-green-300">Video Call</span>
+                            </button>
+                            
+                            <button
+                              onClick={() => openModal('Task Management', 
+                                <div className="space-y-4">
+                                  <p>Create and assign tasks to team members.</p>
+                                  <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      <CheckSquare className="w-4 h-4 text-green-600" />
+                                      <span className="text-sm">Review lab results</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <CheckSquare className="w-4 h-4 text-blue-600" />
+                                      <span className="text-sm">Update treatment plan</span>
+                                    </div>
+                                    <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                      Create New Task
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                            >
+                              <CheckSquare className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Tasks</span>
+                            </button>
+                            
+                            <button
+                              onClick={() => openModal('Patient Trends', 
+                                <div className="space-y-4">
+                                  <p>View trending patterns across patient population.</p>
+                                  <div className="flex items-center gap-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                                    <ArrowUpRight className="w-6 h-6 text-green-600" />
+                                    <div>
+                                      <div className="font-medium text-green-700 dark:text-green-300">Recovery Rate</div>
+                                      <div className="text-sm text-green-600">+15% this month</div>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center gap-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                                    <ArrowDownRight className="w-6 h-6 text-red-600" />
+                                    <div>
+                                      <div className="font-medium text-red-700 dark:text-red-300">Readmissions</div>
+                                      <div className="text-sm text-red-600">-8% this month</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-700 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors"
+                            >
+                              <TrendingDown className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                              <span className="text-sm font-medium text-purple-700 dark:text-purple-300">Trends</span>
+                            </button>
+                            
+                            <button
+                              onClick={() => openModal('Security Center', 
+                                <div className="space-y-4">
+                                  <p>Manage access controls and security settings.</p>
+                                  <div className="space-y-3">
+                                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                      <div className="flex items-center gap-2">
+                                        <Lock className="w-4 h-4 text-gray-600" />
+                                        <span className="text-sm">Data Encryption</span>
+                                      </div>
+                                      <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Active</span>
+                                    </div>
+                                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                      <div className="flex items-center gap-2">
+                                        <Unlock className="w-4 h-4 text-gray-600" />
+                                        <span className="text-sm">Session Timeout</span>
+                                      </div>
+                                      <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded">30 min</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            >
+                              <Lock className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Security</span>
+                            </button>
+                          </div>
+                        </div>
+
                         {/* Export and Sharing */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -1884,17 +2505,20 @@ export default function HVECEnhanced() {
                           </div>
                         </div>
                         
-                        {/* Recent Activity */}
+                        {/* Enhanced Activity Feed */}
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                             Recent Collaboration Activity
                           </h3>
                           <div className="space-y-3">
                             {[
-                              { user: 'Dr. Johnson', action: 'Updated clinical notes', time: '2 hours ago', icon: FileText },
-                              { user: 'Dr. Lee', action: 'Added lab results', time: '5 hours ago', icon: Beaker },
-                              { user: 'RN Smith', action: 'Scheduled follow-up', time: '1 day ago', icon: Calendar },
-                              { user: 'Dr. Patel', action: 'Reviewed imaging', time: '2 days ago', icon: Eye }
+                              { user: 'Dr. Johnson', action: 'Updated clinical notes', time: '2 hours ago', icon: FileText, priority: 'high' },
+                              { user: 'Dr. Lee', action: 'Added lab results', time: '5 hours ago', icon: Beaker, priority: 'medium' },
+                              { user: 'RN Smith', action: 'Scheduled follow-up', time: '1 day ago', icon: Calendar, priority: 'low' },
+                              { user: 'Dr. Patel', action: 'Reviewed imaging', time: '2 days ago', icon: Eye, priority: 'medium' },
+                              { user: 'System', action: 'Payment processed', time: '3 days ago', icon: CreditCard, priority: 'low' },
+                              { user: 'Admin', action: 'Security audit completed', time: '1 week ago', icon: Hash, priority: 'high' }
                             ].map((activity, idx) => (
                               <div key={idx} className="flex items-start gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                                 <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
@@ -1903,7 +2527,16 @@ export default function HVECEnhanced() {
                                 <div className="flex-1">
                                   <div className="flex items-center justify-between">
                                     <span className="font-medium text-sm text-gray-900 dark:text-white">{activity.user}</span>
-                                    <span className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</span>
+                                    <div className="flex items-center gap-2">
+                                      <span className={`px-2 py-1 text-xs rounded-full ${
+                                        activity.priority === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-300' :
+                                        activity.priority === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300' :
+                                        'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300'
+                                      }`}>
+                                        {activity.priority}
+                                      </span>
+                                      <span className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</span>
+                                    </div>
                                   </div>
                                   <p className="text-sm text-gray-600 dark:text-gray-400">{activity.action}</p>
                                 </div>
