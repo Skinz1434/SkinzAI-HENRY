@@ -20,6 +20,24 @@ import { generateVeteranProfileEnhanced, VeteranProfileEnhanced } from '../../li
 import { generatePersonalizedAIInsights } from '../../lib/henry/ai-insights-generator';
 import { TooltipModal } from '../../components/hvec/TooltipModal';
 import { generateClinicalAssessment, ClinicalAssessment } from '../../lib/henry/clinical-assessment-generator';
+import { 
+  InflammatoryTrendChart, 
+  JointAssessmentRadar, 
+  DiseaseActivityGauge,
+  MedicationAdherenceChart,
+  FunctionalAssessmentChart,
+  ComorbidityNetwork
+} from '../../components/hvec/ClinicalCharts';
+import { 
+  ClinicalTimeline, 
+  MilitaryServiceTimeline 
+} from '../../components/hvec/ClinicalTimeline';
+import {
+  RiskPredictionDashboard,
+  CascadeRiskAnalysis,
+  PredictiveHealthScore
+} from '../../components/hvec/RiskPredictionModels';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Medical Reference Links with actual URLs
 const MEDICAL_REFERENCES = {
