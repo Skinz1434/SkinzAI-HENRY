@@ -30,7 +30,8 @@
       "Bash(then echo \"Installing dependencies...\")",
       "Bash(else echo \"Dependencies already installed\")",
       "Bash(fi)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(timeout 10 npm run dev)"
     ],
     "deny": [],
     "ask": []

@@ -30,16 +30,32 @@ import { veteranDataService, VeteranProfile } from '../../lib/henry/veteran-data
 import { generateVeteranDetails } from '../../lib/henry/veteran-details';
 import { generateVeteranProfileEnhanced, VeteranProfileEnhanced } from '../../lib/henry/veteran-profile-enhanced';
 
-// Rheumatology-specific interfaces
-interface RheumatologyAssessment {
+// Clinical Assessment interfaces - works across all specialties
+interface ClinicalAssessment {
   patientId: string;
   assessmentDate: Date;
   chiefComplaint: string;
-  jointInvolvement: {
-    pattern: 'monoarticular' | 'oligoarticular' | 'polyarticular';
-    distribution: 'symmetric' | 'asymmetric';
-    joints: string[];
-    duration: string;
+  specialty: 'rheumatology' | 'cardiology' | 'neurology' | 'psychiatry' | 'pulmonology' | 'general';
+  primarySymptoms: string[];
+  systemsReview: {
+    musculoskeletal?: {
+      pattern: 'monoarticular' | 'oligoarticular' | 'polyarticular';
+      distribution: 'symmetric' | 'asymmetric';
+      joints: string[];
+      duration: string;
+    };
+    cardiovascular?: {
+      symptoms: string[];
+      riskFactors: string[];
+    };
+    neurological?: {
+      symptoms: string[];
+      deficits: string[];
+    };
+    psychiatric?: {
+      symptoms: string[];
+      triggers: string[];
+    };
   };
   inflammatoryMarkers: {
     esr: number | null;
@@ -86,7 +102,35 @@ interface ServiceConnectionAnalysis {
   }>;
 }
 
-// Common rheumatologic conditions with ICD-10 codes
+// Common medical conditions with ICD-10 codes across specialties
+const MEDICAL_CONDITIONS = {
+  // Rheumatology
+  'Rheumatoid Arthritis': { icd10: 'M06.9', criteria: 'ACR/EULAR 2010', specialty: 'rheumatology' },
+  'Psoriatic Arthritis': { icd10: 'L40.5', criteria: 'CASPAR', specialty: 'rheumatology' },
+  'Ankylosing Spondylitis': { icd10: 'M45.9', criteria: 'ASAS', specialty: 'rheumatology' },
+  'Systemic Lupus Erythematosus': { icd10: 'M32.9', criteria: 'SLICC/ACR', specialty: 'rheumatology' },
+  'Gout': { icd10: 'M10.9', criteria: 'ACR/EULAR 2015', specialty: 'rheumatology' },
+  'Osteoarthritis': { icd10: 'M19.9', criteria: 'ACR', specialty: 'rheumatology' },
+  'Fibromyalgia': { icd10: 'M79.7', criteria: 'ACR 2016', specialty: 'rheumatology' },
+  'Polymyalgia Rheumatica': { icd10: 'M35.3', criteria: 'ACR/EULAR 2012', specialty: 'rheumatology' },
+  // Cardiology
+  'Coronary Artery Disease': { icd10: 'I25.1', criteria: 'ACC/AHA', specialty: 'cardiology' },
+  'Heart Failure': { icd10: 'I50.9', criteria: 'NYHA/ACC', specialty: 'cardiology' },
+  'Atrial Fibrillation': { icd10: 'I48.91', criteria: 'AHA/ACC/HRS', specialty: 'cardiology' },
+  // Neurology
+  'Traumatic Brain Injury': { icd10: 'S06.9', criteria: 'DoD/VA', specialty: 'neurology' },
+  'Migraine': { icd10: 'G43.909', criteria: 'ICHD-3', specialty: 'neurology' },
+  'Peripheral Neuropathy': { icd10: 'G62.9', criteria: 'AAN', specialty: 'neurology' },
+  // Psychiatry
+  'PTSD': { icd10: 'F43.10', criteria: 'DSM-5', specialty: 'psychiatry' },
+  'Major Depression': { icd10: 'F32.9', criteria: 'DSM-5', specialty: 'psychiatry' },
+  'Anxiety Disorder': { icd10: 'F41.9', criteria: 'DSM-5', specialty: 'psychiatry' },
+  // Pulmonology
+  'COPD': { icd10: 'J44.9', criteria: 'GOLD', specialty: 'pulmonology' },
+  'Sleep Apnea': { icd10: 'G47.33', criteria: 'AASM', specialty: 'pulmonology' },
+  'Asthma': { icd10: 'J45.909', criteria: 'GINA', specialty: 'pulmonology' }
+};
+
 const RHEUMATOLOGY_CONDITIONS = {
   'Rheumatoid Arthritis': { icd10: 'M06.9', criteria: 'ACR/EULAR 2010' },
   'Psoriatic Arthritis': { icd10: 'L40.5', criteria: 'CASPAR' },
@@ -98,13 +142,14 @@ const RHEUMATOLOGY_CONDITIONS = {
   'Polymyalgia Rheumatica': { icd10: 'M35.3', criteria: 'ACR/EULAR 2012' }
 };
 
-export default function HVECRheumatologyDashboard() {
+export default function HVECClinicalIntelligence() {
   const [selectedVeteran, setSelectedVeteran] = useState<VeteranProfile | null>(null);
   const [veteranDetails, setVeteranDetails] = useState<VeteranProfileEnhanced | null>(null);
   const [activeTab, setActiveTab] = useState<'assessment' | 'history' | 'diagnostics' | 'documentation'>('assessment');
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [currentAssessment, setCurrentAssessment] = useState<RheumatologyAssessment | null>(null);
+  const [currentAssessment, setCurrentAssessment] = useState<ClinicalAssessment | null>(null);
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
 
   // Get all veterans from the service
   const veterans = veteranDataService.getAllVeterans();
@@ -128,19 +173,24 @@ export default function HVECRheumatologyDashboard() {
       const enhanced = generateVeteranProfileEnhanced(details);
       setVeteranDetails(enhanced);
       
-      // Generate rheumatology-specific assessment
-      generateRheumatologyAssessment(selectedVeteran);
+      // Generate comprehensive clinical assessment
+      generateClinicalAssessment(selectedVeteran);
       setLoading(false);
     }
   }, [selectedVeteran]);
 
-  // Generate rheumatology assessment based on veteran data
-  const generateRheumatologyAssessment = (veteran: VeteranProfile) => {
-    const assessment: RheumatologyAssessment = {
+  // Generate comprehensive clinical assessment based on veteran data
+  const generateClinicalAssessment = (veteran: VeteranProfile) => {
+    // Determine primary specialty based on conditions
+    const primarySpecialty = determinePrimarySpecialty(veteran);
+    
+    const assessment: ClinicalAssessment = {
       patientId: veteran.id,
       assessmentDate: new Date(),
       chiefComplaint: extractChiefComplaint(veteran),
-      jointInvolvement: analyzeJointInvolvement(veteran),
+      specialty: primarySpecialty,
+      primarySymptoms: extractPrimarySymptoms(veteran),
+      systemsReview: generateSystemsReview(veteran, primarySpecialty),
       inflammatoryMarkers: generateInflammatoryMarkers(veteran),
       differentialDiagnosis: generateDifferentialDiagnosis(veteran),
       clinicalDecisionSupport: generateClinicalRecommendations(veteran),
@@ -150,6 +200,90 @@ export default function HVECRheumatologyDashboard() {
   };
 
   // Helper functions for assessment generation
+  // Helper function to determine primary specialty based on conditions
+  const determinePrimarySpecialty = (veteran: VeteranProfile): 'rheumatology' | 'cardiology' | 'neurology' | 'psychiatry' | 'pulmonology' | 'general' => {
+    if (!veteran.conditions || veteran.conditions.length === 0) return 'general';
+    
+    // Count conditions by specialty
+    const specialtyCounts: Record<string, number> = {};
+    veteran.conditions.forEach(condition => {
+      const medCondition = Object.entries(MEDICAL_CONDITIONS).find(([name]) => 
+        condition.name.toLowerCase().includes(name.toLowerCase())
+      );
+      if (medCondition) {
+        const specialty = medCondition[1].specialty;
+        specialtyCounts[specialty] = (specialtyCounts[specialty] || 0) + 1;
+      }
+    });
+    
+    // Return most common specialty
+    const sortedSpecialties = Object.entries(specialtyCounts).sort((a, b) => b[1] - a[1]);
+    return (sortedSpecialties[0]?.[0] as any) || 'general';
+  };
+  
+  // Extract primary symptoms from veteran data
+  const extractPrimarySymptoms = (veteran: VeteranProfile): string[] => {
+    const symptoms: string[] = [];
+    
+    // Extract from conditions
+    if (veteran.conditions) {
+      veteran.conditions.forEach(c => {
+        if (c.name.toLowerCase().includes('pain')) symptoms.push('Pain');
+        if (c.name.toLowerCase().includes('anxiety')) symptoms.push('Anxiety');
+        if (c.name.toLowerCase().includes('depression')) symptoms.push('Depression');
+        if (c.name.toLowerCase().includes('ptsd')) symptoms.push('PTSD symptoms');
+        if (c.name.toLowerCase().includes('tbi')) symptoms.push('Cognitive difficulties');
+        if (c.name.toLowerCase().includes('joint')) symptoms.push('Joint problems');
+      });
+    }
+    
+    return [...new Set(symptoms)]; // Remove duplicates
+  };
+  
+  // Generate comprehensive systems review
+  const generateSystemsReview = (veteran: VeteranProfile, specialty: string) => {
+    const review: any = {};
+    
+    // Add musculoskeletal review if relevant
+    if (specialty === 'rheumatology' || veteran.conditions?.some(c => 
+      c.name.toLowerCase().includes('joint') || c.name.toLowerCase().includes('arthritis')
+    )) {
+      review.musculoskeletal = analyzeJointInvolvement(veteran);
+    }
+    
+    // Add cardiovascular review if relevant
+    if (specialty === 'cardiology' || veteran.conditions?.some(c => 
+      c.name.toLowerCase().includes('heart') || c.name.toLowerCase().includes('hypertension')
+    )) {
+      review.cardiovascular = {
+        symptoms: ['chest pain', 'dyspnea', 'palpitations'],
+        riskFactors: veteran.combatService ? ['combat stress', 'environmental exposures'] : ['standard']
+      };
+    }
+    
+    // Add neurological review if relevant
+    if (specialty === 'neurology' || veteran.conditions?.some(c => 
+      c.name.toLowerCase().includes('tbi') || c.name.toLowerCase().includes('headache')
+    )) {
+      review.neurological = {
+        symptoms: ['headaches', 'dizziness', 'memory issues'],
+        deficits: []
+      };
+    }
+    
+    // Add psychiatric review if relevant
+    if (specialty === 'psychiatry' || veteran.conditions?.some(c => 
+      c.name.toLowerCase().includes('ptsd') || c.name.toLowerCase().includes('depression')
+    )) {
+      review.psychiatric = {
+        symptoms: ['mood changes', 'sleep disturbance', 'hypervigilance'],
+        triggers: veteran.combatService ? ['combat-related'] : ['civilian']
+      };
+    }
+    
+    return review;
+  };
+  
   const extractChiefComplaint = (veteran: VeteranProfile): string => {
     const musculoskeletalConditions = veteran.conditions?.filter(c => 
       c.name.toLowerCase().includes('joint') || 
@@ -161,7 +295,7 @@ export default function HVECRheumatologyDashboard() {
       : 'Joint pain and stiffness';
   };
 
-  const analyzeJointInvolvement = (veteran: VeteranProfile) => {
+  const analyzeJointInvolvement = (veteran: VeteranProfile): any => {
     // Simulate joint involvement analysis based on conditions
     const hasMultipleJointConditions = veteran.conditions?.filter(c => 
       c.name.toLowerCase().includes('joint')
@@ -215,7 +349,7 @@ export default function HVECRheumatologyDashboard() {
     if (veteran.conditions?.some(c => c.name.toLowerCase().includes('multiple'))) {
       diagnoses.push({
         condition: 'Rheumatoid Arthritis',
-        icd10: RHEUMATOLOGY_CONDITIONS['Rheumatoid Arthritis'].icd10,
+        icd10: MEDICAL_CONDITIONS['Rheumatoid Arthritis'].icd10,
         probability: 0.65,
         supportingEvidence: [
           'Polyarticular involvement',
@@ -313,10 +447,10 @@ export default function HVECRheumatologyDashboard() {
               </div>
               <div>
                 <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  HVEC Rheumatology Clinical Decision Support
+                  HVEC Clinical Intelligence System
                 </h1>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  HENRY Vector Enhancement Component - Physician Portal
+                  Multi-Specialty Clinical Decision Support - Powered by HENRY Protocol
                 </p>
               </div>
             </div>
@@ -343,7 +477,7 @@ export default function HVECRheumatologyDashboard() {
               </h2>
               
               {/* Search */}
-              <div className="relative mb-4">
+              <div className="relative mb-3">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="text"
@@ -352,6 +486,23 @@ export default function HVECRheumatologyDashboard() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
+              </div>
+
+              {/* Specialty Filter */}
+              <div className="mb-4">
+                <select 
+                  value={selectedSpecialty}
+                  onChange={(e) => setSelectedSpecialty(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Specialties</option>
+                  <option value="rheumatology">Rheumatology</option>
+                  <option value="cardiology">Cardiology</option>
+                  <option value="neurology">Neurology</option>
+                  <option value="psychiatry">Psychiatry</option>
+                  <option value="pulmonology">Pulmonology</option>
+                  <option value="general">General Medicine</option>
+                </select>
               </div>
 
               {/* Patient List */}
@@ -456,36 +607,65 @@ export default function HVECRheumatologyDashboard() {
                           </div>
                         </div>
 
-                        {/* Joint Involvement */}
+                        {/* Specialty-Specific Assessment */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                            Joint Involvement Analysis
+                            {currentAssessment.specialty === 'rheumatology' ? 'Joint Involvement Analysis' :
+                             currentAssessment.specialty === 'cardiology' ? 'Cardiovascular Assessment' :
+                             currentAssessment.specialty === 'neurology' ? 'Neurological Evaluation' :
+                             currentAssessment.specialty === 'psychiatry' ? 'Mental Health Assessment' :
+                             'Systems Review'}
                           </h3>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Pattern</div>
-                              <div className="font-medium text-gray-900 dark:text-white capitalize">
-                                {currentAssessment.jointInvolvement.pattern}
+                          
+                          {/* Show specialty-specific data */}
+                          {currentAssessment.systemsReview.musculoskeletal && (
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Pattern</div>
+                                <div className="font-medium text-gray-900 dark:text-white capitalize">
+                                  {currentAssessment.systemsReview.musculoskeletal.pattern}
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Distribution</div>
+                                <div className="font-medium text-gray-900 dark:text-white capitalize">
+                                  {currentAssessment.systemsReview.musculoskeletal.distribution}
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Duration</div>
+                                <div className="font-medium text-gray-900 dark:text-white">
+                                  {currentAssessment.systemsReview.musculoskeletal.duration}
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Affected Joints</div>
+                                <div className="font-medium text-gray-900 dark:text-white">
+                                  {currentAssessment.systemsReview.musculoskeletal.joints.join(', ')}
+                                </div>
                               </div>
                             </div>
-                            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Distribution</div>
-                              <div className="font-medium text-gray-900 dark:text-white capitalize">
-                                {currentAssessment.jointInvolvement.distribution}
+                          )}
+                          
+                          {/* Primary Symptoms for all specialties */}
+                          {currentAssessment.primarySymptoms.length > 0 && (
+                            <div className="mt-4">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">Primary Symptoms</div>
+                              <div className="flex flex-wrap gap-2">
+                                {currentAssessment.primarySymptoms.map((symptom, i) => (
+                                  <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                    {symptom}
+                                  </span>
+                                ))}
                               </div>
                             </div>
-                            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Duration</div>
-                              <div className="font-medium text-gray-900 dark:text-white">
-                                {currentAssessment.jointInvolvement.duration}
-                              </div>
-                            </div>
-                            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Affected Joints</div>
-                              <div className="font-medium text-gray-900 dark:text-white">
-                                {currentAssessment.jointInvolvement.joints.join(', ')}
-                              </div>
-                            </div>
+                          )}
+                          
+                          {/* Specialty Badge */}
+                          <div className="mt-4">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                              {currentAssessment.specialty.toUpperCase()} FOCUS
+                            </span>
                           </div>
                         </div>
 
@@ -853,8 +1033,8 @@ export default function HVECRheumatologyDashboard() {
                               </p>
                               <p className="text-gray-700 dark:text-gray-300">
                                 <strong>History of Present Illness:</strong> {selectedVeteran.name} is a {selectedVeteran.branch} veteran with 
-                                a {selectedVeteran.disabilityRating}% service-connected disability presenting with {currentAssessment?.jointInvolvement.pattern} joint 
-                                involvement in a {currentAssessment?.jointInvolvement.distribution} distribution. Symptoms have been {currentAssessment?.jointInvolvement.duration}.
+                                a {selectedVeteran.disabilityRating}% service-connected disability presenting with {currentAssessment?.chiefComplaint}. 
+                                Current specialty focus: {currentAssessment?.specialty}. Primary symptoms include: {currentAssessment?.primarySymptoms.join(', ')}.
                               </p>
                               <p className="text-gray-700 dark:text-gray-300">
                                 <strong>Military History:</strong> Served {selectedVeteran.serviceYears} with {selectedVeteran.combatService ? 'combat' : 'non-combat'} service. 

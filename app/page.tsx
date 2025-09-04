@@ -35,27 +35,31 @@ export default function Home() {
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
                 <Brain className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">HVEC Rheumatology</h2>
+              <h2 className="text-2xl font-bold text-white">HVEC Clinical Intelligence</h2>
             </div>
             <p className="text-gray-400 mb-6">
-              Physician-centric clinical decision support for rheumatology with AI-powered diagnostic assistance and VA service connection analysis.
+              Advanced clinical decision support system with AI-powered diagnostic reasoning, pattern recognition, and comprehensive VA service connection analysis.
             </p>
             <ul className="space-y-2 mb-6">
               <li className="text-sm text-gray-500 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                Differential diagnosis generator
+                Multi-specialty diagnostic engine
               </li>
               <li className="text-sm text-gray-500 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                ACR/EULAR criteria assessment
+                Evidence-based recommendations
               </li>
               <li className="text-sm text-gray-500 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                Clinical documentation assistant
+                Automated documentation & DBQ
+              </li>
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                Real-time veteran data integration
               </li>
             </ul>
             <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors">
-              <span className="text-sm font-medium">Launch HVEC Portal</span>
+              <span className="text-sm font-medium">Launch Clinical Intelligence</span>
               <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
