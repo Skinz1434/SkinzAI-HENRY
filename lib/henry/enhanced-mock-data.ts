@@ -31,6 +31,8 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
   
   const veterans: Veteran[] = [];
   
+  console.log(`🔧 Enhanced Mock Data Generator: Creating ${count} veterans with proper VA ratings`);
+  
   for (let i = 0; i < count; i++) {
     // Gender distribution (15% female veterans)
     const isFemale = Math.random() < 0.15;
@@ -228,6 +230,19 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
     };
     
     veterans.push(veteran);
+    
+    // Debug first few veterans
+    if (i < 3) {
+      console.log(`👤 Veteran ${i + 1}: ${veteran.name} - Rating: ${veteran.disabilityRating}% - Conditions: ${veteran.conditions?.length || 0}`);
+    }
+  }
+  
+  const invalidRatings = veterans.filter(v => v.disabilityRating % 10 !== 0);
+  if (invalidRatings.length > 0) {
+    console.error(`❌ Found ${invalidRatings.length} veterans with invalid ratings:`, 
+      invalidRatings.map(v => `${v.name}: ${v.disabilityRating}%`));
+  } else {
+    console.log(`✅ All ${veterans.length} veterans have valid VA ratings (10% increments)`);
   }
   
   return veterans;

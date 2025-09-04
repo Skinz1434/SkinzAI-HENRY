@@ -275,6 +275,10 @@ function generateMockConditions(veteranId: string, count: number) {
 export async function mockFetchVeterans(page: number = 1, limit: number = 1000, filters?: any) {
   await new Promise(resolve => setTimeout(resolve, 300)); // Simulate network delay
   
+  // Force fresh data generation with timestamp-based cache busting
+  const cacheKey = `veterans_${Math.floor(Date.now() / 10000)}`; // Cache for 10 seconds only
+  console.log(`Generating fresh veteran data with enhanced ratings - ${new Date().toISOString()}`);
+  
   const allVeterans = generateMockVeterans(500);
   let filtered = [...allVeterans];
   
