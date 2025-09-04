@@ -29,7 +29,8 @@
       "Bash(if [ ! -d \"node_modules\" ])",
       "Bash(then echo \"Installing dependencies...\")",
       "Bash(else echo \"Dependencies already installed\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(cd:*)"
     ],
     "deny": [],
     "ask": []

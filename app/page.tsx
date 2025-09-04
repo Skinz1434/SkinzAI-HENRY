@@ -25,6 +25,41 @@ export default function Home() {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* HVEC Rheumatology Card */}
+          <div 
+            onClick={() => window.location.href = '/hvec'}
+            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-8 border border-gray-700 hover:border-purple-500/50 transition-all cursor-pointer group relative z-10"
+            style={{ pointerEvents: 'auto' }}
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+                <Brain className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white">HVEC Rheumatology</h2>
+            </div>
+            <p className="text-gray-400 mb-6">
+              Physician-centric clinical decision support for rheumatology with AI-powered diagnostic assistance and VA service connection analysis.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                Differential diagnosis generator
+              </li>
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                ACR/EULAR criteria assessment
+              </li>
+              <li className="text-sm text-gray-500 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                Clinical documentation assistant
+              </li>
+            </ul>
+            <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors">
+              <span className="text-sm font-medium">Launch HVEC Portal</span>
+              <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
           {/* Dashboard Card */}
           <div 
             onClick={() => window.location.href = '/henry/dashboard-full'}
