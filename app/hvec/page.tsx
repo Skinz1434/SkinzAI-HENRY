@@ -24,7 +24,46 @@ import {
   Download,
   CheckCircle,
   Filter,
-  RefreshCw
+  RefreshCw,
+  Heart,
+  Microscope,
+  Pill,
+  ThermometerSun,
+  Zap,
+  BookOpen,
+  Link2,
+  MessageSquare,
+  Share2,
+  Printer,
+  Mail,
+  Sparkles,
+  TrendingDown,
+  AlertOctagon,
+  Award,
+  Beaker,
+  BrainCircuit,
+  HeartPulse,
+  Layers,
+  Network,
+  Workflow,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  TestTube,
+  ArrowRight,
+  PlayCircle,
+  PauseCircle,
+  CheckSquare,
+  XCircle,
+  Copy,
+  CheckCheck,
+  Settings,
+  HelpCircle,
+  Lightbulb,
+  GitBranch,
+  ArrowUpRight,
+  ArrowDownRight,
+  Gauge
 } from 'lucide-react';
 import { mockFetchVeterans } from '../../lib/henry/mock-data';
 import { Veteran } from '../../types';
@@ -143,10 +182,67 @@ const RHEUMATOLOGY_CONDITIONS = {
   'Polymyalgia Rheumatica': { icd10: 'M35.3', criteria: 'ACR/EULAR 2012' }
 };
 
+// Add chart component for visual analytics
+const MiniChart = ({ data, color = 'blue', height = 60 }: { data: number[], color?: string, height?: number }) => {
+  const max = Math.max(...data);
+  const min = Math.min(...data);
+  const range = max - min || 1;
+  
+  return (
+    <div className="relative" style={{ height: `${height}px` }}>
+      <svg className="w-full h-full">
+        <polyline
+          fill="none"
+          stroke={`currentColor`}
+          strokeWidth="2"
+          className={`text-${color}-500`}
+          points={data.map((value, index) => 
+            `${(index / (data.length - 1)) * 100},${height - ((value - min) / range) * height}`
+          ).join(' ')}
+        />
+        {data.map((value, index) => (
+          <circle
+            key={index}
+            cx={`${(index / (data.length - 1)) * 100}%`}
+            cy={height - ((value - min) / range) * height}
+            r="3"
+            className={`fill-${color}-500`}
+          />
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+// Risk indicator component
+const RiskIndicator = ({ level, label }: { level: 'low' | 'medium' | 'high' | 'critical', label: string }) => {
+  const colors = {
+    low: 'bg-green-100 text-green-800 border-green-300',
+    medium: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+    high: 'bg-orange-100 text-orange-800 border-orange-300',
+    critical: 'bg-red-100 text-red-800 border-red-300'
+  };
+  
+  const icons = {
+    low: <TrendingDown className="w-4 h-4" />,
+    medium: <TrendingUp className="w-4 h-4" />,
+    high: <AlertTriangle className="w-4 h-4" />,
+    critical: <AlertOctagon className="w-4 h-4" />
+  };
+  
+  return (
+    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border ${colors[level]}`}>
+      {icons[level]}
+      <span className="text-sm font-medium">{label}</span>
+      <span className="text-xs uppercase">{level}</span>
+    </div>
+  );
+};
+
 export default function HVECClinicalIntelligence() {
   const [selectedVeteran, setSelectedVeteran] = useState<Veteran | null>(null);
   const [veteranDetails, setVeteranDetails] = useState<VeteranProfileEnhanced | null>(null);
-  const [activeTab, setActiveTab] = useState<'assessment' | 'history' | 'diagnostics' | 'documentation'>('assessment');
+  const [activeTab, setActiveTab] = useState<'assessment' | 'history' | 'diagnostics' | 'documentation' | 'insights' | 'collaboration'>('assessment');
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentAssessment, setCurrentAssessment] = useState<ClinicalAssessment | null>(null);
@@ -596,31 +692,89 @@ export default function HVECClinicalIntelligence() {
           <div className="lg:col-span-3">
             {selectedVeteran ? (
               <>
-                {/* Patient Header */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                {/* Enhanced Patient Header with Visual Analytics */}
+                <div className="bg-gradient-to-r from-white to-blue-50 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg p-6 mb-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex items-start justify-between">
-                    <div>
-                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                        {selectedVeteran.name}
-                      </h2>
-                      <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
-                        <div>DOB: {selectedVeteran.dateOfBirth ? new Date(selectedVeteran.dateOfBirth).toLocaleDateString() : 'N/A'} • {selectedVeteran.gender || 'N/A'}</div>
-                        <div>{selectedVeteran.branch} • {selectedVeteran.rank || 'N/A'} • Service: {selectedVeteran.serviceStartDate ? new Date(selectedVeteran.serviceStartDate).getFullYear() : 'N/A'}-{selectedVeteran.serviceEndDate ? new Date(selectedVeteran.serviceEndDate).getFullYear() : 'Present'}</div>
-                        <div className="flex items-center gap-4 mt-2">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                            {selectedVeteran.disabilityRating}% SC
-                          </span>
-                          {selectedVeteran.combatService && (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
-                              Combat Veteran
-                            </span>
-                          )}
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-3">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                          {selectedVeteran.name}
+                        </h2>
+                        {veteranDetails && (
+                          <RiskIndicator 
+                            level={veteranDetails.analytics?.riskScores?.healthRisk || 'low'} 
+                            label="Health Risk"
+                          />
+                        )}
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            DOB: {selectedVeteran.dateOfBirth ? new Date(selectedVeteran.dateOfBirth).toLocaleDateString() : 'N/A'}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Shield className="w-4 h-4" />
+                            {selectedVeteran.branch} • {selectedVeteran.rank || 'N/A'}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Award className="w-4 h-4" />
+                            Service: {selectedVeteran.serviceStartDate ? new Date(selectedVeteran.serviceStartDate).getFullYear() : 'N/A'}-{selectedVeteran.serviceEndDate ? new Date(selectedVeteran.serviceEndDate).getFullYear() : 'Present'}
+                          </div>
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                          <div className="flex items-center gap-2">
+                            <HeartPulse className="w-4 h-4 text-red-500" />
+                            Vitals: <span className="font-medium text-green-600">Stable</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Pill className="w-4 h-4 text-blue-500" />
+                            Medications: <span className="font-medium">{veteranDetails?.mpd?.medications?.length || 0} Active</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Beaker className="w-4 h-4 text-purple-500" />
+                            Labs: <span className="font-medium text-yellow-600">Review Needed</span>
+                          </div>
                         </div>
                       </div>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                          <Gauge className="w-3 h-3" />
+                          {selectedVeteran.disabilityRating}% SC
+                        </span>
+                        {selectedVeteran.combatService && (
+                          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                            <Zap className="w-3 h-3" />
+                            Combat Veteran
+                          </span>
+                        )}
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                          <CheckCheck className="w-3 h-3" />
+                          {selectedVeteran.claims?.filter(c => c.status === 'APPROVED').length || 0} Approved Claims
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Last Visit</div>
-                      <div className="font-medium text-gray-900 dark:text-white">2 weeks ago</div>
+                    <div className="ml-6">
+                      {/* Quick Stats Card */}
+                      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+                        <div className="text-center mb-3">
+                          <div className="text-sm text-gray-500 dark:text-gray-400">Health Score</div>
+                          <div className="text-3xl font-bold text-green-600 dark:text-green-400">
+                            {veteranDetails?.analytics?.trends?.healthScores?.[veteranDetails.analytics.trends.healthScores.length - 1]?.score || 85}
+                          </div>
+                        </div>
+                        <div className="w-32">
+                          <MiniChart 
+                            data={veteranDetails?.analytics?.trends?.healthScores?.map(s => s.score) || [75, 78, 82, 80, 85, 88]} 
+                            color="green"
+                            height={40}
+                          />
+                        </div>
+                        <div className="mt-3 text-center">
+                          <div className="text-xs text-gray-500 dark:text-gray-400">Last Visit</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">2 weeks ago</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -628,12 +782,14 @@ export default function HVECClinicalIntelligence() {
                 {/* Navigation Tabs */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md mb-6">
                   <div className="border-b border-gray-200 dark:border-gray-700">
-                    <nav className="flex -mb-px">
+                    <nav className="flex -mb-px overflow-x-auto">
                       {[
                         { id: 'assessment', label: 'Clinical Assessment', icon: Stethoscope },
                         { id: 'history', label: 'Medical History', icon: Clock },
                         { id: 'diagnostics', label: 'Diagnostics & Labs', icon: BarChart3 },
-                        { id: 'documentation', label: 'Documentation', icon: FileText }
+                        { id: 'insights', label: 'AI Insights', icon: Sparkles },
+                        { id: 'documentation', label: 'Documentation', icon: FileText },
+                        { id: 'collaboration', label: 'Collaborate', icon: MessageSquare }
                       ].map(tab => (
                         <button
                           key={tab.id}
@@ -997,6 +1153,134 @@ export default function HVECClinicalIntelligence() {
 
                     {activeTab === 'diagnostics' && currentAssessment && (
                       <div className="space-y-6">
+                        {/* Interactive Diagnostic Workflow */}
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-6 mb-6">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Workflow className="w-5 h-5" />
+                            Interactive Diagnostic Workflow
+                          </h3>
+                          <div className="space-y-4">
+                            {/* Step 1: Initial Assessment */}
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-blue-500">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                  <CheckCircle className="w-5 h-5 text-green-500" />
+                                  <h4 className="font-medium text-gray-900 dark:text-white">Step 1: Initial Clinical Assessment</h4>
+                                </div>
+                                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Completed</span>
+                              </div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                                Review chief complaint, HPI, and military service history
+                              </p>
+                              <div className="grid grid-cols-2 gap-2 text-xs">
+                                <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                  <span className="text-gray-500">Primary Symptom:</span>
+                                  <span className="ml-2 font-medium">{currentAssessment.chiefComplaint}</span>
+                                </div>
+                                <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                  <span className="text-gray-500">Duration:</span>
+                                  <span className="ml-2 font-medium">6 months</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Step 2: Laboratory Orders */}
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-yellow-500">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                  <PlayCircle className="w-5 h-5 text-yellow-500 animate-pulse" />
+                                  <h4 className="font-medium text-gray-900 dark:text-white">Step 2: Laboratory Workup</h4>
+                                </div>
+                                <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">In Progress</span>
+                              </div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                Order appropriate laboratory tests based on clinical presentation
+                              </p>
+                              <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" checked className="rounded text-blue-600" readOnly />
+                                  <span>CBC with differential</span>
+                                </label>
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" checked className="rounded text-blue-600" readOnly />
+                                  <span>ESR, CRP</span>
+                                </label>
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" checked className="rounded text-blue-600" readOnly />
+                                  <span>RF, Anti-CCP antibodies</span>
+                                </label>
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" className="rounded text-blue-600" />
+                                  <span>ANA with reflex panel</span>
+                                </label>
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" className="rounded text-blue-600" />
+                                  <span>HLA-B27 (if indicated)</span>
+                                </label>
+                              </div>
+                              <button className="mt-3 px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors text-sm">
+                                Order Selected Tests
+                              </button>
+                            </div>
+
+                            {/* Step 3: Imaging Studies */}
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-gray-400">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                  <PauseCircle className="w-5 h-5 text-gray-400" />
+                                  <h4 className="font-medium text-gray-900 dark:text-white">Step 3: Imaging Studies</h4>
+                                </div>
+                                <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">Pending</span>
+                              </div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                                Order imaging based on laboratory results and clinical findings
+                              </p>
+                              <div className="opacity-50 space-y-2">
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" disabled className="rounded text-gray-400" />
+                                  <span>X-ray affected joints</span>
+                                </label>
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" disabled className="rounded text-gray-400" />
+                                  <span>MRI if early inflammatory arthritis suspected</span>
+                                </label>
+                                <label className="flex items-center gap-2 text-sm">
+                                  <input type="checkbox" disabled className="rounded text-gray-400" />
+                                  <span>Ultrasound for synovitis</span>
+                                </label>
+                              </div>
+                            </div>
+
+                            {/* Step 4: Diagnosis & Treatment */}
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-gray-400">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                  <Clock className="w-5 h-5 text-gray-400" />
+                                  <h4 className="font-medium text-gray-900 dark:text-white">Step 4: Diagnosis & Treatment Plan</h4>
+                                </div>
+                                <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">Not Started</span>
+                              </div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">
+                                Formulate diagnosis and initiate evidence-based treatment
+                              </p>
+                            </div>
+                          </div>
+                          
+                          {/* Workflow Actions */}
+                          <div className="mt-4 flex gap-3">
+                            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                              <PlayCircle className="w-4 h-4" />
+                              Continue Workflow
+                            </button>
+                            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+                              Save Progress
+                            </button>
+                            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors">
+                              Export Workflow
+                            </button>
+                          </div>
+                        </div>
+
                         {/* Inflammatory Markers */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
@@ -1082,11 +1366,21 @@ export default function HVECClinicalIntelligence() {
 
                     {activeTab === 'documentation' && (
                       <div className="space-y-6">
-                        {/* Clinical Note Generator */}
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                            Clinical Documentation Assistant
-                          </h3>
+                        {/* Documentation Template Selector */}
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                              Clinical Documentation Templates
+                            </h3>
+                            <select className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm border border-gray-300 dark:border-gray-600">
+                              <option value="consult">Consultation Note</option>
+                              <option value="progress">Progress Note</option>
+                              <option value="c&p">C&P Examination</option>
+                              <option value="dbq">VA DBQ</option>
+                              <option value="nexus">Nexus Letter</option>
+                              <option value="discharge">Discharge Summary</option>
+                            </select>
+                          </div>
                           <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-4">
                             <div className="flex items-start gap-3">
                               <Info className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5" />
@@ -1135,6 +1429,95 @@ export default function HVECClinicalIntelligence() {
                           </div>
                         </div>
 
+                        {/* Medical Reference Links */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                            Medical Guidelines & References
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+                              <h4 className="font-medium text-blue-900 dark:text-blue-200 mb-3 flex items-center gap-2">
+                                <ExternalLink className="w-4 h-4" />
+                                ACR Guidelines
+                              </h4>
+                              <div className="space-y-2">
+                                <a href="#" className="block text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                  • Rheumatoid Arthritis Management 2021
+                                </a>
+                                <a href="#" className="block text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                  • Lupus Nephritis Guidelines
+                                </a>
+                                <a href="#" className="block text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                  • Vasculitis Treatment Protocol
+                                </a>
+                                <a href="#" className="block text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                                  • Osteoarthritis Clinical Practice
+                                </a>
+                              </div>
+                            </div>
+                            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-4">
+                              <h4 className="font-medium text-green-900 dark:text-green-200 mb-3 flex items-center gap-2">
+                                <BookOpen className="w-4 h-4" />
+                                VA Clinical Resources
+                              </h4>
+                              <div className="space-y-2">
+                                <a href="#" className="block text-sm text-green-600 dark:text-green-400 hover:underline">
+                                  • VA/DoD Clinical Practice Guidelines
+                                </a>
+                                <a href="#" className="block text-sm text-green-600 dark:text-green-400 hover:underline">
+                                  • VASRD Rating Schedule
+                                </a>
+                                <a href="#" className="block text-sm text-green-600 dark:text-green-400 hover:underline">
+                                  • M21-1 Adjudication Manual
+                                </a>
+                                <a href="#" className="block text-sm text-green-600 dark:text-green-400 hover:underline">
+                                  • BVA Decision Database
+                                </a>
+                              </div>
+                            </div>
+                            <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700 rounded-lg p-4">
+                              <h4 className="font-medium text-purple-900 dark:text-purple-200 mb-3 flex items-center gap-2">
+                                <TestTube className="w-4 h-4" />
+                                Diagnostic Tools
+                              </h4>
+                              <div className="space-y-2">
+                                <a href="#" className="block text-sm text-purple-600 dark:text-purple-400 hover:underline">
+                                  • DAS28 Calculator
+                                </a>
+                                <a href="#" className="block text-sm text-purple-600 dark:text-purple-400 hover:underline">
+                                  • SLEDAI-2K Score
+                                </a>
+                                <a href="#" className="block text-sm text-purple-600 dark:text-purple-400 hover:underline">
+                                  • ACR/EULAR Criteria
+                                </a>
+                                <a href="#" className="block text-sm text-purple-600 dark:text-purple-400 hover:underline">
+                                  • HAQ-DI Assessment
+                                </a>
+                              </div>
+                            </div>
+                            <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700 rounded-lg p-4">
+                              <h4 className="font-medium text-orange-900 dark:text-orange-200 mb-3 flex items-center gap-2">
+                                <FileText className="w-4 h-4" />
+                                Medical Literature
+                              </h4>
+                              <div className="space-y-2">
+                                <a href="#" className="block text-sm text-orange-600 dark:text-orange-400 hover:underline">
+                                  • PubMed Central
+                                </a>
+                                <a href="#" className="block text-sm text-orange-600 dark:text-orange-400 hover:underline">
+                                  • UpToDate
+                                </a>
+                                <a href="#" className="block text-sm text-orange-600 dark:text-orange-400 hover:underline">
+                                  • Cochrane Reviews
+                                </a>
+                                <a href="#" className="block text-sm text-orange-600 dark:text-orange-400 hover:underline">
+                                  • NEJM Journal Watch
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         {/* DBQ Assistant */}
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
@@ -1161,6 +1544,179 @@ export default function HVECClinicalIntelligence() {
                                 <AlertCircle className="w-4 h-4 text-yellow-500" />
                                 Flare-up frequency and severity to be documented
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* AI Insights Tab */}
+                    {activeTab === 'insights' && (
+                      <div className="space-y-6">
+                        {/* AI-Powered Analysis */}
+                        <div>
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                              <BrainCircuit className="w-5 h-5 text-purple-600" />
+                              AI-Powered Clinical Analysis
+                            </h3>
+                            <button className="flex items-center gap-2 px-3 py-1.5 bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors">
+                              <RefreshCw className="w-4 h-4" />
+                              Regenerate Insights
+                            </button>
+                          </div>
+                          
+                          {/* Predictive Analytics Grid */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-sm text-blue-700 dark:text-blue-300 font-medium">Disease Progression</span>
+                                <TrendingUp className="w-4 h-4 text-blue-600" />
+                              </div>
+                              <div className="text-2xl font-bold text-blue-900 dark:text-blue-100">85%</div>
+                              <div className="text-xs text-blue-600 dark:text-blue-400">Likely stable in 6 months</div>
+                              <div className="mt-2">
+                                <MiniChart data={[70, 75, 73, 78, 82, 85]} color="blue" height={30} />
+                              </div>
+                            </div>
+                            
+                            <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-4 border border-green-200 dark:border-green-700">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-sm text-green-700 dark:text-green-300 font-medium">Treatment Response</span>
+                                <Heart className="w-4 h-4 text-green-600" />
+                              </div>
+                              <div className="text-2xl font-bold text-green-900 dark:text-green-100">92%</div>
+                              <div className="text-xs text-green-600 dark:text-green-400">Positive medication response</div>
+                              <div className="mt-2">
+                                <MiniChart data={[60, 68, 75, 82, 88, 92]} color="green" height={30} />
+                              </div>
+                            </div>
+                            
+                            <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-sm text-purple-700 dark:text-purple-300 font-medium">Risk Score</span>
+                                <Shield className="w-4 h-4 text-purple-600" />
+                              </div>
+                              <div className="text-2xl font-bold text-purple-900 dark:text-purple-100">Low</div>
+                              <div className="text-xs text-purple-600 dark:text-purple-400">2.3 composite score</div>
+                              <div className="mt-2">
+                                <MiniChart data={[4.5, 3.8, 3.2, 2.8, 2.5, 2.3]} color="purple" height={30} />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Pattern Recognition */}
+                          <div className="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-6">
+                            <div className="flex items-start gap-3">
+                              <Lightbulb className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5" />
+                              <div>
+                                <h4 className="font-medium text-yellow-900 dark:text-yellow-100 mb-1">Pattern Recognition Alert</h4>
+                                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                                  Patient's symptom constellation matches 87% with early-stage inflammatory arthritis pattern observed in 
+                                  234 similar veterans. Consider anti-CCP antibody testing and baseline hand/feet X-rays.
+                                </p>
+                                <div className="mt-2 flex gap-2">
+                                  <button className="text-xs text-yellow-700 dark:text-yellow-300 hover:text-yellow-900 dark:hover:text-yellow-100 underline">
+                                    View Similar Cases
+                                  </button>
+                                  <span className="text-yellow-400">•</span>
+                                  <button className="text-xs text-yellow-700 dark:text-yellow-300 hover:text-yellow-900 dark:hover:text-yellow-100 underline">
+                                    Review Evidence
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* AI Recommendations */}
+                          <div>
+                            <h4 className="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                              <Sparkles className="w-4 h-4 text-purple-500" />
+                              AI-Generated Recommendations
+                            </h4>
+                            <div className="space-y-3">
+                              <div className="flex items-start gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <div className="p-1 bg-blue-100 dark:bg-blue-900 rounded">
+                                  <Microscope className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="font-medium text-sm text-gray-900 dark:text-white">Order Genetic Marker Panel</div>
+                                  <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+                                    HLA-B27 testing recommended based on symptom pattern and family history
+                                  </div>
+                                </div>
+                                <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded">
+                                  High Priority
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Collaboration Tab */}
+                    {activeTab === 'collaboration' && (
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Network className="w-5 h-5 text-indigo-600" />
+                            Clinical Collaboration Network
+                          </h3>
+                          
+                          {/* Quick Actions */}
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <button className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors">
+                              <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                                <Share2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                              </div>
+                              <div className="text-left">
+                                <div className="font-medium text-sm text-gray-900 dark:text-white">Share Case</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">Request second opinion</div>
+                              </div>
+                            </button>
+                            
+                            <button className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 transition-colors">
+                              <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                                <MessageSquare className="w-5 h-5 text-green-600 dark:text-green-400" />
+                              </div>
+                              <div className="text-left">
+                                <div className="font-medium text-sm text-gray-900 dark:text-white">Consult Specialist</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">Connect with experts</div>
+                              </div>
+                            </button>
+                            
+                            <button className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors">
+                              <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                                <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                              </div>
+                              <div className="text-left">
+                                <div className="font-medium text-sm text-gray-900 dark:text-white">Send to Provider</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">Email summary</div>
+                              </div>
+                            </button>
+                          </div>
+                          
+                          {/* Export Options */}
+                          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                            <h4 className="font-medium text-sm text-gray-900 dark:text-white mb-3">Export & Share Options</h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                              <button className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <Download className="w-4 h-4" />
+                                <span className="text-sm">PDF Report</span>
+                              </button>
+                              <button className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <Printer className="w-4 h-4" />
+                                <span className="text-sm">Print</span>
+                              </button>
+                              <button className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <Copy className="w-4 h-4" />
+                                <span className="text-sm">Copy Link</span>
+                              </button>
+                              <button className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <Mail className="w-4 h-4" />
+                                <span className="text-sm">Email</span>
+                              </button>
                             </div>
                           </div>
                         </div>
