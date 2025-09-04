@@ -237,7 +237,7 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
   // Common condition patterns based on service
   if (combatService) {
     // Combat veterans often have PTSD/TBI
-    if (Math.random() > 0.3) {
+    if (Math.random() > 0.15) { // 85% chance for combat veterans
       const ptsd = VA_CONDITIONS['PTSD'];
       conditions.push({
         name: 'PTSD',
@@ -259,7 +259,7 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
   }
   
   // Musculoskeletal conditions are very common
-  if (Math.random() > 0.2) {
+  if (Math.random() > 0.1) { // 90% chance
     const lumbar = VA_CONDITIONS['Lumbar Strain'];
     conditions.push({
       name: 'Lumbar Strain',
@@ -290,7 +290,7 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
   }
   
   // Tinnitus is extremely common
-  if (Math.random() > 0.3) {
+  if (Math.random() > 0.2) { // 80% chance
     const tinnitus = VA_CONDITIONS['Tinnitus'];
     conditions.push({
       name: 'Tinnitus',
@@ -308,6 +308,21 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
       rating: sleepApnea.ratingOptions[Math.floor(Math.random() * (sleepApnea.ratingOptions.length - 1)) + 1],
       icd10: sleepApnea.icd10,
       dbq: sleepApnea.dbq
+    });
+  }
+  
+  // Ensure every veteran has at least one condition if they have any service time
+  if (conditions.length === 0) {
+    // Give them at least tinnitus (most common) or a minor musculoskeletal condition
+    const fallbackConditions = ['Tinnitus', 'Lumbar Strain', 'Right Knee Strain'];
+    const selectedCondition = fallbackConditions[Math.floor(Math.random() * fallbackConditions.length)];
+    const condition = VA_CONDITIONS[selectedCondition];
+    
+    conditions.push({
+      name: selectedCondition,
+      rating: selectedCondition === 'Tinnitus' ? 10 : condition.ratingOptions[1] || 10, // Skip 0% rating
+      icd10: condition.icd10,
+      dbq: condition.dbq
     });
   }
   
