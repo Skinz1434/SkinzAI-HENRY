@@ -6,7 +6,7 @@ import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   AreaChart, Area, BarChart, Bar, Cell, PieChart, Pie,
   ComposedChart, ReferenceLine, Brush, ScatterChart, Scatter,
-  Sankey, Treemap, RadialBarChart, RadialBar
+  RadialBarChart, RadialBar
 } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
