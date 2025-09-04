@@ -5,7 +5,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   AreaChart, Area, BarChart, Bar, Cell, PieChart, Pie,
-  ComposedChart, ReferenceLine, ScatterChart, Scatter, ZAxis
+  ComposedChart, ReferenceLine
 } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -760,83 +760,81 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
             <AlertOctagon className="w-5 h-5 text-red-500" />
             Risk Stratification Analysis
           </h3>
-          <div style={{ width: '100%', height: 350 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 40, left: 40 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
-              <XAxis 
-                type="number" 
-                dataKey="likelihood"
-                name="Likelihood"
-                domain={[0, 100]} 
-                stroke="#9CA3AF" 
-                fontSize={11}
-                label={{ value: 'Likelihood (%)', position: 'insideBottom', offset: -5 }}
-              />
-              <YAxis 
-                type="number" 
-                dataKey="impact"
-                name="Impact"
-                domain={[0, 100]} 
-                stroke="#9CA3AF" 
-                fontSize={11}
-                label={{ value: 'Impact Score', angle: -90, position: 'insideLeft' }}
-              />
-              <ZAxis range={[60, 400]} />
-              <Tooltip content={({ active, payload }) => {
-                if (!active || !payload || !payload[0]) return null;
-                const data = payload[0].payload;
-                if (!data) return null;
+          {/* Custom Risk Matrix Visualization */}
+          <div className="relative" style={{ width: '100%', height: 350 }}>
+            <svg width="100%" height="100%" viewBox="0 0 400 350" preserveAspectRatio="xMidYMid meet">
+              {/* Background grid */}
+              <defs>
+                <pattern id="grid" width="40" height="35" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 35" fill="none" stroke="#374151" strokeWidth="0.5" opacity="0.3"/>
+                </pattern>
+              </defs>
+              <rect width="400" height="350" fill="url(#grid)" />
+              
+              {/* Axes */}
+              <line x1="40" y1="310" x2="380" y2="310" stroke="#9CA3AF" strokeWidth="1"/>
+              <line x1="40" y1="30" x2="40" y2="310" stroke="#9CA3AF" strokeWidth="1"/>
+              
+              {/* Axis labels */}
+              <text x="200" y="340" textAnchor="middle" className="fill-gray-500 text-xs">Likelihood (%)</text>
+              <text x="15" y="170" textAnchor="middle" className="fill-gray-500 text-xs" transform="rotate(-90, 15, 170)">Impact Score</text>
+              
+              {/* Reference lines */}
+              <line x1="210" y1="30" x2="210" y2="310" stroke="#9CA3AF" strokeDasharray="3 3" strokeWidth="0.5" opacity="0.5"/>
+              <line x1="40" y1="170" x2="380" y2="170" stroke="#9CA3AF" strokeDasharray="3 3" strokeWidth="0.5" opacity="0.5"/>
+              
+              {/* Risk zones */}
+              <rect x="210" y="30" width="170" height="140" fill="#EF4444" opacity="0.05"/>
+              <rect x="40" y="30" width="170" height="140" fill="#F59E0B" opacity="0.05"/>
+              <rect x="210" y="170" width="170" height="140" fill="#3B82F6" opacity="0.05"/>
+              <rect x="40" y="170" width="170" height="140" fill="#10B981" opacity="0.05"/>
+              
+              {/* Data points */}
+              {(riskStratification?.conditions || []).map((condition: any, index: number) => {
+                const x = 40 + (condition.likelihood / 100) * 340;
+                const y = 310 - (condition.impact / 100) * 280;
+                const color = condition.riskLevel === 'critical' ? '#EF4444' :
+                             condition.riskLevel === 'high' ? '#F59E0B' :
+                             condition.riskLevel === 'medium' ? '#3B82F6' :
+                             '#10B981';
                 
                 return (
-                  <div className="bg-gray-900/95 backdrop-blur-sm text-white p-3 rounded-lg border border-gray-700 shadow-2xl">
-                    <p className="font-bold text-blue-400">{data.condition || 'Unknown'}</p>
-                    <p className="text-xs mt-1">Likelihood: {(data.likelihood || 0).toFixed(1)}%</p>
-                    <p className="text-xs">Impact: {data.impact || 0}</p>
-                    <p className="text-xs">Risk Level: <span className={
-                      data.riskLevel === 'critical' ? 'text-red-400' :
-                      data.riskLevel === 'high' ? 'text-yellow-400' :
-                      'text-green-400'
-                    }>{data.riskLevel || 'unknown'}</span></p>
-                    <p className="text-xs">Timeframe: {data.timeframe || 'N/A'}</p>
-                    {data.modifiable && (
-                      <p className="text-xs text-green-400 mt-1">✓ Modifiable risk</p>
-                    )}
-                  </div>
-                );
-              }} />
-              <Scatter 
-                name="Health Conditions" 
-                data={riskStratification?.conditions || []} 
-                fill="#8884d8"
-                shape={(props: any) => {
-                  const { cx, cy, payload } = props;
-                  // Always return a valid element, even if empty
-                  if (!cx || !cy || !payload) {
-                    return <circle cx={0} cy={0} r={0} fill="transparent" />;
-                  }
-                  
-                  const color = payload.riskLevel === 'critical' ? '#EF4444' :
-                               payload.riskLevel === 'high' ? '#F59E0B' :
-                               payload.riskLevel === 'medium' ? '#3B82F6' :
-                               '#10B981';
-                  return (
+                  <g key={index}>
                     <circle 
-                      cx={cx} 
-                      cy={cy} 
-                      r={6} 
-                      fill={color} 
-                      fillOpacity={0.8}
+                      cx={x} 
+                      cy={y} 
+                      r="8" 
+                      fill={color}
+                      fillOpacity="0.8"
                       stroke={color}
-                      strokeWidth={2}
-                    />
-                  );
-                }}
-              />
-              <ReferenceLine x={50} stroke="#9CA3AF" strokeDasharray="3 3" />
-              <ReferenceLine y={50} stroke="#9CA3AF" strokeDasharray="3 3" />
-            </ScatterChart>
-          </ResponsiveContainer>
+                      strokeWidth="2"
+                      className="cursor-pointer hover:r-10 transition-all"
+                    >
+                      <title>{`${condition.condition}: Likelihood ${condition.likelihood}%, Impact ${condition.impact}`}</title>
+                    </circle>
+                    {index < 3 && (
+                      <text x={x} y={y - 12} textAnchor="middle" className="fill-gray-700 dark:fill-gray-300 text-xs font-medium">
+                        {condition.condition.split(' ')[0]}
+                      </text>
+                    )}
+                  </g>
+                );
+              })}
+              
+              {/* Axis ticks and values */}
+              {[0, 25, 50, 75, 100].map(val => (
+                <g key={`x-${val}`}>
+                  <line x1={40 + (val/100)*340} y1="310" x2={40 + (val/100)*340} y2="315" stroke="#9CA3AF" strokeWidth="1"/>
+                  <text x={40 + (val/100)*340} y="325" textAnchor="middle" className="fill-gray-500 text-xs">{val}</text>
+                </g>
+              ))}
+              {[0, 25, 50, 75, 100].map(val => (
+                <g key={`y-${val}`}>
+                  <line x1="35" y1={310 - (val/100)*280} x2="40" y2={310 - (val/100)*280} stroke="#9CA3AF" strokeWidth="1"/>
+                  <text x="25" y={315 - (val/100)*280} textAnchor="end" className="fill-gray-500 text-xs">{val}</text>
+                </g>
+              ))}
+            </svg>
           </div>
           
           {/* Risk Legend */}
