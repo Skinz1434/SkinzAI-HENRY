@@ -62,7 +62,8 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
     
     const serviceYears = Math.random() < 0.4 ? (2 + Math.floor(Math.random() * 4)) : (4 + Math.floor(Math.random() * 16));
     const branch = Object.values(Branch)[Math.floor(Math.random() * Object.values(Branch).length)];
-    const rank = getRankForBranch(branch, serviceYears);
+    const isOfficer = Math.random() < 0.2; // 20% chance of being an officer
+    const rank = getRankForBranch(branch, isOfficer);
     
     // Combat service probability based on era and branch
     const combatService = (serviceEra === 'OIF/OEF' && Math.random() > 0.3) ||
@@ -97,7 +98,7 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       
       // Double-check: if we somehow still have an invalid rating, force it to valid
       if (disabilityRating % 10 !== 0) {
-        console.warn(`Invalid VA rating detected: ${disabilityRating}% for ${fullName}, fixing to ${validateVARating(disabilityRating)}%`);
+        console.warn(`Invalid VA rating detected: ${disabilityRating}%, fixing to ${validateVARating(disabilityRating)}%`);
         disabilityRating = validateVARating(disabilityRating);
       }
       
@@ -115,15 +116,13 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
         effectiveDate: new Date(serviceStartYear + serviceYears, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
         lastUpdated: new Date(),
         lastActionDate: new Date(),
-        notes: 'Enhanced claim generation with proper VA rating calculation',
+        notes: [],
         documents: [],
-        evidence: {
-          medicalRecords: Math.floor(Math.random() * 20) + 5,
-          layStatements: Math.floor(Math.random() * 3),
-          serviceRecords: Math.floor(Math.random() * 10) + 3
-        }
+        evidence: [] // Fix: evidence should be an array, not an object
       }));
     }
+    
+    const fullName = `${firstName} ${lastName}`;
     
     // Calculate monthly compensation based on actual VA rates (2024)  
     const dependents = Math.floor(Math.random() * 3);
@@ -138,8 +137,6 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
     else if (riskScore >= 50) riskLevel = 'Moderate';
     else if (riskScore >= 25) riskLevel = 'Low';
     else riskLevel = 'Minimal';
-    
-    const fullName = `${firstName} ${lastName}`;
     const dateOfBirth = new Date(1950 + Math.floor(Math.random() * 50), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28));
     
     // Create veteran object
@@ -156,14 +153,6 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@email.com`,
       phone: `${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
       
-      // Address
-      address: {
-        street: `${Math.floor(Math.random() * 9999) + 1} Main St`,
-        city: ['Washington', 'Arlington', 'Alexandria', 'Richmond', 'Norfolk'][Math.floor(Math.random() * 5)],
-        state: ['DC', 'VA', 'MD'][Math.floor(Math.random() * 3)],
-        zipCode: `${20000 + Math.floor(Math.random() * 999)}`
-      },
-      
       // Service Information
       branch,
       rank: typeof rank === 'string' ? rank : rank.rank,
@@ -171,7 +160,6 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       serviceEndDate: new Date(serviceStartYear + serviceYears, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)),
       dischargeStatus,
       combatService,
-      unit: generateUnit(branch),
       
       // Benefits
       disabilityRating,
@@ -181,11 +169,6 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       // Risk Assessment
       riskScore,
       riskLevel,
-      lastAssessmentDate: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000),
-      nextAppointmentDate: new Date(Date.now() + Math.floor(Math.random() * 90) * 24 * 60 * 60 * 1000),
-      
-      // Priority Group (VA healthcare)
-      priorityGroup: calculatePriorityGroup(disabilityRating, combatService),
       
       // Sync Information
       syncStatus: 'success',

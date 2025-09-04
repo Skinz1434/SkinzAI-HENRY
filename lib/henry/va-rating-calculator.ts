@@ -334,7 +334,7 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
     // Give them at least tinnitus (most common) or a minor musculoskeletal condition
     const fallbackConditions = ['Tinnitus', 'Lumbar Strain', 'Right Knee Strain'];
     const selectedCondition = fallbackConditions[Math.floor(Math.random() * fallbackConditions.length)];
-    const condition = VA_CONDITIONS[selectedCondition];
+    const condition = VA_CONDITIONS[selectedCondition as keyof typeof VA_CONDITIONS];
     
     conditions.push({
       name: selectedCondition,
