@@ -67,9 +67,6 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
   const [showPredictions, setShowPredictions] = useState(true);
   const [selectedLabCategory, setSelectedLabCategory] = useState<'inflammatory' | 'metabolic' | 'cardiac' | 'hepatic' | 'renal' | 'hematology'>('inflammatory');
   
-  // Debug logging
-  console.log('DiagnosticsEnhanced render:', { veteran, assessment });
-  
   // Early return if no veteran data
   if (!veteran) {
     return (
@@ -477,9 +474,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       }
     ];
 
-    const result = { conditions, recommendations };
-    console.log('Risk stratification data:', result);
-    return result;
+    return { conditions, recommendations };
   }, [veteran, biomarkerData]);
 
   // Lab category selector component
@@ -816,7 +811,10 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                 fill="#8884d8"
                 shape={(props: any) => {
                   const { cx, cy, payload } = props;
-                  if (!cx || !cy || !payload) return null;
+                  // Always return a valid element, even if empty
+                  if (!cx || !cy || !payload) {
+                    return <circle cx={0} cy={0} r={0} fill="transparent" />;
+                  }
                   
                   const color = payload.riskLevel === 'critical' ? '#EF4444' :
                                payload.riskLevel === 'high' ? '#F59E0B' :
