@@ -1,0 +1,12 @@
+DEPLOYMENT VERSION: 2.1.1
+DATE: 2025-09-04
+STATUS: Fixed TypeScript Compilation
+
+Changes in this version:
+- Fixed all TypeScript compilation errors
+- Veteran interface now matches types/index.ts
+- VA ratings use proper 10% increments only
+- Enhanced mock data generator active
+- Consistent conditions with ratings
+
+This file forces Vercel to rebuild with latest commits.
