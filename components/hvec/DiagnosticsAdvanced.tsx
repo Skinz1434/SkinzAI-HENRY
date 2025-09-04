@@ -29,7 +29,7 @@ import {
   Wind, Dna, Syringe, Thermometer, HeartPulse, HelpCircle,
   ChevronDown, ChevronUp, ExternalLink, BookOpen, GraduationCap,
   Lightbulb, Clipboard, FileText, Award, ShieldCheck, BrainCircuit,
-  Fingerprint, Workflow, GitBranch, Share2, Download
+  Fingerprint, Workflow, GitBranch, Share2, Download, ArrowRight
 } from 'lucide-react';
 
 // Register Chart.js components
@@ -1019,6 +1019,412 @@ export const DiagnosticsAdvanced: React.FC<DiagnosticsAdvancedProps> = ({ vetera
           </motion.div>
         )}
 
+        {activeTab === 'trends' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-6"
+          >
+            {/* Time Range Selector */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-blue-500" />
+                  Clinical Trends & Predictive Analytics
+                </h3>
+                <div className="flex gap-2">
+                  {(['3m', '6m', '1y', 'all'] as const).map(range => (
+                    <button
+                      key={range}
+                      onClick={() => setTimeRange(range)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                        timeRange === range
+                          ? 'bg-blue-600 text-white shadow-lg'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      }`}
+                    >
+                      {range === 'all' ? 'All Time' : range.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Primary Biomarker Trends */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-red-500" />
+                  Inflammatory Markers Trend
+                </h4>
+                <div style={{ height: '250px' }}>
+                  <Line
+                    data={{
+                      labels: Array.from({ length: timeRange === '3m' ? 3 : timeRange === '6m' ? 6 : timeRange === '1y' ? 12 : 24 }, 
+                        (_, i) => {
+                          const date = new Date();
+                          date.setMonth(date.getMonth() - (timeRange === '3m' ? 3 : timeRange === '6m' ? 6 : timeRange === '1y' ? 12 : 24) + i);
+                          return date.toLocaleDateString('en-US', { month: 'short' });
+                        }
+                      ),
+                      datasets: [
+                        {
+                          label: 'CRP (mg/L)',
+                          data: generateLabData?.inflammatory?.CRP?.history?.map(h => parseFloat(h.value)) || [],
+                          borderColor: 'rgb(239, 68, 68)',
+                          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                          tension: 0.4,
+                          yAxisID: 'y'
+                        },
+                        {
+                          label: 'ESR (mm/hr)',
+                          data: generateLabData?.inflammatory?.ESR?.history?.map(h => h.value) || [],
+                          borderColor: 'rgb(245, 158, 11)',
+                          backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                          tension: 0.4,
+                          yAxisID: 'y1'
+                        },
+                        {
+                          label: 'IL-6 (pg/mL)',
+                          data: generateLabData?.inflammatory?.IL6?.history?.map(h => parseFloat(h.value)) || [],
+                          borderColor: 'rgb(168, 85, 247)',
+                          backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                          tension: 0.4,
+                          yAxisID: 'y'
+                        }
+                      ]
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      interaction: {
+                        mode: 'index' as const,
+                        intersect: false
+                      },
+                      plugins: {
+                        legend: {
+                          position: 'top' as const,
+                          labels: { font: { size: 10 } }
+                        },
+                        tooltip: {
+                          callbacks: {
+                            label: (context) => {
+                              const label = context.dataset.label || '';
+                              const value = context.parsed.y;
+                              const trend = value > (context.dataset.data[Math.max(0, context.dataIndex - 1)] as number) ? '↑' : '↓';
+                              return `${label}: ${value} ${trend}`;
+                            }
+                          }
+                        }
+                      },
+                      scales: {
+                        y: {
+                          type: 'linear' as const,
+                          display: true,
+                          position: 'left' as const,
+                          title: { display: true, text: 'CRP & IL-6', font: { size: 10 } },
+                          grid: { drawOnChartArea: false }
+                        },
+                        y1: {
+                          type: 'linear' as const,
+                          display: true,
+                          position: 'right' as const,
+                          title: { display: true, text: 'ESR', font: { size: 10 } },
+                          grid: { drawOnChartArea: true, color: 'rgba(156, 163, 175, 0.1)' }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Heart className="w-4 h-4 text-blue-500" />
+                  Metabolic & Renal Function
+                </h4>
+                <div style={{ height: '250px' }}>
+                  <Line
+                    data={{
+                      labels: Array.from({ length: timeRange === '3m' ? 3 : timeRange === '6m' ? 6 : timeRange === '1y' ? 12 : 24 }, 
+                        (_, i) => {
+                          const date = new Date();
+                          date.setMonth(date.getMonth() - (timeRange === '3m' ? 3 : timeRange === '6m' ? 6 : timeRange === '1y' ? 12 : 24) + i);
+                          return date.toLocaleDateString('en-US', { month: 'short' });
+                        }
+                      ),
+                      datasets: [
+                        {
+                          label: 'Glucose (mg/dL)',
+                          data: generateLabData?.metabolic?.Glucose?.history?.map(h => h.value) || [],
+                          borderColor: 'rgb(59, 130, 246)',
+                          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                          tension: 0.4,
+                          yAxisID: 'y'
+                        },
+                        {
+                          label: 'eGFR (mL/min)',
+                          data: generateLabData?.metabolic?.eGFR?.history?.map(h => h.value) || [],
+                          borderColor: 'rgb(16, 185, 129)',
+                          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                          tension: 0.4,
+                          yAxisID: 'y1'
+                        },
+                        {
+                          label: 'Creatinine (mg/dL)',
+                          data: generateLabData?.metabolic?.Creatinine?.history?.map(h => parseFloat(h.value)) || [],
+                          borderColor: 'rgb(251, 146, 60)',
+                          backgroundColor: 'rgba(251, 146, 60, 0.1)',
+                          tension: 0.4,
+                          yAxisID: 'y2',
+                          hidden: true
+                        }
+                      ]
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: {
+                          position: 'top' as const,
+                          labels: { font: { size: 10 } }
+                        }
+                      },
+                      scales: {
+                        y: {
+                          type: 'linear' as const,
+                          display: true,
+                          position: 'left' as const,
+                          title: { display: true, text: 'Glucose', font: { size: 10 } }
+                        },
+                        y1: {
+                          type: 'linear' as const,
+                          display: true,
+                          position: 'right' as const,
+                          title: { display: true, text: 'eGFR', font: { size: 10 } },
+                          grid: { drawOnChartArea: false }
+                        },
+                        y2: {
+                          type: 'linear' as const,
+                          display: false
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Disease Activity Score Trends */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <Gauge className="w-4 h-4 text-purple-500" />
+                Disease Activity & Functional Assessment Scores
+              </h4>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+                {/* DAS28 Score */}
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-gray-600 dark:text-gray-400">DAS28-CRP</span>
+                    <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                      {(3.2 + (veteran?.disabilityRating || 0) * 0.02).toFixed(1)}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {parseFloat((3.2 + (veteran?.disabilityRating || 0) * 0.02).toFixed(1)) > 5.1 ? 'High Activity' :
+                     parseFloat((3.2 + (veteran?.disabilityRating || 0) * 0.02).toFixed(1)) > 3.2 ? 'Moderate Activity' :
+                     parseFloat((3.2 + (veteran?.disabilityRating || 0) * 0.02).toFixed(1)) > 2.6 ? 'Low Activity' : 'Remission'}
+                  </div>
+                  <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      className="h-2 rounded-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500"
+                      style={{ width: `${Math.min(100, ((3.2 + (veteran?.disabilityRating || 0) * 0.02) / 10) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* CDAI Score */}
+                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-gray-600 dark:text-gray-400">CDAI</span>
+                    <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                      {Math.floor(150 + (veteran?.disabilityRating || 0) * 2)}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {Math.floor(150 + (veteran?.disabilityRating || 0) * 2) > 300 ? 'High Activity' :
+                     Math.floor(150 + (veteran?.disabilityRating || 0) * 2) > 150 ? 'Moderate Activity' :
+                     Math.floor(150 + (veteran?.disabilityRating || 0) * 2) > 75 ? 'Low Activity' : 'Remission'}
+                  </div>
+                  <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      className="h-2 rounded-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500"
+                      style={{ width: `${Math.min(100, (Math.floor(150 + (veteran?.disabilityRating || 0) * 2) / 500) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* HAQ-DI Score */}
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-gray-600 dark:text-gray-400">HAQ-DI</span>
+                    <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                      {(0.5 + (veteran?.disabilityRating || 0) * 0.015).toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {parseFloat((0.5 + (veteran?.disabilityRating || 0) * 0.015).toFixed(2)) > 2 ? 'Severe Disability' :
+                     parseFloat((0.5 + (veteran?.disabilityRating || 0) * 0.015).toFixed(2)) > 1 ? 'Moderate Disability' :
+                     'Mild Disability'}
+                  </div>
+                  <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      className="h-2 rounded-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500"
+                      style={{ width: `${Math.min(100, ((0.5 + (veteran?.disabilityRating || 0) * 0.015) / 3) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Historical Score Trends Chart */}
+              <div style={{ height: '300px' }}>
+                <Line
+                  data={{
+                    labels: Array.from({ length: 12 }, (_, i) => {
+                      const date = new Date();
+                      date.setMonth(date.getMonth() - 12 + i);
+                      return date.toLocaleDateString('en-US', { month: 'short' });
+                    }),
+                    datasets: [
+                      {
+                        label: 'DAS28-CRP',
+                        data: Array.from({ length: 12 }, (_, i) => 
+                          (3.2 + (veteran?.disabilityRating || 0) * 0.02 + Math.sin(i * 0.5) * 0.5).toFixed(1)
+                        ),
+                        borderColor: 'rgb(168, 85, 247)',
+                        backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y'
+                      },
+                      {
+                        label: 'CDAI (÷100)',
+                        data: Array.from({ length: 12 }, (_, i) => 
+                          ((150 + (veteran?.disabilityRating || 0) * 2 + Math.cos(i * 0.3) * 30) / 100).toFixed(1)
+                        ),
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y'
+                      },
+                      {
+                        label: 'HAQ-DI (×10)',
+                        data: Array.from({ length: 12 }, (_, i) => 
+                          ((0.5 + (veteran?.disabilityRating || 0) * 0.015 - i * 0.01) * 10).toFixed(1)
+                        ),
+                        borderColor: 'rgb(16, 185, 129)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y'
+                      }
+                    ]
+                  }}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: {
+                        position: 'top' as const,
+                        labels: { font: { size: 11 } }
+                      }
+                    },
+                    scales: {
+                      y: {
+                        type: 'linear' as const,
+                        display: true,
+                        position: 'left' as const,
+                        title: { display: true, text: 'Score Value', font: { size: 10 } }
+                      }
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Predictive Risk Trajectories */}
+            <div className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-xl p-6 shadow-lg">
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <AlertOctagon className="w-4 h-4 text-orange-500" />
+                Predictive Risk Trajectories (6-Month Projection)
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                {[
+                  { 
+                    label: 'CV Event Risk',
+                    current: 15 + (veteran?.disabilityRating || 0) * 0.3,
+                    projected: 18 + (veteran?.disabilityRating || 0) * 0.35,
+                    color: 'red'
+                  },
+                  {
+                    label: 'Flare Risk',
+                    current: 25 + (veteran?.disabilityRating || 0) * 0.4,
+                    projected: 30 + (veteran?.disabilityRating || 0) * 0.45,
+                    color: 'orange'
+                  },
+                  {
+                    label: 'Hospitalization',
+                    current: 10 + (veteran?.disabilityRating || 0) * 0.2,
+                    projected: 12 + (veteran?.disabilityRating || 0) * 0.25,
+                    color: 'purple'
+                  },
+                  {
+                    label: 'Functional Decline',
+                    current: 20 + (veteran?.disabilityRating || 0) * 0.5,
+                    projected: 28 + (veteran?.disabilityRating || 0) * 0.6,
+                    color: 'blue'
+                  }
+                ].map(risk => (
+                  <div key={risk.label} className="bg-white/50 dark:bg-gray-800/50 backdrop-blur rounded-lg p-3">
+                    <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">{risk.label}</div>
+                    <div className="flex items-end justify-between mb-2">
+                      <div>
+                        <div className="text-xs text-gray-500">Current</div>
+                        <div className={`text-lg font-bold text-${risk.color}-600 dark:text-${risk.color}-400`}>
+                          {risk.current.toFixed(0)}%
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-gray-400" />
+                      <div>
+                        <div className="text-xs text-gray-500">6mo</div>
+                        <div className={`text-lg font-bold text-${risk.color}-700 dark:text-${risk.color}-300`}>
+                          {risk.projected.toFixed(0)}%
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs">
+                      {risk.projected > risk.current ? (
+                        <>
+                          <TrendingUp className="w-3 h-3 text-red-500" />
+                          <span className="text-red-600 dark:text-red-400">
+                            +{(risk.projected - risk.current).toFixed(0)}%
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <TrendingDown className="w-3 h-3 text-green-500" />
+                          <span className="text-green-600 dark:text-green-400">
+                            {(risk.projected - risk.current).toFixed(0)}%
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {activeTab === 'differential' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1026,52 +1432,252 @@ export const DiagnosticsAdvanced: React.FC<DiagnosticsAdvancedProps> = ({ vetera
             exit={{ opacity: 0, y: -20 }}
             className="space-y-6"
           >
-            {/* Differential Diagnosis Ranking */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                <Brain className="w-5 h-5 text-purple-500" />
-                Differential Diagnosis Ranking
-              </h3>
-              <div className="space-y-3">
-                {differentialDiagnosis.map((dx, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                    <div className="flex-shrink-0">
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${
-                        idx === 0 ? 'bg-gradient-to-br from-purple-500 to-pink-500' :
-                        idx === 1 ? 'bg-gradient-to-br from-blue-500 to-cyan-500' :
-                        'bg-gray-400'
-                      }`}>
-                        {idx + 1}
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-gray-900 dark:text-white">
-                          {dx.disease}
-                        </h4>
-                        <div className="flex items-center gap-2">
-                          <span className={`text-sm px-2 py-1 rounded ${
-                            dx.classification.includes('Classifies') 
-                              ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-                              : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                          }`}>
-                            {dx.classification}
-                          </span>
-                          <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                            {dx.confidence}% confidence
-                          </span>
+            {/* Enhanced Differential Diagnosis with Workup Plans */}
+            <div className="space-y-6">
+              {/* Differential Diagnosis Overview */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Brain className="w-5 h-5 text-purple-500" />
+                  Comprehensive Differential Diagnosis & Clinical Workup
+                </h3>
+                <div className="space-y-4">
+                  {differentialDiagnosis.map((dx, idx) => (
+                    <div key={idx} className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                      <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
+                        <div className="flex items-center gap-4">
+                          <div className="flex-shrink-0">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg ${
+                              idx === 0 ? 'bg-gradient-to-br from-purple-500 to-pink-500 shadow-purple-500/30 shadow-lg' :
+                              idx === 1 ? 'bg-gradient-to-br from-blue-500 to-cyan-500 shadow-blue-500/30 shadow-lg' :
+                              idx === 2 ? 'bg-gradient-to-br from-green-500 to-emerald-500 shadow-green-500/30 shadow-lg' :
+                              'bg-gray-400'
+                            }`}>
+                              {idx + 1}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="text-lg font-bold text-gray-900 dark:text-white">
+                                {dx.disease}
+                              </h4>
+                              <div className="flex items-center gap-3">
+                                <span className={`text-sm px-3 py-1.5 rounded-full font-medium ${
+                                  dx.classification.includes('Classifies') 
+                                    ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
+                                    : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                                }`}>
+                                  {dx.classification}
+                                </span>
+                                <div className="text-right">
+                                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                                    {dx.confidence}%
+                                  </div>
+                                  <div className="text-xs text-gray-500 dark:text-gray-400">Confidence</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Quick Metrics */}
+                            <div className="flex items-center gap-4 text-sm">
+                              <div className="flex items-center gap-1">
+                                <CheckCircle className="w-4 h-4 text-green-500" />
+                                <span className="text-gray-600 dark:text-gray-400">
+                                  {dx.met.length} criteria met
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <AlertCircle className="w-4 h-4 text-yellow-500" />
+                                <span className="text-gray-600 dark:text-gray-400">
+                                  {dx.missing.length} tests pending
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Target className="w-4 h-4 text-blue-500" />
+                                <span className="text-gray-600 dark:text-gray-400">
+                                  Score: {dx.score}/{dx.threshold}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                        <span>Score: {dx.score}/{dx.threshold}</span>
-                        <span>•</span>
-                        <span>{dx.met.length} criteria met</span>
-                        <span>•</span>
-                        <span>{dx.missing.length} tests pending</span>
+                      
+                      {/* Detailed Workup Plan */}
+                      <div className="p-4 space-y-4">
+                        {/* Met Criteria */}
+                        {dx.met.length > 0 && (
+                          <div>
+                            <h5 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-green-500" />
+                              Positive Findings
+                            </h5>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                              {dx.met.map((item: string, i: number) => (
+                                <div key={i} className="flex items-start gap-2 text-sm">
+                                  <CheckCircle className="w-3 h-3 text-green-500 mt-0.5" />
+                                  <span className="text-gray-600 dark:text-gray-400">{item}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Recommended Workup */}
+                        <div>
+                          <h5 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
+                            <Microscope className="w-4 h-4 text-blue-500" />
+                            Recommended Diagnostic Workup
+                          </h5>
+                          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              {/* Laboratory Tests */}
+                              <div>
+                                <div className="text-xs font-medium text-blue-700 dark:text-blue-300 mb-2">Laboratory Tests</div>
+                                <div className="space-y-1">
+                                  {dx.missing.map((test: string, i: number) => (
+                                    <div key={i} className="flex items-center gap-2 text-xs">
+                                      <TestTube className="w-3 h-3 text-blue-500" />
+                                      <span className="text-gray-700 dark:text-gray-300">{test}</span>
+                                    </div>
+                                  ))}
+                                  {idx === 0 && ['Anti-Sm', 'Anti-RNP', 'Complement C3/C4', 'Urinalysis'].map(test => (
+                                    <div key={test} className="flex items-center gap-2 text-xs">
+                                      <TestTube className="w-3 h-3 text-blue-500" />
+                                      <span className="text-gray-700 dark:text-gray-300">{test}</span>
+                                    </div>
+                                  ))}
+                                  {idx === 1 && ['Anti-CCP Ab', 'RF Titer', 'Hand X-rays', 'Joint US'].map(test => (
+                                    <div key={test} className="flex items-center gap-2 text-xs">
+                                      <TestTube className="w-3 h-3 text-blue-500" />
+                                      <span className="text-gray-700 dark:text-gray-300">{test}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              {/* Imaging Studies */}
+                              <div>
+                                <div className="text-xs font-medium text-blue-700 dark:text-blue-300 mb-2">Imaging Studies</div>
+                                <div className="space-y-1">
+                                  {idx === 0 && ['Chest X-ray', 'Echo if pericarditis suspected'].map(test => (
+                                    <div key={test} className="flex items-center gap-2 text-xs">
+                                      <FileSearch className="w-3 h-3 text-purple-500" />
+                                      <span className="text-gray-700 dark:text-gray-300">{test}</span>
+                                    </div>
+                                  ))}
+                                  {idx === 1 && ['Bilateral hand/feet X-rays', 'MRI for early erosions'].map(test => (
+                                    <div key={test} className="flex items-center gap-2 text-xs">
+                                      <FileSearch className="w-3 h-3 text-purple-500" />
+                                      <span className="text-gray-700 dark:text-gray-300">{test}</span>
+                                    </div>
+                                  ))}
+                                  {idx === 2 && ['Joint X-ray/US', 'Dual-energy CT if available'].map(test => (
+                                    <div key={test} className="flex items-center gap-2 text-xs">
+                                      <FileSearch className="w-3 h-3 text-purple-500" />
+                                      <span className="text-gray-700 dark:text-gray-300">{test}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Treatment Considerations */}
+                        <div>
+                          <h5 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
+                            <Pill className="w-4 h-4 text-green-500" />
+                            Initial Treatment Considerations
+                          </h5>
+                          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                              <div>
+                                <div className="font-medium text-green-700 dark:text-green-300 mb-1">First-Line</div>
+                                <ul className="space-y-1 text-gray-700 dark:text-gray-300">
+                                  {idx === 0 && ['Hydroxychloroquine', 'Low-dose prednisone', 'NSAIDs for arthralgia'].map(med => (
+                                    <li key={med}>• {med}</li>
+                                  ))}
+                                  {idx === 1 && ['Methotrexate', 'Hydroxychloroquine', 'Short-term steroids'].map(med => (
+                                    <li key={med}>• {med}</li>
+                                  ))}
+                                  {idx === 2 && ['Colchicine', 'NSAIDs', 'Allopurinol (after flare)'].map(med => (
+                                    <li key={med}>• {med}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div>
+                                <div className="font-medium text-green-700 dark:text-green-300 mb-1">Monitoring</div>
+                                <ul className="space-y-1 text-gray-700 dark:text-gray-300">
+                                  {idx === 0 && ['CBC q3 months', 'CMP q3 months', 'Urinalysis monthly'].map(mon => (
+                                    <li key={mon}>• {mon}</li>
+                                  ))}
+                                  {idx === 1 && ['LFTs monthly', 'CBC monthly', 'ESR/CRP q3 months'].map(mon => (
+                                    <li key={mon}>• {mon}</li>
+                                  ))}
+                                  {idx === 2 && ['Uric acid q3 months', 'CMP q6 months', 'Joint exam q visit'].map(mon => (
+                                    <li key={mon}>• {mon}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Clinical Pearls */}
+                        <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-3">
+                          <div className="flex items-start gap-2">
+                            <Lightbulb className="w-4 h-4 text-yellow-600 dark:text-yellow-400 mt-0.5" />
+                            <div className="flex-1">
+                              <div className="text-xs font-medium text-yellow-700 dark:text-yellow-300 mb-1">Clinical Pearl</div>
+                              <p className="text-xs text-gray-700 dark:text-gray-300">
+                                {idx === 0 && "Consider SLE in young women with multi-system involvement. ANA is sensitive but not specific. Look for low complements and anti-dsDNA for disease activity."}
+                                {idx === 1 && "Early aggressive treatment prevents joint damage. Morning stiffness >1hr is characteristic. Anti-CCP is highly specific and predicts erosive disease."}
+                                {idx === 2 && "Acute flares contraindicate urate-lowering therapy. Target uric acid <6 mg/dL. Consider CPPD if atypical presentation."}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Diagnostic Decision Tree */}
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-6 shadow-lg">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Workflow className="w-4 h-4 text-purple-500" />
+                  Diagnostic Decision Algorithm
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg p-3">
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">Initial Screening</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                        CBC, CMP, ESR, CRP, ANA, RF, Anti-CCP, Uric acid
                       </div>
                     </div>
                   </div>
-                ))}
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg p-3">
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">Targeted Testing</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                        Based on initial results: ENA panel, dsDNA, complement, HLA-B27, joint aspiration
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg p-3">
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">Confirm Diagnosis</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                        Apply classification criteria, consider imaging, tissue biopsy if indicated
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
