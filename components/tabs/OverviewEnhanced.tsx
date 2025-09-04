@@ -109,6 +109,112 @@ export default function OverviewEnhanced({ accuracy, veteranCount, veterans = []
         />
       </div>
 
+      {/* HENRY Platform Tools */}
+      <div className="mb-6">
+        <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+          <Zap className="w-5 h-5 text-cyan-400" />
+          HENRY Platform Tools
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* HVEC Tool Card */}
+          <div 
+            onClick={() => window.open('/hvec', '_blank')}
+            className="bg-skinz-bg-secondary rounded-xl p-6 border border-skinz-border hover:border-cyan-500/50 transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Heart className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-white">HVEC</h4>
+                <p className="text-xs text-gray-400">Health & Vitals</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-300 mb-4">Advanced health monitoring and veteran care coordination platform with AI-powered insights.</p>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-green-400 flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                Active
+              </span>
+              <Globe className="w-4 h-4 text-cyan-400" />
+            </div>
+          </div>
+
+          {/* VA Claims AI Tool Card */}
+          <div 
+            onClick={() => window.open('/va-claims-ai', '_blank')}
+            className="bg-skinz-bg-secondary rounded-xl p-6 border border-skinz-border hover:border-purple-500/50 transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-white">VA Claims AI</h4>
+                <p className="text-xs text-gray-400">Claims Processing</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-300 mb-4">Intelligent claims analysis and processing with automated decision support and evidence review.</p>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-green-400 flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                Active
+              </span>
+              <Globe className="w-4 h-4 text-cyan-400" />
+            </div>
+          </div>
+
+          {/* Analytics Tool Card */}
+          <div className="bg-skinz-bg-secondary rounded-xl p-6 border border-skinz-border hover:border-amber-500/50 transition-all cursor-pointer group">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-white">Analytics</h4>
+                <p className="text-xs text-gray-400">Data Insights</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-300 mb-4">Comprehensive analytics dashboard with predictive modeling and performance metrics.</p>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-green-400 flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                Active
+              </span>
+              <Globe className="w-4 h-4 text-cyan-400" />
+            </div>
+          </div>
+
+          {/* CODDA Tool Card - NEW */}
+          <div 
+            onClick={() => window.open('/codda', '_blank')}
+            className="bg-skinz-bg-secondary rounded-xl p-6 border border-skinz-border hover:border-teal-500/50 transition-all cursor-pointer group relative overflow-hidden"
+          >
+            {/* New Badge */}
+            <div className="absolute top-2 right-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+              NEW
+            </div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-white">CODDA</h4>
+                <p className="text-xs text-gray-400">Character of Discharge</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-300 mb-4">AI-powered Character of Discharge Determination Assistant with IDE-style workspace and QBit integration.</p>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-teal-400 flex items-center gap-1">
+                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse"></div>
+                Launch Ready
+              </span>
+              <Globe className="w-4 h-4 text-cyan-400" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Real-time Performance Chart */}
