@@ -76,6 +76,7 @@ export default function CODDAPage() {
     wordWrap: true
   });
   const [showInstructions, setShowInstructions] = useState(false);
+  const [isInteractiveTourActive, setIsInteractiveTourActive] = useState(false);
 
   // Initialize export service
   const exportService = createExportService(defaultMSGraphConfig);
@@ -157,7 +158,7 @@ export default function CODDAPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <CODDAHeader 
         currentCase={currentCase}
         leftPanelOpen={leftPanelOpen}
@@ -204,6 +205,11 @@ export default function CODDAPage() {
       <CODDAInstructionsModal
         isOpen={showInstructions}
         onClose={() => setShowInstructions(false)}
+        onStartInteractiveTour={() => {
+          setIsInteractiveTourActive(true);
+          setShowInstructions(false);
+          // Add tour highlighting logic
+        }}
       />
       
       {/* Help Button */}

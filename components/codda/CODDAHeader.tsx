@@ -29,7 +29,7 @@ export default function CODDAHeader({
   const lastSaved = new Date();
 
   return (
-    <div className="border-b border-gray-200 bg-white shadow-sm">
+    <div className="border-b border-white/10 bg-slate-900/80 backdrop-blur-sm">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
@@ -37,43 +37,43 @@ export default function CODDAHeader({
               <FileText className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-800">CODDA</h1>
-              <p className="text-sm text-gray-500">Character of Discharge Determination Assistant</p>
+              <h1 className="text-xl font-semibold text-white">CODDA</h1>
+              <p className="text-sm text-gray-400">Character of Discharge Determination Assistant</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div className="flex items-center gap-2 text-sm text-gray-400">
             <span>Case:</span>
-            <span className="text-cyan-600 font-mono font-medium">{currentCase.id}</span>
+            <span className="text-cyan-400 font-mono font-medium">{currentCase.id}</span>
             <span>•</span>
-            <span className="font-medium">{currentCase.claimant}</span>
+            <span className="font-medium text-gray-200">{currentCase.claimant}</span>
           </div>
         </div>
         
         <div className="flex items-center gap-2">
           <button
             onClick={onToggleLeftPanel}
-            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
+            className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded transition-colors"
             title="Toggle Navigator"
           >
             {leftPanelOpen ? <PanelLeftClose className="w-4 h-4" /> : <Sidebar className="w-4 h-4" />}
           </button>
           <button
             onClick={onToggleRightPanel}
-            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
+            className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded transition-colors"
             title="Toggle Insights Panel"
           >
             <PanelRightClose className="w-4 h-4" />
           </button>
           
-          <div className="w-px h-6 bg-gray-300 mx-2" />
+          <div className="w-px h-6 bg-white/10 mx-2" />
           
-          <div className="flex items-center gap-1 text-xs text-gray-500">
+          <div className="flex items-center gap-1 text-xs text-gray-400">
             <Clock className="w-3 h-3" />
             <span>Saved {lastSaved.toLocaleTimeString()}</span>
           </div>
           
-          <button className="flex items-center gap-2 px-3 py-1.5 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors">
+          <button className="flex items-center gap-2 px-3 py-1.5 bg-cyan-500/20 text-cyan-400 rounded-md hover:bg-cyan-500/30 transition-colors">
             <Save className="w-4 h-4" />
             <span>Save</span>
           </button>

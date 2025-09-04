@@ -32,13 +32,16 @@ import {
   Search,
   Filter,
   Settings,
-  RefreshCw
+  RefreshCw,
+  CheckSquare,
+  Clock
 } from 'lucide-react';
 import Modal from './ui/Modal';
 
 interface CODDAInstructionsModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onStartInteractiveTour?: () => void;
 }
 
 interface TutorialStep {
@@ -54,7 +57,7 @@ interface TutorialStep {
   tips?: string[];
 }
 
-export default function CODDAInstructionsModal({ isOpen, onClose }: CODDAInstructionsModalProps) {
+export default function CODDAInstructionsModal({ isOpen, onClose, onStartInteractiveTour }: CODDAInstructionsModalProps) {
   const [currentSection, setCurrentSection] = useState('overview');
   const [currentStep, setCurrentStep] = useState(0);
   const [showInteractiveTour, setShowInteractiveTour] = useState(false);
@@ -68,9 +71,15 @@ export default function CODDAInstructionsModal({ isOpen, onClose }: CODDAInstruc
     { id: 'collaboration', label: 'Collaboration', icon: Users },
     { id: 'quality-assurance', label: 'Quality Assurance', icon: Shield },
     { id: 'export-sharing', label: 'Export & Sharing', icon: Upload },
-    { id: 'tips-tricks', label: 'Tips & Tricks', icon: Lightbulb },
-    { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle }
+    { id: 'tips-tricks', label: 'Tips & Tricks', icon: Lightbulb }
   ];
+
+  const startInteractiveTour = () => {
+    onStartInteractiveTour?.();
+    onClose();
+    // Add tour highlighting logic here
+    console.log('Starting interactive tour...');
+  };
 
   const tutorialSteps: Record<string, TutorialStep[]> = {
     'getting-started': [
@@ -307,6 +316,57 @@ export default function CODDAInstructionsModal({ isOpen, onClose }: CODDAInstruc
           'Be specific in your questions for better responses',
           'Ask about applicable regulations for your specific case type',
           'Request help with evidence gaps or missing documentation'
+        ]
+      }
+    ],
+    'quality-assurance': [
+      {
+        id: 'qa-1',
+        title: 'Quality Assurance System',
+        content: 'CODDA includes comprehensive quality assurance tools to ensure your determinations meet all regulatory requirements and maintain consistency.',
+        actions: [
+          {
+            label: 'Template Fidelity Check',
+            description: 'Verify all required sections are present and properly formatted',
+            icon: <CheckCircle className="w-4 h-4" />
+          },
+          {
+            label: 'Regulation Completeness',
+            description: 'Ensure insanity and healthcare eligibility are properly addressed',
+            icon: <Shield className="w-4 h-4" />
+          },
+          {
+            label: 'Evidence Traceability',
+            description: 'Verify all findings are supported by specific evidence',
+            icon: <FileText className="w-4 h-4" />
+          },
+          {
+            label: 'Bias Detection',
+            description: 'Identify and correct subjective or biased language',
+            icon: <Brain className="w-4 h-4" />
+          }
+        ]
+      },
+      {
+        id: 'qa-2',
+        title: 'IPR Enforcement',
+        content: 'For determinations requiring Individual Personnel Review (IPR), CODDA enforces mandatory compliance checks.',
+        actions: [
+          {
+            label: 'IPR Checklist',
+            description: 'Automated checklist for dishonorable outcome processing',
+            icon: <CheckSquare className="w-4 h-4" />
+          },
+          {
+            label: 'Form Validation',
+            description: 'Ensure VA Form 21-0961 is properly completed',
+            icon: <FileText className="w-4 h-4" />
+          },
+          {
+            label: 'Suspense Tracking',
+            description: 'Automatic deadline management and notifications',
+            icon: <Clock className="w-4 h-4" />
+          }
         ]
       }
     ],
@@ -548,7 +608,7 @@ export default function CODDAInstructionsModal({ isOpen, onClose }: CODDAInstruc
             
             <div className="flex items-center justify-between">
               <button
-                onClick={() => setShowInteractiveTour(true)}
+                onClick={startInteractiveTour}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Play className="w-4 h-4" />
@@ -722,16 +782,16 @@ export default function CODDAInstructionsModal({ isOpen, onClose }: CODDAInstruc
             ))}
           </div>
           
-          <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="mt-8 p-4 bg-slate-800/50 rounded-lg border border-white/10">
             <div className="flex items-center gap-2 mb-2">
-              <Video className="w-4 h-4 text-blue-600" />
-              <span className="text-sm font-medium text-blue-900">Video Tutorials</span>
+              <HelpCircle className="w-4 h-4 text-cyan-400" />
+              <span className="text-sm font-medium text-gray-200">Need Help?</span>
             </div>
-            <p className="text-xs text-blue-700 mb-3">
-              Watch comprehensive video guides for each feature
+            <p className="text-xs text-gray-400 mb-3">
+              Use QBit for real-time assistance or contact support
             </p>
-            <button className="w-full px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors">
-              View Videos
+            <button className="w-full px-3 py-2 bg-cyan-500/20 text-cyan-400 rounded text-sm hover:bg-cyan-500/30 transition-colors">
+              Contact Support
             </button>
           </div>
         </div>

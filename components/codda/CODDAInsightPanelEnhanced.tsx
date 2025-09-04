@@ -258,9 +258,9 @@ export default function CODDAInsightPanelEnhanced({
   ];
 
   return (
-    <div className="w-96 border-l border-gray-200 bg-white flex flex-col h-full">
+    <div className="w-96 border-l border-white/10 bg-slate-900/50 backdrop-blur-sm flex flex-col h-full">
       {/* Tab Headers */}
-      <div className="border-b border-gray-200 bg-gray-50">
+      <div className="border-b border-white/10 bg-slate-800/50">
         <div className="flex">
           {tabs.map(tab => (
             <button
@@ -268,8 +268,8 @@ export default function CODDAInsightPanelEnhanced({
               onClick={() => onTabChange(tab.id as any)}
               className={`flex-1 flex items-center justify-center gap-2 px-3 py-3 text-sm transition-colors relative ${
                 activeTab === tab.id 
-                  ? 'bg-white text-blue-600 border-b-2 border-blue-600 font-medium' 
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                  ? 'bg-slate-700 text-cyan-400 border-b-2 border-cyan-400 font-medium' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
               }`}
             >
               <tab.icon className="w-4 h-4" />

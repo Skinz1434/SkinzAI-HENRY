@@ -82,11 +82,11 @@ export default function Modal({
 
   const getTypeColors = () => {
     switch (type) {
-      case 'success': return 'border-green-500/20 bg-green-500/5';
-      case 'warning': return 'border-amber-500/20 bg-amber-500/5';
-      case 'error': return 'border-red-500/20 bg-red-500/5';
-      case 'info': return 'border-blue-500/20 bg-blue-500/5';
-      default: return 'border-gray-700 bg-slate-800/95';
+      case 'success': return 'border-green-500/20 bg-slate-800/95';
+      case 'warning': return 'border-amber-500/20 bg-slate-800/95';
+      case 'error': return 'border-red-500/20 bg-slate-800/95';
+      case 'info': return 'border-blue-500/20 bg-slate-800/95';
+      default: return 'border-white/10 bg-slate-800/95';
     }
   };
 
@@ -124,7 +124,7 @@ export default function Modal({
         </div>
         
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] text-gray-200">
           {children}
         </div>
       </div>

@@ -606,46 +606,49 @@ export default function CODDADocumentEditor({
 
       {/* Document Editor */}
       <div className="flex-1 overflow-auto bg-gray-200 p-4">
-        <div 
-          className="max-w-4xl mx-auto bg-white shadow-lg"
-          style={{ 
-            transform: `scale(${zoomLevel / 100})`,
-            transformOrigin: 'top center',
-            minHeight: '11in',
-            width: '8.5in'
-          }}
-        >
-          <div
-            ref={contentRef}
-            contentEditable
-            className="p-16 min-h-full focus:outline-none"
-            style={{
-              fontFamily: activeFont,
-              fontSize: `${fontSize}px`,
-              lineHeight: '1.6',
-              color: '#000'
+        <div className="flex justify-center">
+          <div 
+            className="bg-white shadow-lg"
+            style={{ 
+              transform: `scale(${zoomLevel / 100})`,
+              transformOrigin: 'top center',
+              minHeight: '11in',
+              width: '8.5in',
+              maxWidth: '8.5in'
             }}
-            dangerouslySetInnerHTML={{ __html: content }}
-            onInput={(e) => {
-              const target = e.target as HTMLDivElement;
-              handleContentChange(target.innerHTML);
-            }}
-            onKeyDown={(e) => {
-              // Handle keyboard shortcuts
-              if (e.ctrlKey || e.metaKey) {
-                switch (e.key) {
-                  case 's':
-                    e.preventDefault();
-                    handleSave();
-                    break;
-                  case 'f':
-                    e.preventDefault();
-                    setShowFindReplace(true);
-                    break;
+          >
+            <div
+              ref={contentRef}
+              contentEditable
+              className="p-16 min-h-full focus:outline-none"
+              style={{
+                fontFamily: activeFont,
+                fontSize: `${fontSize}px`,
+                lineHeight: '1.6',
+                color: '#000'
+              }}
+              dangerouslySetInnerHTML={{ __html: content }}
+              onInput={(e) => {
+                const target = e.target as HTMLDivElement;
+                handleContentChange(target.innerHTML);
+              }}
+              onKeyDown={(e) => {
+                // Handle keyboard shortcuts
+                if (e.ctrlKey || e.metaKey) {
+                  switch (e.key) {
+                    case 's':
+                      e.preventDefault();
+                      handleSave();
+                      break;
+                    case 'f':
+                      e.preventDefault();
+                      setShowFindReplace(true);
+                      break;
+                  }
                 }
-              }
-            }}
-          />
+              }}
+            />
+          </div>
         </div>
       </div>
 

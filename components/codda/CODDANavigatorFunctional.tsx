@@ -29,7 +29,8 @@ import {
   Folder,
   PlayCircle,
   PauseCircle,
-  XCircle
+  XCircle,
+  Zap
 } from 'lucide-react';
 import { CODCase, NavigationItem } from '@/types/codda';
 import { demoCODCases } from '@/lib/codda/demo-data';
@@ -243,7 +244,7 @@ export default function CODDANavigatorFunctional({
       <div key={item.id} className={`${level > 0 ? 'ml-4' : ''} mb-1`}>
         <div
           className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg cursor-pointer transition-all duration-200 group relative
-            ${item.id === currentCase.id ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50'}
+            ${item.id === currentCase.id ? 'bg-cyan-500/20 border border-cyan-500/50' : 'hover:bg-white/5'}
           `}
           onClick={() => {
             if (item.children) {
@@ -261,18 +262,18 @@ export default function CODDANavigatorFunctional({
                 e.stopPropagation();
                 toggleExpanded(item.id);
               }}
-              className="p-0.5 hover:bg-gray-200 rounded transition-colors"
+              className="p-0.5 hover:bg-white/10 rounded transition-colors"
             >
               {isExpanded ? 
-                <ChevronDown className="w-4 h-4 text-gray-500" /> :
-                <ChevronRight className="w-4 h-4 text-gray-500" />
+                <ChevronDown className="w-4 h-4 text-gray-400" /> :
+                <ChevronRight className="w-4 h-4 text-gray-400" />
               }
             </button>
           )}
           {!item.children && <div className="w-5" />}
           
           {/* Icon */}
-          <Icon className="w-4 h-4 text-gray-600 flex-shrink-0" />
+          <Icon className="w-4 h-4 text-gray-400 flex-shrink-0" />
           
           {/* Status indicator */}
           {item.status && (
@@ -282,7 +283,7 @@ export default function CODDANavigatorFunctional({
           )}
           
           {/* Label */}
-          <span className="text-gray-800 flex-1 truncate font-medium">
+          <span className="text-gray-200 flex-1 truncate font-medium">
             {item.label}
           </span>
 
@@ -373,19 +374,19 @@ export default function CODDANavigatorFunctional({
   };
 
   return (
-    <div className="w-80 border-r border-gray-200 bg-white flex flex-col h-full">
+    <div className="w-80 border-r border-white/10 bg-slate-900/50 backdrop-blur-sm flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 bg-gray-50">
+      <div className="p-4 border-b border-white/10">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-800">CODDA Navigator</h2>
+          <h2 className="text-lg font-semibold text-gray-200">CODDA Navigator</h2>
           <div className="flex items-center gap-1">
             <Tooltip content="Add new case">
-              <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors">
+              <button className="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 rounded transition-colors">
                 <Plus className="w-4 h-4" />
               </button>
             </Tooltip>
             <Tooltip content="Navigator settings">
-              <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors">
+              <button className="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 rounded transition-colors">
                 <Settings className="w-4 h-4" />
               </button>
             </Tooltip>
@@ -400,7 +401,7 @@ export default function CODDANavigatorFunctional({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search cases and sections..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-white/10 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
           />
         </div>
         
@@ -408,10 +409,10 @@ export default function CODDANavigatorFunctional({
         <div className="mt-3">
           <button
             onClick={() => setShowCaseSelector(true)}
-            className="w-full flex items-center justify-between p-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="w-full flex items-center justify-between p-2 bg-slate-800 border border-white/10 rounded-lg hover:bg-slate-700 transition-colors"
           >
-            <span className="text-sm font-medium text-gray-700">Switch Case</span>
-            <ChevronDown className="w-4 h-4 text-gray-500" />
+            <span className="text-sm font-medium text-gray-200">Switch Case</span>
+            <ChevronDown className="w-4 h-4 text-gray-400" />
           </button>
         </div>
       </div>
@@ -433,12 +434,12 @@ export default function CODDANavigatorFunctional({
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-200 bg-gray-50">
-        <div className="bg-white rounded-lg p-3 space-y-3">
+      <div className="p-4 border-t border-white/10">
+        <div className="bg-slate-800/30 rounded-lg p-3 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-700">Current Case</span>
+            <span className="text-sm font-medium text-gray-200">Current Case</span>
             <Tooltip content="Share case">
-              <button className="p-1 text-gray-400 hover:text-gray-600 rounded transition-colors">
+              <button className="p-1 text-gray-400 hover:text-white hover:bg-white/10 rounded transition-colors">
                 <Share2 className="w-4 h-4" />
               </button>
             </Tooltip>
@@ -446,34 +447,34 @@ export default function CODDANavigatorFunctional({
           
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-500">Case ID:</span>
-              <span className="font-mono text-gray-800">{currentCase.id}</span>
+              <span className="text-gray-400">Case ID:</span>
+              <span className="font-mono text-gray-200">{currentCase.id}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">Claimant:</span>
-              <span className="text-gray-800">{currentCase.claimant}</span>
+              <span className="text-gray-400">Claimant:</span>
+              <span className="text-gray-200">{currentCase.claimant}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">Status:</span>
+              <span className="text-gray-400">Status:</span>
               <span className={`capitalize font-medium ${
-                currentCase.status === 'draft' ? 'text-amber-600' :
-                currentCase.status === 'review' ? 'text-blue-600' :
-                currentCase.status === 'completed' ? 'text-green-600' :
-                'text-gray-600'
+                currentCase.status === 'draft' ? 'text-amber-400' :
+                currentCase.status === 'review' ? 'text-blue-400' :
+                currentCase.status === 'completed' ? 'text-green-400' :
+                'text-gray-400'
               }`}>
                 {currentCase.status}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-500">Progress:</span>
+              <span className="text-gray-400">Progress:</span>
               <div className="flex items-center gap-2">
-                <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div className="w-16 h-2 bg-slate-700 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-blue-500 transition-all duration-300"
+                    className="h-full bg-cyan-500 transition-all duration-300"
                     style={{ width: `${currentCase.qa.completeness}%` }}
                   />
                 </div>
-                <span className="text-xs font-medium text-gray-700">{currentCase.qa.completeness}%</span>
+                <span className="text-xs font-medium text-cyan-400">{currentCase.qa.completeness}%</span>
               </div>
             </div>
           </div>
@@ -488,43 +489,77 @@ export default function CODDANavigatorFunctional({
         size="lg"
       >
         <div className="space-y-4">
+          <div className="text-sm text-gray-400 mb-4">
+            Choose from {demoCODCases.length} available cases. Click any case to switch your workspace.
+          </div>
+          
           <div className="grid gap-3 max-h-96 overflow-y-auto">
             {demoCODCases.map(caseItem => (
               <div
                 key={caseItem.id}
                 className={`p-4 border rounded-lg cursor-pointer transition-all ${
                   caseItem.id === selectedCaseId 
-                    ? 'border-blue-500 bg-blue-50' 
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    ? 'border-cyan-500 bg-cyan-500/10' 
+                    : 'border-white/10 bg-slate-800/30 hover:border-cyan-500/50 hover:bg-slate-700/30'
                 }`}
                 onClick={() => handleCaseChange(caseItem.id)}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-semibold text-gray-800">{caseItem.id}</h3>
-                      <span className={`px-2 py-1 text-xs rounded-full ${getCompletionColor(caseItem.qa.completeness)}`}>
+                      <h3 className="font-semibold text-white">{caseItem.id}</h3>
+                      <span className={`px-2 py-1 text-xs rounded-full font-medium ${
+                        caseItem.qa.completeness >= 90 ? 'bg-green-500/20 text-green-400' :
+                        caseItem.qa.completeness >= 70 ? 'bg-blue-500/20 text-blue-400' :
+                        caseItem.qa.completeness >= 50 ? 'bg-amber-500/20 text-amber-400' :
+                        'bg-red-500/20 text-red-400'
+                      }`}>
                         {caseItem.qa.completeness}% complete
                       </span>
                     </div>
-                    <p className="text-gray-600 mb-1">{caseItem.claimant}</p>
-                    <p className="text-sm text-gray-500">{caseItem.station}</p>
+                    <p className="text-gray-300 mb-1 font-medium">{caseItem.claimant}</p>
+                    <p className="text-sm text-gray-400">{caseItem.station}</p>
                     {caseItem.service[0] && (
-                      <p className="text-sm text-gray-500">
-                        {caseItem.service[0].branch} • {caseItem.service[0].charOfDischarge}
+                      <p className="text-sm text-gray-400">
+                        <span className="font-medium">{caseItem.service[0].branch}</span> • 
+                        <span className={`ml-1 ${
+                          caseItem.service[0].charOfDischarge === 'HON' ? 'text-green-400' :
+                          caseItem.service[0].charOfDischarge === 'GEN' ? 'text-blue-400' :
+                          caseItem.service[0].charOfDischarge === 'OTH' ? 'text-amber-400' :
+                          'text-red-400'
+                        }`}>
+                          {caseItem.service[0].charOfDischarge}
+                        </span>
+                      </p>
+                    )}
+                    {caseItem.assignedTo && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Assigned to: {caseItem.assignedTo}
                       </p>
                     )}
                   </div>
                   <div className="text-right">
                     {getStatusIcon(caseItem.status)}
-                    <p className="text-xs text-gray-500 mt-1 capitalize">{caseItem.status}</p>
+                    <p className="text-xs text-gray-400 mt-1 capitalize">{caseItem.status}</p>
+                    {caseItem.dueDate && (
+                      <p className="text-xs text-amber-400 mt-1">
+                        Due: {new Date(caseItem.dueDate).toLocaleDateString()}
+                      </p>
+                    )}
                   </div>
                 </div>
                 
                 {caseItem.qa.lintFlags.length > 0 && (
-                  <div className="mt-2 flex items-center gap-1 text-amber-600">
+                  <div className="mt-3 flex items-center gap-1 text-amber-400 bg-amber-500/10 rounded px-2 py-1">
                     <AlertTriangle className="w-4 h-4" />
-                    <span className="text-sm">{caseItem.qa.lintFlags.length} issues need attention</span>
+                    <span className="text-sm">{caseItem.qa.lintFlags.length} quality issue{caseItem.qa.lintFlags.length !== 1 ? 's' : ''}</span>
+                  </div>
+                )}
+                
+                {caseItem.ipr.required && (
+                  <div className="mt-2 flex items-center gap-1 text-blue-400 bg-blue-500/10 rounded px-2 py-1">
+                    <Zap className="w-4 h-4" />
+                    <span className="text-sm">IPR Required</span>
                   </div>
                 )}
               </div>
