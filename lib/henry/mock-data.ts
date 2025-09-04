@@ -264,7 +264,7 @@ function generateMockConditions(veteranId: string, count: number) {
 }
 
 // Mock API functions
-export async function mockFetchVeterans(page: number = 1, limit: number = 20, filters?: any) {
+export async function mockFetchVeterans(page: number = 1, limit: number = 1000, filters?: any) {
   await new Promise(resolve => setTimeout(resolve, 300)); // Simulate network delay
   
   const allVeterans = generateMockVeterans(500);

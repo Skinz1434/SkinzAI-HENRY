@@ -19,6 +19,7 @@ import { generateVeteranDetails } from '../../lib/henry/veteran-details';
 import { generateVeteranProfileEnhanced, VeteranProfileEnhanced } from '../../lib/henry/veteran-profile-enhanced';
 import { generatePersonalizedAIInsights } from '../../lib/henry/ai-insights-generator';
 import { TooltipModal } from '../../components/hvec/TooltipModal';
+import { generateClinicalAssessment, ClinicalAssessment } from '../../lib/henry/clinical-assessment-generator';
 
 // Medical Reference Links with actual URLs
 const MEDICAL_REFERENCES = {
@@ -86,6 +87,7 @@ export default function HVECEnhanced() {
   const [darkMode, setDarkMode] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [aiInsights, setAiInsights] = useState<any>(null);
+  const [currentAssessment, setCurrentAssessment] = useState<ClinicalAssessment | null>(null);
   
   const [filters, setFilters] = useState<SearchFilters>({
     specialty: 'all',
@@ -130,6 +132,10 @@ export default function HVECEnhanced() {
       // Generate personalized AI insights
       const insights = generatePersonalizedAIInsights(selectedVeteran);
       setAiInsights(insights);
+      
+      // Generate clinical assessment
+      const assessment = generateClinicalAssessment(selectedVeteran);
+      setCurrentAssessment(assessment);
     }
   }, [selectedVeteran]);
 
@@ -480,9 +486,9 @@ export default function HVECEnhanced() {
                           <div className="font-medium text-gray-900 dark:text-white">
                             {veteran.name}
                           </div>
-                          {veteran.riskScore > 7 && (
-                            <span className="px-1.5 py-0.5 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 text-xs rounded-full">
-                              High Risk
+                          {veteran.riskScore > 8 && (
+                            <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 text-xs rounded-full">
+                              Priority
                             </span>
                           )}
                         </div>
@@ -669,6 +675,380 @@ export default function HVECEnhanced() {
                   </div>
 
                   <div className="p-6">
+                    {/* Clinical Assessment Tab */}
+                    {activeTab === 'assessment' && currentAssessment && (
+                      <div className="space-y-6">
+                        {/* Chief Complaint */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                            Chief Complaint
+                          </h3>
+                          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p className="text-gray-700 dark:text-gray-300">
+                              {currentAssessment.chiefComplaint}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Joint Involvement */}
+                        {currentAssessment.jointInvolvement && (
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                              Joint Involvement Analysis
+                            </h3>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Pattern</div>
+                                <div className="font-medium text-gray-900 dark:text-white capitalize">
+                                  {currentAssessment.jointInvolvement.pattern}
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Distribution</div>
+                                <div className="font-medium text-gray-900 dark:text-white capitalize">
+                                  {currentAssessment.jointInvolvement.distribution}
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Duration</div>
+                                <div className="font-medium text-gray-900 dark:text-white">
+                                  {currentAssessment.jointInvolvement.duration}
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Affected Joints</div>
+                                <div className="font-medium text-gray-900 dark:text-white">
+                                  {currentAssessment.jointInvolvement.joints.join(', ')}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Differential Diagnosis */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                            Differential Diagnosis
+                          </h3>
+                          <div className="space-y-4">
+                            {currentAssessment.differentialDiagnosis.map((diagnosis, idx) => (
+                              <div key={idx} className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                                <div className="flex items-start justify-between mb-3">
+                                  <div>
+                                    <h4 className="font-medium text-gray-900 dark:text-white">
+                                      {diagnosis.condition}
+                                    </h4>
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                                      ICD-10: {diagnosis.icd10}
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">Probability</div>
+                                    <div className="font-semibold text-lg text-blue-600 dark:text-blue-400">
+                                      {(diagnosis.probability * 100).toFixed(0)}%
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Evidence */}
+                                <div className="grid grid-cols-2 gap-4 mb-3">
+                                  <div>
+                                    <div className="text-xs font-medium text-green-700 dark:text-green-400 mb-1">
+                                      Supporting Evidence
+                                    </div>
+                                    <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                      {diagnosis.supportingEvidence.map((evidence, i) => (
+                                        <li key={i} className="flex items-start gap-1">
+                                          <span className="text-green-500 mt-1">•</span>
+                                          {evidence}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                  {diagnosis.conflictingEvidence.length > 0 && (
+                                    <div>
+                                      <div className="text-xs font-medium text-red-700 dark:text-red-400 mb-1">
+                                        Conflicting Evidence
+                                      </div>
+                                      <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                        {diagnosis.conflictingEvidence.map((evidence, i) => (
+                                          <li key={i} className="flex items-start gap-1">
+                                            <span className="text-red-500 mt-1">•</span>
+                                            {evidence}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Recommended Tests */}
+                                <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
+                                  <div className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Recommended Tests
+                                  </div>
+                                  <div className="flex flex-wrap gap-2">
+                                    {diagnosis.recommendedTests.map((test, i) => (
+                                      <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                                        {test}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Clinical Recommendations */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                            Clinical Decision Support
+                          </h3>
+                          <div className="space-y-3">
+                            {currentAssessment.clinicalDecisionSupport.map((rec, idx) => (
+                              <div key={idx} className={`border rounded-lg p-4 ${
+                                rec.priority === 'immediate' 
+                                  ? 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
+                                  : rec.priority === 'urgent'
+                                  ? 'border-yellow-300 bg-yellow-50 dark:border-yellow-700 dark:bg-yellow-900/20'
+                                  : 'border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-700'
+                              }`}>
+                                <div className="flex items-start justify-between mb-2">
+                                  <div className="flex items-center gap-2">
+                                    <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
+                                      rec.priority === 'immediate'
+                                        ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                                        : rec.priority === 'urgent'
+                                        ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                                        : 'bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200'
+                                    }`}>
+                                      {rec.priority}
+                                    </span>
+                                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                                      {rec.category}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                                    Evidence Level: {rec.evidenceLevel}
+                                  </span>
+                                </div>
+                                <div className="font-medium text-gray-900 dark:text-white mb-1">
+                                  {rec.recommendation}
+                                </div>
+                                <div className="text-sm text-gray-600 dark:text-gray-300">
+                                  {rec.rationale}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Medical History Tab */}
+                    {activeTab === 'history' && veteranDetails && (
+                      <div className="space-y-6">
+                        {/* Service History */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                            Military Service History
+                          </h3>
+                          <div className="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 p-4">
+                            <dl className="grid grid-cols-2 gap-4">
+                              <div>
+                                <dt className="text-sm text-gray-500 dark:text-gray-400">Branch</dt>
+                                <dd className="mt-1 font-medium text-gray-900 dark:text-white">{selectedVeteran.branch}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-sm text-gray-500 dark:text-gray-400">Service Period</dt>
+                                <dd className="mt-1 font-medium text-gray-900 dark:text-white">
+                                  {new Date(selectedVeteran.serviceStartDate).getFullYear()} - {selectedVeteran.serviceEndDate ? new Date(selectedVeteran.serviceEndDate).getFullYear() : 'Present'}
+                                </dd>
+                              </div>
+                              <div>
+                                <dt className="text-sm text-gray-500 dark:text-gray-400">Discharge Status</dt>
+                                <dd className="mt-1 font-medium text-gray-900 dark:text-white">{selectedVeteran.dischargeStatus}</dd>
+                              </div>
+                              <div>
+                                <dt className="text-sm text-gray-500 dark:text-gray-400">Combat Service</dt>
+                                <dd className="mt-1 font-medium text-gray-900 dark:text-white">{selectedVeteran.combatService ? 'Yes' : 'No'}</dd>
+                              </div>
+                            </dl>
+                          </div>
+                        </div>
+
+                        {/* Medical Conditions */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                            Service-Connected Conditions
+                          </h3>
+                          <div className="space-y-3">
+                            {selectedVeteran.claims?.map((claim, idx) => (
+                              <div key={idx} className="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 p-4">
+                                <div className="flex items-start justify-between">
+                                  <div>
+                                    <h4 className="font-medium text-gray-900 dark:text-white">
+                                      {claim.description || claim.type}
+                                    </h4>
+                                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                      Filed: {new Date(claim.filingDate).toLocaleDateString()}
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    {claim.rating && (
+                                      <span className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+                                        {claim.rating}%
+                                      </span>
+                                    )}
+                                    <span className={`px-2 py-1 text-xs rounded-full ${
+                                      claim.status === 'APPROVED' ? 'bg-green-100 text-green-700' :
+                                      claim.status === 'PENDING' ? 'bg-yellow-100 text-yellow-700' :
+                                      claim.status === 'DENIED' ? 'bg-red-100 text-red-700' :
+                                      'bg-gray-100 text-gray-700'
+                                    }`}>
+                                      {claim.status}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Medications */}
+                        {veteranDetails?.mpd?.medications && (
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                              Current Medications
+                            </h3>
+                            <div className="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 overflow-hidden">
+                              <table className="w-full">
+                                <thead className="bg-gray-50 dark:bg-gray-600">
+                                  <tr>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Medication</th>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Dosage</th>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Prescribed By</th>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
+                                  {veteranDetails.mpd.medications.map((med: any, idx: number) => (
+                                    <tr key={idx}>
+                                      <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{med.name}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{med.dosage} - {med.frequency}</td>
+                                      <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{med.prescribedBy}</td>
+                                      <td className="px-4 py-3">
+                                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                          med.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                                        }`}>
+                                          {med.status}
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Diagnostics Tab */}
+                    {activeTab === 'diagnostics' && currentAssessment && (
+                      <div className="space-y-6">
+                        {/* Inflammatory Markers */}
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                            Laboratory Results - Inflammatory Markers
+                          </h3>
+                          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">ESR</div>
+                              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                                {currentAssessment.inflammatoryMarkers.esr || '--'}
+                              </div>
+                              <div className="text-xs text-gray-400 mt-1">mm/hr (0-20)</div>
+                            </div>
+                            <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">CRP</div>
+                              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                                {currentAssessment.inflammatoryMarkers.crp || '--'}
+                              </div>
+                              <div className="text-xs text-gray-400 mt-1">mg/L (&lt;3.0)</div>
+                            </div>
+                            <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">RF</div>
+                              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                                {currentAssessment.inflammatoryMarkers.rf || 'Negative'}
+                              </div>
+                              <div className="text-xs text-gray-400 mt-1">IU/mL (&lt;14)</div>
+                            </div>
+                            <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">Anti-CCP</div>
+                              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                                {currentAssessment.inflammatoryMarkers.antiCCP || 'Pending'}
+                              </div>
+                              <div className="text-xs text-gray-400 mt-1">U/mL (&lt;20)</div>
+                            </div>
+                            <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">ANA</div>
+                              <div className="text-xl font-bold text-gray-900 dark:text-white">
+                                {currentAssessment.inflammatoryMarkers.ana || 'Negative'}
+                              </div>
+                              <div className="text-xs text-gray-400 mt-1">Titer</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Service Connection */}
+                        {currentAssessment.serviceConnection && (
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                              Service Connection Analysis
+                            </h3>
+                            <div className="space-y-4">
+                              {currentAssessment.serviceConnection.conditions.map((condition, idx) => (
+                                <div key={idx} className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+                                  <div className="flex items-start justify-between mb-3">
+                                    <h4 className="font-medium text-blue-900 dark:text-blue-100">
+                                      {condition.condition}
+                                    </h4>
+                                    <span className={`px-2 py-1 text-xs rounded-full ${
+                                      condition.connectionLikelihood === 'high' ? 'bg-green-100 text-green-700' :
+                                      condition.connectionLikelihood === 'moderate' ? 'bg-yellow-100 text-yellow-700' :
+                                      'bg-gray-100 text-gray-700'
+                                    }`}>
+                                      {condition.connectionLikelihood} likelihood
+                                    </span>
+                                  </div>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                      <h5 className="font-medium text-gray-700 dark:text-gray-300 mb-1">Military Exposures</h5>
+                                      <ul className="space-y-1">
+                                        {condition.militaryExposures.map((exposure, i) => (
+                                          <li key={i} className="text-gray-600 dark:text-gray-400">• {exposure}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                    <div>
+                                      <h5 className="font-medium text-gray-700 dark:text-gray-300 mb-1">DBQ Recommendations</h5>
+                                      <ul className="space-y-1">
+                                        {condition.dbqRecommendations.map((rec, i) => (
+                                          <li key={i} className="text-gray-600 dark:text-gray-400">• {rec}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
                     {/* Enhanced AI Insights Tab */}
                     {activeTab === 'insights' && aiInsights && (
                       <div className="space-y-6">
