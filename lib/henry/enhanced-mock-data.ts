@@ -25,9 +25,32 @@ function generateEDIPI(): string {
  * Enhanced veteran generator with realistic VA ratings and conditions
  */
 export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
-  const maleFirstNames = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Christopher'];
-  const femaleFirstNames = ['Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth', 'Barbara', 'Susan', 'Jessica', 'Sarah', 'Karen'];
-  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+  const maleFirstNames = [
+    'James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Christopher',
+    'Charles', 'Daniel', 'Matthew', 'Anthony', 'Mark', 'Donald', 'Steven', 'Paul', 'Joshua', 'Kenneth',
+    'Kevin', 'Brian', 'George', 'Timothy', 'Ronald', 'Jason', 'Edward', 'Jeffrey', 'Ryan', 'Jacob',
+    'Gary', 'Nicholas', 'Eric', 'Jonathan', 'Stephen', 'Larry', 'Justin', 'Scott', 'Brandon', 'Benjamin',
+    'Samuel', 'Gregory', 'Frank', 'Raymond', 'Alexander', 'Patrick', 'Jack', 'Dennis', 'Jerry', 'Tyler',
+    'Aaron', 'Henry', 'Douglas', 'Jose', 'Peter', 'Nathan', 'Noah', 'Zachary', 'Wayne', 'Carl'
+  ];
+  const femaleFirstNames = [
+    'Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth', 'Barbara', 'Susan', 'Jessica', 'Sarah', 'Karen',
+    'Nancy', 'Lisa', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle',
+    'Laura', 'Sarah', 'Kimberly', 'Deborah', 'Dorothy', 'Amy', 'Angela', 'Ashley', 'Brenda', 'Emma',
+    'Olivia', 'Cynthia', 'Marie', 'Janet', 'Catherine', 'Frances', 'Christine', 'Samantha', 'Debra', 'Rachel',
+    'Carolyn', 'Janet', 'Virginia', 'Maria', 'Heather', 'Diane', 'Julie', 'Joyce', 'Victoria', 'Kelly',
+    'Christina', 'Joan', 'Evelyn', 'Lauren', 'Judith', 'Megan', 'Cheryl', 'Andrea', 'Hannah', 'Jacqueline'
+  ];
+  const lastNames = [
+    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez',
+    'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
+    'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson',
+    'Walker', 'Young', 'Allen', 'King', 'Wright', 'Scott', 'Torres', 'Nguyen', 'Hill', 'Flores',
+    'Green', 'Adams', 'Nelson', 'Baker', 'Hall', 'Rivera', 'Campbell', 'Mitchell', 'Carter', 'Roberts',
+    'Gomez', 'Phillips', 'Evans', 'Turner', 'Diaz', 'Parker', 'Cruz', 'Edwards', 'Collins', 'Reyes',
+    'Stewart', 'Morris', 'Morales', 'Murphy', 'Cook', 'Rogers', 'Gutierrez', 'Ortiz', 'Morgan', 'Cooper',
+    'Peterson', 'Bailey', 'Reed', 'Kelly', 'Howard', 'Ramos', 'Kim', 'Cox', 'Ward', 'Richardson'
+  ];
   
   const veterans: Veteran[] = [];
   
@@ -40,6 +63,16 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       ? femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)]
       : maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)];
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+    
+    // Add middle initial for more uniqueness (80% chance)
+    const middleInitials = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const middleInitial = Math.random() < 0.8 
+      ? middleInitials[Math.floor(Math.random() * middleInitials.length)]
+      : '';
+    
+    const fullName = middleInitial 
+      ? `${firstName} ${middleInitial}. ${lastName}`
+      : `${firstName} ${lastName}`;
     
     // Service era
     const eraRandom = Math.random();
@@ -121,8 +154,6 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
         evidence: [] // Fix: evidence should be an array, not an object
       }));
     }
-    
-    const fullName = `${firstName} ${lastName}`;
     
     // Calculate monthly compensation based on actual VA rates (2024)  
     const dependents = Math.floor(Math.random() * 3);

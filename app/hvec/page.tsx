@@ -93,6 +93,9 @@ interface SearchFilters {
   disabilityRange: string;
   branch: string;
   combatService: string;
+  serviceEra: string;
+  ageRange: string;
+  gender: string;
   sortBy: string;
 }
 
@@ -129,6 +132,9 @@ export default function HVECEnhanced() {
     disabilityRange: 'all',
     branch: 'all',
     combatService: 'all',
+    serviceEra: 'all',
+    ageRange: 'all',
+    gender: 'all',
     sortBy: 'name'
   });
 
@@ -183,10 +189,24 @@ export default function HVECEnhanced() {
   // Enhanced filtering logic
   const filteredVeterans = useMemo(() => {
     let result = veterans.filter(veteran => {
-      // Search query
-      if (searchQuery && !veteran.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-          !veteran.edipi?.includes(searchQuery)) {
-        return false;
+      // Enhanced search query
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        const searchable = [
+          veteran.name.toLowerCase(),
+          veteran.edipi || '',
+          veteran.branch || '',
+          veteran.lastName?.toLowerCase() || '',
+          veteran.firstName?.toLowerCase() || '',
+          (veteran.disabilityRating || 0).toString(),
+          veteran.ssn || '',
+          veteran.rank || '',
+          veteran.mos || ''
+        ].join(' ');
+        
+        if (!searchable.includes(query)) {
+          return false;
+        }
       }
       
       // Branch filter
@@ -216,6 +236,48 @@ export default function HVECEnhanced() {
       if (filters.claimStatus !== 'all' && veteran.claims) {
         const hasStatus = veteran.claims.some(c => c.status === filters.claimStatus);
         if (!hasStatus) return false;
+      }
+      
+      // Service era filter (calculated from service dates)
+      if (filters.serviceEra !== 'all') {
+        const serviceYear = new Date(veteran.serviceStartDate).getFullYear();
+        let calculatedEra = '';
+        
+        if (serviceYear >= 1965 && serviceYear <= 1975) {
+          calculatedEra = 'Vietnam';
+        } else if (serviceYear >= 1975 && serviceYear <= 1990) {
+          calculatedEra = 'Post-Vietnam';
+        } else if (serviceYear >= 1990 && serviceYear <= 2000) {
+          calculatedEra = 'Gulf War';
+        } else if (serviceYear >= 2000) {
+          calculatedEra = 'OIF/OEF';
+        }
+        
+        if (calculatedEra !== filters.serviceEra) {
+          return false;
+        }
+      }
+      
+      // Age range filter
+      if (filters.ageRange !== 'all') {
+        const currentDate = new Date();
+        const birthDate = new Date(veteran.dateOfBirth);
+        const age = Math.floor((currentDate.getTime() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+        
+        switch(filters.ageRange) {
+          case '18-30': if (age < 18 || age > 30) return false; break;
+          case '31-40': if (age < 31 || age > 40) return false; break;
+          case '41-50': if (age < 41 || age > 50) return false; break;
+          case '51-65': if (age < 51 || age > 65) return false; break;
+          case '65+': if (age < 65) return false; break;
+        }
+      }
+      
+      // Gender filter
+      if (filters.gender !== 'all') {
+        const isDetectedFemale = veteran.firstName && ['Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth', 'Barbara', 'Susan', 'Jessica', 'Sarah', 'Karen', 'Nancy', 'Lisa', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle', 'Laura', 'Kimberly', 'Deborah', 'Dorothy', 'Amy', 'Angela', 'Ashley', 'Brenda', 'Emma', 'Olivia', 'Cynthia', 'Marie', 'Janet', 'Catherine', 'Frances', 'Christine', 'Samantha', 'Debra', 'Rachel', 'Carolyn', 'Virginia', 'Maria', 'Heather', 'Diane', 'Julie', 'Joyce', 'Victoria', 'Kelly', 'Christina', 'Joan', 'Evelyn', 'Lauren', 'Judith', 'Megan', 'Cheryl', 'Andrea', 'Hannah', 'Jacqueline'].includes(veteran.firstName);
+        if (filters.gender === 'female' && !isDetectedFemale) return false;
+        if (filters.gender === 'male' && isDetectedFemale) return false;
       }
       
       return true;
@@ -258,11 +320,31 @@ export default function HVECEnhanced() {
     switch(format) {
       case 'pdf':
         console.log('Exporting to PDF:', exportData);
-        alert('PDF export initiated. Document will be downloaded shortly.');
+        openModal('PDF Export', 
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Download className="w-6 h-6 text-green-600" />
+              <div>
+                <h4 className="font-medium text-gray-900 dark:text-white">PDF Export Initiated</h4>
+                <p className="text-sm text-gray-500">Document will be downloaded shortly...</p>
+              </div>
+            </div>
+          </div>
+        );
         break;
       case 'csv':
         console.log('Exporting to CSV:', exportData);
-        alert('CSV export initiated. File will be downloaded shortly.');
+        openModal('CSV Export', 
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Download className="w-6 h-6 text-green-600" />
+              <div>
+                <h4 className="font-medium text-gray-900 dark:text-white">CSV Export Initiated</h4>
+                <p className="text-sm text-gray-500">File will be downloaded shortly...</p>
+              </div>
+            </div>
+          </div>
+        );
         break;
       case 'email':
         const subject = `HVEC Report - ${selectedVeteran?.name}`;
@@ -326,14 +408,58 @@ export default function HVECEnhanced() {
                   <FileSearch className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span className="font-medium">Claims</span>
                 </a>
-                <a href="#" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                <button 
+                  onClick={() => openModal('VA Benefits Information', 
+                    <div className="space-y-4">
+                      <p>Access comprehensive VA benefits information including:</p>
+                      <ul className="list-disc list-inside space-y-2 text-sm">
+                        <li>Disability compensation and ratings</li>
+                        <li>Healthcare benefits and eligibility</li>
+                        <li>Education benefits (GI Bill)</li>
+                        <li>Home loan guarantees</li>
+                        <li>Vocational rehabilitation</li>
+                      </ul>
+                      <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <p className="text-sm text-blue-700 dark:text-blue-300">
+                          For detailed benefits information, visit <a href="https://www.va.gov/benefits/" target="_blank" className="underline">VA.gov/benefits</a>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group"
+                >
                   <Shield className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span className="font-medium">Benefits</span>
-                </a>
-                <a href="#" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                </button>
+                <button 
+                  onClick={() => {
+                    if (selectedVeteran && aiInsights) {
+                      setActiveTab('insights');
+                    } else {
+                      openModal('AI Insights Information', 
+                        <div className="space-y-4">
+                          <p>AI-powered clinical insights provide:</p>
+                          <ul className="list-disc list-inside space-y-2 text-sm">
+                            <li>Risk prediction and early warning systems</li>
+                            <li>Pattern recognition in clinical data</li>
+                            <li>Personalized treatment recommendations</li>
+                            <li>Medication interaction analysis</li>
+                            <li>Outcome prediction modeling</li>
+                          </ul>
+                          <div className="mt-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                            <p className="text-sm text-purple-700 dark:text-purple-300">
+                              Select a veteran from the list to view their personalized AI insights and clinical recommendations.
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    }
+                  }}
+                  className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group"
+                >
                   <Brain className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span className="font-medium">AI Insights</span>
-                </a>
+                </button>
               </nav>
               
               {/* Right Section: Actions and User Menu */}
@@ -439,18 +565,69 @@ export default function HVECEnhanced() {
                         className="absolute right-0 mt-2 w-64 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 z-50"
                       >
                         <div className="p-2">
-                          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors">
+                          <button 
+                            onClick={() => {
+                              setShowUserMenu(false);
+                              openModal('User Profile', 
+                                <div className="space-y-4">
+                                  <p>Access and manage your user profile settings.</p>
+                                  <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                                    <p className="text-sm text-blue-700 dark:text-blue-300">
+                                      Profile management features are currently being developed.
+                                    </p>
+                                  </div>
+                                </div>
+                              );
+                            }}
+                            className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors w-full text-left"
+                          >
                             <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                             <span className="text-sm text-gray-700 dark:text-gray-300">Profile</span>
-                          </a>
-                          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors">
+                          </button>
+                          <button 
+                            onClick={() => {
+                              setShowUserMenu(false);
+                              openModal('System Settings', 
+                                <div className="space-y-4">
+                                  <p>Configure system preferences and application settings.</p>
+                                  <div className="space-y-3">
+                                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                      <span className="text-sm">Dark Mode</span>
+                                      <button 
+                                        onClick={() => setDarkMode(!darkMode)}
+                                        className={`w-12 h-6 rounded-full transition-colors ${darkMode ? 'bg-blue-600' : 'bg-gray-300'}`}
+                                      >
+                                        <div className={`w-5 h-5 bg-white rounded-full transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-0.5'}`} />
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            }}
+                            className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors w-full text-left"
+                          >
                             <Settings className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                             <span className="text-sm text-gray-700 dark:text-gray-300">Settings</span>
-                          </a>
-                          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors">
+                          </button>
+                          <button 
+                            onClick={() => {
+                              setShowUserMenu(false);
+                              openModal('Security Settings', 
+                                <div className="space-y-4">
+                                  <p>Manage security preferences and access controls.</p>
+                                  <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                                    <p className="text-sm text-green-700 dark:text-green-300">
+                                      Security features including MFA and audit logs are currently being implemented.
+                                    </p>
+                                  </div>
+                                </div>
+                              );
+                            }}
+                            className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors w-full text-left"
+                          >
                             <Shield className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                             <span className="text-sm text-gray-700 dark:text-gray-300">Security</span>
-                          </a>
+                          </button>
                           <hr className="my-2 border-gray-200/50 dark:border-gray-700/50" />
                           <button className="flex items-center gap-3 px-3 py-2 w-full hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors">
                             <LogOut className="w-4 h-4 text-red-600 dark:text-red-400" />
@@ -488,14 +665,62 @@ export default function HVECEnhanced() {
                   <FileSearch className="w-5 h-5" />
                   <span className="font-medium">Claims</span>
                 </a>
-                <a href="#" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                <button 
+                  onClick={() => {
+                    setShowMobileMenu(false);
+                    openModal('VA Benefits Information', 
+                      <div className="space-y-4">
+                        <p>Access comprehensive VA benefits information including:</p>
+                        <ul className="list-disc list-inside space-y-2 text-sm">
+                          <li>Disability compensation and ratings</li>
+                          <li>Healthcare benefits and eligibility</li>
+                          <li>Education benefits (GI Bill)</li>
+                          <li>Home loan guarantees</li>
+                          <li>Vocational rehabilitation</li>
+                        </ul>
+                        <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                          <p className="text-sm text-blue-700 dark:text-blue-300">
+                            For detailed benefits information, visit <a href="https://www.va.gov/benefits/" target="_blank" className="underline">VA.gov/benefits</a>
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  }}
+                  className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 w-full text-left"
+                >
                   <Shield className="w-5 h-5" />
                   <span className="font-medium">Benefits</span>
-                </a>
-                <a href="#" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                </button>
+                <button 
+                  onClick={() => {
+                    setShowMobileMenu(false);
+                    if (selectedVeteran && aiInsights) {
+                      setActiveTab('insights');
+                    } else {
+                      openModal('AI Insights Information', 
+                        <div className="space-y-4">
+                          <p>AI-powered clinical insights provide:</p>
+                          <ul className="list-disc list-inside space-y-2 text-sm">
+                            <li>Risk prediction and early warning systems</li>
+                            <li>Pattern recognition in clinical data</li>
+                            <li>Personalized treatment recommendations</li>
+                            <li>Medication interaction analysis</li>
+                            <li>Outcome prediction modeling</li>
+                          </ul>
+                          <div className="mt-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                            <p className="text-sm text-purple-700 dark:text-purple-300">
+                              Select a veteran from the list to view their personalized AI insights and clinical recommendations.
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    }
+                  }}
+                  className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 w-full text-left"
+                >
                   <Brain className="w-5 h-5" />
                   <span className="font-medium">AI Insights</span>
-                </a>
+                </button>
                 <hr className="border-blue-800/30" />
                 <button
                   onClick={() => setShowWelcomeModal(true)}
@@ -715,7 +940,7 @@ export default function HVECEnhanced() {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Search name or EDIPI..."
+                    placeholder="Search by name, EDIPI, branch, service era, or rating..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -783,6 +1008,52 @@ export default function HVECEnhanced() {
                   </div>
                   
                   <div>
+                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Service Era</label>
+                    <select
+                      value={filters.serviceEra}
+                      onChange={(e) => setFilters({...filters, serviceEra: e.target.value})}
+                      className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700"
+                    >
+                      <option value="all">All Eras</option>
+                      <option value="Vietnam">Vietnam</option>
+                      <option value="Post-Vietnam">Post-Vietnam</option>
+                      <option value="Gulf War">Gulf War</option>
+                      <option value="OIF/OEF">OIF/OEF</option>
+                    </select>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Age Range</label>
+                      <select
+                        value={filters.ageRange}
+                        onChange={(e) => setFilters({...filters, ageRange: e.target.value})}
+                        className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700"
+                      >
+                        <option value="all">All Ages</option>
+                        <option value="18-30">18-30</option>
+                        <option value="31-40">31-40</option>
+                        <option value="41-50">41-50</option>
+                        <option value="51-65">51-65</option>
+                        <option value="65+">65+</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Gender</label>
+                      <select
+                        value={filters.gender}
+                        onChange={(e) => setFilters({...filters, gender: e.target.value})}
+                        className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700"
+                      >
+                        <option value="all">All</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div>
                     <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Sort By</label>
                     <select
                       value={filters.sortBy}
@@ -825,6 +1096,9 @@ export default function HVECEnhanced() {
                           disabilityRange: 'all',
                           branch: 'all',
                           combatService: 'all',
+                          serviceEra: 'all',
+                          ageRange: 'all',
+                          gender: 'all',
                           sortBy: 'name'
                         });
                       }}
@@ -1032,7 +1306,7 @@ export default function HVECEnhanced() {
                         <BrainCircuit className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                         <h3 className="font-semibold text-purple-900 dark:text-purple-100">AI Quick Insights</h3>
                       </div>
-                      {aiInsights && aiInsights.insights.length > 0 && (
+                      {aiInsights && aiInsights.insights && aiInsights.insights.length > 0 ? (
                         <div className="space-y-2">
                           <div className="text-sm text-purple-700 dark:text-purple-300">
                             <span className="font-medium">Primary Risk:</span> {aiInsights.insights[0].title}
@@ -1046,6 +1320,13 @@ export default function HVECEnhanced() {
                           >
                             View Full Analysis →
                           </button>
+                        </div>
+                      ) : (
+                        <div className="text-sm text-purple-600 dark:text-purple-300">
+                          <div className="animate-pulse">Generating AI insights...</div>
+                          <div className="text-xs text-purple-500 dark:text-purple-400 mt-1">
+                            Analysis will appear once patient data is processed
+                          </div>
                         </div>
                       )}
                     </div>
@@ -1067,7 +1348,7 @@ export default function HVECEnhanced() {
                       ].map(tab => (
                         <button
                           key={tab.id}
-                          onClick={() => setActiveTab(tab.id as any)}
+                          onClick={() => setActiveTab(tab.id as 'assessment' | 'history' | 'diagnostics' | 'insights' | 'documentation' | 'collaboration')}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 border-b-2 font-medium text-sm transition-colors ${
                             activeTab === tab.id
                               ? 'border-blue-500 text-blue-600 dark:text-blue-400'
@@ -1444,7 +1725,26 @@ export default function HVECEnhanced() {
                           {/* Collaboration Actions */}
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <button
-                              onClick={() => alert('Opening secure messaging...')}
+                              onClick={() => openModal('Secure Messaging', 
+                                <div className="space-y-4">
+                                  <p>Send encrypted messages to medical team members and coordinators.</p>
+                                  <div className="space-y-3">
+                                    <textarea 
+                                      placeholder="Type your secure message..."
+                                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700"
+                                      rows={4}
+                                    />
+                                    <div className="flex gap-2">
+                                      <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                        Send Message
+                                      </button>
+                                      <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                                        Save Draft
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                               className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
                             >
                               <MessageSquare className="w-5 h-5 text-blue-600 dark:text-blue-400" />
@@ -1455,7 +1755,29 @@ export default function HVECEnhanced() {
                             </button>
                             
                             <button
-                              onClick={() => alert('Scheduling consultation...')}
+                              onClick={() => openModal('Schedule Consultation', 
+                                <div className="space-y-4">
+                                  <p>Schedule a clinical consultation or review session.</p>
+                                  <div className="space-y-3">
+                                    <div>
+                                      <label className="block text-sm font-medium mb-1">Consultation Type</label>
+                                      <select className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700">
+                                        <option>Clinical Review</option>
+                                        <option>Mental Health Assessment</option>
+                                        <option>Disability Evaluation</option>
+                                        <option>Care Coordination</option>
+                                      </select>
+                                    </div>
+                                    <div>
+                                      <label className="block text-sm font-medium mb-1">Preferred Date</label>
+                                      <input type="date" className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700" />
+                                    </div>
+                                    <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                      Schedule Consultation
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                               className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 transition-colors"
                             >
                               <Calendar className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -1466,7 +1788,34 @@ export default function HVECEnhanced() {
                             </button>
                             
                             <button
-                              onClick={() => alert('Creating referral...')}
+                              onClick={() => openModal('Create Referral', 
+                                <div className="space-y-4">
+                                  <p>Create a referral to a specialist or specialized service.</p>
+                                  <div className="space-y-3">
+                                    <div>
+                                      <label className="block text-sm font-medium mb-1">Referral Type</label>
+                                      <select className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700">
+                                        <option>Mental Health Specialist</option>
+                                        <option>Orthopedic Specialist</option>
+                                        <option>Neurologist</option>
+                                        <option>Physical Therapy</option>
+                                        <option>Social Services</option>
+                                      </select>
+                                    </div>
+                                    <div>
+                                      <label className="block text-sm font-medium mb-1">Reason for Referral</label>
+                                      <textarea 
+                                        placeholder="Describe the reason for referral..."
+                                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700"
+                                        rows={3}
+                                      />
+                                    </div>
+                                    <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                                      Create Referral
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                               className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-colors"
                             >
                               <Share2 className="w-5 h-5 text-purple-600 dark:text-purple-400" />
@@ -1506,7 +1855,15 @@ export default function HVECEnhanced() {
                               <button
                                 onClick={() => {
                                   navigator.clipboard.writeText(window.location.href);
-                                  alert('Link copied to clipboard!');
+                                  openModal('Link Copied', 
+                                    <div className="flex items-center gap-3">
+                                      <Copy className="w-6 h-6 text-green-600" />
+                                      <div>
+                                        <h4 className="font-medium text-gray-900 dark:text-white">Success!</h4>
+                                        <p className="text-sm text-gray-500">Link copied to clipboard</p>
+                                      </div>
+                                    </div>
+                                  );
                                 }}
                                 className="flex flex-col items-center justify-center gap-2 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                               >
