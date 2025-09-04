@@ -679,7 +679,7 @@ export default function HVECEnhanced() {
                 <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                   <p className="text-xs text-gray-500 dark:text-gray-400">Active Cases</p>
                   <p className="text-xl font-bold text-green-600 dark:text-green-400">
-                    {veterans.filter(v => v.claims?.some(c => c.status === 'pending')).length}
+                    {veterans.filter(v => v.claims?.some(c => c.status === 'PENDING')).length}
                   </p>
                 </div>
                 <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
@@ -1558,6 +1558,7 @@ export default function HVECEnhanced() {
                     )}
                   </div>
                 </div>
+              </>
             ) : (
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-12 text-center">
                 <Stethoscope className="w-16 h-16 text-gray-400 mx-auto mb-4" />
@@ -1571,6 +1572,7 @@ export default function HVECEnhanced() {
             )}
           </div>
         </div>
+      </div>
       </div>
       
       {/* Modal */}
