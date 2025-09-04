@@ -32,7 +32,8 @@
       "Bash(fi)",
       "Bash(cd:*)",
       "Bash(timeout 10 npm run dev)",
-      "Bash(timeout 5 npm run dev)"
+      "Bash(timeout 5 npm run dev)",
+      "Bash(npm run type-check:*)"
     ],
     "deny": [],
     "ask": []
