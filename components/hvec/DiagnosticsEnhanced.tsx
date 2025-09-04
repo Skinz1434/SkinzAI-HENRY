@@ -66,6 +66,18 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
   const [timeRange, setTimeRange] = useState<'3m' | '6m' | '1y' | 'all'>('6m');
   const [showPredictions, setShowPredictions] = useState(true);
   const [selectedLabCategory, setSelectedLabCategory] = useState<'inflammatory' | 'metabolic' | 'cardiac' | 'hepatic' | 'renal' | 'hematology'>('inflammatory');
+  
+  // Early return if no veteran data
+  if (!veteran) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-gray-500 dark:text-gray-400">
+          <AlertCircle className="w-8 h-8 mx-auto mb-2" />
+          <p>No veteran data available</p>
+        </div>
+      </div>
+    );
+  }
 
   // Generate comprehensive biomarker data with proper structure
   const biomarkerData = useMemo(() => {
@@ -352,6 +364,8 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
 
   // Generate coherent risk stratification data
   const riskStratification = useMemo(() => {
+    if (!veteran || !biomarkerData) return { conditions: [], recommendations: [] };
+    
     const disabilityRating = veteran?.disabilityRating || 0;
     const combatService = veteran?.combatService || false;
     const age = veteran?.age || 45;
@@ -368,9 +382,9 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       },
       {
         condition: 'Type 2 Diabetes',
-        likelihood: Math.min(90, 25 + (disabilityRating * 0.35) + (parseFloat(biomarkerData.metabolic.hba1c.value) > 5.7 ? 20 : 0)),
+        likelihood: Math.min(90, 25 + (disabilityRating * 0.35) + (parseFloat(biomarkerData?.metabolic?.hba1c?.value || '5.4') > 5.7 ? 20 : 0)),
         impact: 70,
-        riskLevel: parseFloat(biomarkerData.metabolic.hba1c.value) > 6.0 ? 'high' : 'medium',
+        riskLevel: parseFloat(biomarkerData?.metabolic?.hba1c?.value || '5.4') > 6.0 ? 'high' : 'medium',
         timeframe: '3 years',
         modifiable: true,
         interventions: ['Weight loss', 'Metformin', 'Diet modification']
@@ -404,9 +418,9 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
       },
       {
         condition: 'Kidney Disease',
-        likelihood: Math.min(70, 20 + (disabilityRating * 0.25) + (parseFloat(biomarkerData.renal.creatinine.value) > 1.2 ? 15 : 0)),
+        likelihood: Math.min(70, 20 + (disabilityRating * 0.25) + (parseFloat(biomarkerData?.renal?.creatinine?.value || '0.9') > 1.2 ? 15 : 0)),
         impact: 80,
-        riskLevel: biomarkerData.renal.egfr.value < 60 ? 'high' : 'low',
+        riskLevel: parseInt(String(biomarkerData?.renal?.egfr?.value || '90')) < 60 ? 'high' : 'low',
         timeframe: '5 years',
         modifiable: true,
         interventions: ['ACE inhibitors', 'Protein restriction', 'BP control']
@@ -558,7 +572,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
               System-Wide Health Radar
             </h4>
             <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={correlationMatrix.systemHealth}>
+              <RadarChart data={correlationMatrix?.systemHealth || []}>
                 <PolarGrid stroke="#374151" />
                 <PolarAngleAxis dataKey="system" stroke="#9CA3AF" fontSize={11} />
                 <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#9CA3AF" fontSize={10} />
@@ -597,7 +611,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
               Biomarker Trends & Interventions
             </h4>
             <ResponsiveContainer width="100%" height={300}>
-              <ComposedChart data={labTrends}>
+              <ComposedChart data={labTrends || []}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
                 <XAxis dataKey="month" stroke="#9CA3AF" fontSize={11} />
                 <YAxis yAxisId="left" stroke="#9CA3AF" fontSize={11} label={{ value: 'Score', angle: -90, position: 'insideLeft' }} />
@@ -731,7 +745,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
             Risk Stratification Analysis
           </h3>
           <ResponsiveContainer width="100%" height={350}>
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 40, left: 40 }}>
+            <ScatterChart data={riskStratification?.conditions || []} margin={{ top: 20, right: 20, bottom: 40, left: 40 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
               <XAxis 
                 dataKey="likelihood" 
@@ -771,8 +785,8 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                 }
                 return null;
               }} />
-              <Scatter name="Health Conditions" data={riskStratification.conditions} fill="#8884d8">
-                {riskStratification.conditions.map((entry: any, index: number) => (
+              <Scatter name="Health Conditions" data={riskStratification?.conditions || []} fill="#8884d8">
+                {(riskStratification?.conditions || []).map((entry: any, index: number) => (
                   <Cell 
                     key={`cell-${index}`} 
                     fill={
@@ -816,7 +830,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
             Clinical Decision Support
           </h3>
           <div className="space-y-3">
-            {riskStratification.recommendations.map((rec, idx) => (
+            {(riskStratification?.recommendations || []).map((rec: any, idx: number) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, x: -20 }}
@@ -838,7 +852,7 @@ export const DiagnosticsEnhanced: React.FC<DiagnosticsEnhancedProps> = ({ vetera
                       {rec.rationale}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-2">
-                      {rec.metrics.map((metric, i) => (
+                      {rec.metrics.map((metric: string, i: number) => (
                         <span key={i} className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded">
                           {metric}
                         </span>

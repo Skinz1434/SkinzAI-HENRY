@@ -1,6 +1,80 @@
 # CHANGELOG
 
-## [Latest] - 2025-09-04
+## [0.2.1] - 2025-09-04 - Build & Deployment Resolution
+
+### ⚡ Quick Summary
+Fixed critical TypeScript errors, implemented proper VA disability calculations (10% increments only), ensured all veterans with ratings have matching conditions, and resolved Vercel deployment cache issues.
+
+### 🚀 Key Fixes
+- **Build**: All TypeScript compilation errors resolved
+- **VA Ratings**: Now uses official VA combined ratings table (38 CFR 4.25)
+- **Data Integrity**: Veterans with ratings always have conditions (no more 81% with 0 conditions)
+- **Deployment**: Cache invalidation via version bump to force Vercel rebuild
+
+### 📦 New Utilities
+- `va-rating-calculator.ts` - Official VA rating calculations
+- `medical-record-generator.ts` - Realistic medical documentation
+- `enhanced-mock-data.ts` - Proper data generation with conditions
+
+### 🔄 Deployment Resolution
+If Vercel is stuck on old commit (97c98d1):
+1. Go to Vercel Dashboard → Project Settings
+2. Clear build cache or trigger manual deployment
+3. Latest working commits: `5030377` or `c4c1110`
+
+---
+
+## [0.2.0] - 2025-09-04 - Critical Fixes & Data Consistency Update
+
+### 🔧 TypeScript Compilation Fixes
+- **Fixed all build errors** preventing deployment
+- Corrected `getRankForBranch` parameter (serviceYears → isOfficer boolean)
+- Fixed Veteran interface compliance with types/index.ts
+- Resolved property mismatches (syncStatus → vetProfileSyncStatus)
+- Fixed evidence/notes array types in Claims interface
+- Removed invalid properties not in Veteran type
+
+### 📊 VA Rating System Overhaul
+- **Implemented proper VA combined ratings calculator** (38 CFR 4.25)
+  - Uses official VA combined ratings table
+  - Bilateral factor calculations (38 CFR 4.26)
+  - Ensures only valid 10% increment ratings (0%, 10%, 20%...100%)
+  - Fixed invalid percentages like 81%, 67%, 53%
+  
+### 🎯 Veteran Data Consistency
+- **Every veteran with a disability rating now has matching conditions**
+  - No more 81% ratings with 0 conditions
+  - Conditions directly correlate to combined rating
+  - Fallback mechanism ensures minimum 1 condition
+  - Enhanced probability logic (85% PTSD for combat vets, 90% musculoskeletal)
+
+### 🏥 Medical Record Generation
+- Created comprehensive medical record generator
+  - Service Treatment Records (STRs)
+  - C&P exam results with nexus statements
+  - VA treatment records with clinical notes
+  - Range of motion measurements
+  - Functional assessments
+
+### 🐛 Deployment Issues Resolved
+- Fixed Vercel deployment caching issues
+- Added DEPLOYMENT_VERSION.txt for cache busting
+- Bumped version to 0.2.0 to force rebuild
+- Multiple commits to resolve TypeScript errors:
+  - `fb28644` - Version bump to 0.2.0
+  - `986c685` - Fixed all TypeScript compilation errors
+  - `00a3f26` - Fixed TypeScript build errors
+  - `d032859` - Fixed VA rating percentages
+
+### 📈 Statistics
+- **Lines changed**: ~4,000+
+- **Files modified**: 15+
+- **New utilities**: 5 (rating calculator, medical generator, debug tools)
+- **Build status**: ✅ Compiles successfully locally
+
+---
+
+## [0.1.0] - 2025-09-04
 
 ### HVEC (Henry Veterans Enhanced Care) Portal - Major Enhancement
 
