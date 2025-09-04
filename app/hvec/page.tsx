@@ -108,6 +108,19 @@ export default function HVECEnhanced() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [aiInsights, setAiInsights] = useState<any>(null);
   const [currentAssessment, setCurrentAssessment] = useState<ClinicalAssessment | null>(null);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !localStorage.getItem('hvec-welcome-shown');
+    }
+    return false;
+  });
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [notifications] = useState([
+    { id: 1, message: 'New VA rating decision available', time: '2 hours ago', type: 'success' },
+    { id: 2, message: 'Clinical review required for 3 veterans', time: '5 hours ago', type: 'warning' },
+    { id: 3, message: 'System maintenance scheduled', time: '1 day ago', type: 'info' }
+  ]);
   
   const [filters, setFilters] = useState<SearchFilters>({
     specialty: 'all',
@@ -142,6 +155,14 @@ export default function HVECEnhanced() {
     };
     loadVeterans();
   }, []);
+
+  // Handle welcome modal dismissal
+  const handleCloseWelcome = () => {
+    setShowWelcomeModal(false);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hvec-welcome-shown', 'true');
+    }
+  };
 
   // Generate details when veteran is selected
   useEffect(() => {
@@ -253,125 +274,441 @@ export default function HVECEnhanced() {
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-gray-50 dark:bg-gray-900`}>
-      {/* Enhanced Header with Navigation */}
-      <header className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-gray-800 dark:via-gray-900 dark:to-black shadow-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo and Title */}
-            <div className="flex items-center gap-4">
-              <button className="lg:hidden p-2 text-white hover:bg-white/10 rounded-lg">
-                <Menu className="w-6 h-6" />
-              </button>
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                  <Stethoscope className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-white">HVEC Portal</h1>
-                  <p className="text-sm text-blue-100">Henry Veterans Enhanced Care - Physician Dashboard</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Navigation Menu */}
-            <nav className="hidden lg:flex items-center gap-6">
-              <a href="/" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                <Home className="w-4 h-4" />
-                <span>Dashboard</span>
-              </a>
-              <a href="/henry" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                <Users className="w-4 h-4" />
-                <span>Veterans</span>
-              </a>
-              <a href="/va-claims-ai" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                <FileSearch className="w-4 h-4" />
-                <span>Claims</span>
-              </a>
-              <a href="#" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                <CreditCard className="w-4 h-4" />
-                <span>Benefits</span>
-              </a>
-            </nav>
-            
-            {/* Action Buttons */}
-            <div className="flex items-center gap-3">
-              {/* Notifications */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-2 text-white hover:bg-white/10 rounded-lg relative"
+      {/* Premium Header with HENRY Branding */}
+      <header className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 shadow-2xl border-b border-blue-800/30">
+        {/* Subtle animated gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-600/5 to-transparent animate-pulse" />
+        
+        <div className="relative z-10">
+          <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-20">
+              {/* Left Section: Logo and Brand */}
+              <div className="flex items-center gap-4">
+                {/* Mobile Menu Toggle */}
+                <button 
+                  onClick={() => setShowMobileMenu(!showMobileMenu)}
+                  className="lg:hidden p-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 backdrop-blur-sm"
                 >
-                  <Bell className="w-5 h-5" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                  {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </button>
-                {showNotifications && (
-                  <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50">
-                    <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">Notifications</h3>
-                    </div>
-                    <div className="max-h-96 overflow-y-auto">
-                      <div className="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
-                        <div className="flex items-start gap-3">
-                          <div className="p-1 bg-blue-100 dark:bg-blue-900 rounded">
-                            <AlertCircle className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-900 dark:text-white">New lab results available for 3 patients</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">5 minutes ago</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
-                        <div className="flex items-start gap-3">
-                          <div className="p-1 bg-green-100 dark:bg-green-900 rounded">
-                            <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-900 dark:text-white">Claim approved for John Smith</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">1 hour ago</p>
-                          </div>
-                        </div>
-                      </div>
+                
+                {/* Brand Identity */}
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-600 blur-xl opacity-50 rounded-full" />
+                    <div className="relative p-3 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-2xl backdrop-blur-xl border border-white/10">
+                      <HeartPulse className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                )}
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h1 className="text-2xl font-bold text-white tracking-tight">HENRY</h1>
+                      <span className="text-xs font-semibold px-2 py-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-full uppercase tracking-wider">
+                        HVEC
+                      </span>
+                    </div>
+                    <p className="text-xs text-blue-200/80 font-medium mt-0.5">Veterans Enhanced Care System</p>
+                  </div>
+                </div>
               </div>
               
-              {/* Dark Mode Toggle */}
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className="p-2 text-white hover:bg-white/10 rounded-lg"
-              >
-                {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
+              {/* Center Section: Main Navigation */}
+              <nav className="hidden lg:flex items-center gap-1 bg-white/5 backdrop-blur-sm rounded-2xl p-1.5">
+                <a href="/hvec" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                  <Home className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">Dashboard</span>
+                </a>
+                <a href="/henry" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                  <Users className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">Veterans</span>
+                </a>
+                <a href="/va-claims-ai" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                  <FileSearch className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">Claims</span>
+                </a>
+                <a href="#" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                  <Shield className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">Benefits</span>
+                </a>
+                <a href="#" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                  <Brain className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">AI Insights</span>
+                </a>
+              </nav>
               
-              {/* User Menu */}
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-lg">
-                <User className="w-5 h-5 text-white" />
-                <span className="text-sm text-white font-medium">Dr. Smith</span>
-                <ChevronDown className="w-4 h-4 text-white/70" />
+              {/* Right Section: Actions and User Menu */}
+              <div className="flex items-center gap-2">
+                {/* Quick Actions */}
+                <button
+                  onClick={() => setShowWelcomeModal(true)}
+                  className="hidden lg:flex items-center gap-2 px-3 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200"
+                >
+                  <HelpCircle className="w-4 h-4" />
+                  <span className="text-sm font-medium">Help</span>
+                </button>
+                
+                {/* Notifications */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowNotifications(!showNotifications)}
+                    className="relative p-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200"
+                  >
+                    <Bell className="w-5 h-5" />
+                    {notifications.length > 0 && (
+                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                    )}
+                  </button>
+                  
+                  {showNotifications && (
+                    <AnimatePresence>
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute right-0 mt-2 w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 z-50"
+                      >
+                        <div className="p-4 border-b border-gray-200/50 dark:border-gray-700/50">
+                          <div className="flex items-center justify-between">
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Notifications</h3>
+                            <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full">
+                              {notifications.length} new
+                            </span>
+                          </div>
+                        </div>
+                        <div className="max-h-96 overflow-y-auto">
+                          {notifications.map((notif) => (
+                            <div key={notif.id} className="p-4 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors">
+                              <div className="flex items-start gap-3">
+                                <div className={`p-2 rounded-lg ${
+                                  notif.type === 'success' ? 'bg-green-100 dark:bg-green-900/50' :
+                                  notif.type === 'warning' ? 'bg-yellow-100 dark:bg-yellow-900/50' :
+                                  'bg-blue-100 dark:bg-blue-900/50'
+                                }`}>
+                                  {notif.type === 'success' ? <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" /> :
+                                   notif.type === 'warning' ? <AlertTriangle className="w-4 h-4 text-yellow-600 dark:text-yellow-400" /> :
+                                   <Info className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
+                                </div>
+                                <div className="flex-1">
+                                  <p className="text-sm text-gray-900 dark:text-white">{notif.message}</p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{notif.time}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="p-3 border-t border-gray-200/50 dark:border-gray-700/50">
+                          <button className="w-full text-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+                            View all notifications
+                          </button>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  )}
+                </div>
+                
+                {/* Theme Toggle */}
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className="p-2.5 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200"
+                >
+                  {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                </button>
+                
+                {/* User Menu */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="flex items-center gap-3 px-3 py-2 bg-white/10 hover:bg-white/15 backdrop-blur-sm rounded-xl transition-all duration-200 border border-white/10"
+                  >
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-lg flex items-center justify-center">
+                      <User className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="hidden lg:block text-left">
+                      <p className="text-xs text-blue-200/80">Welcome back</p>
+                      <p className="text-sm text-white font-semibold">Dr. Smith</p>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-blue-200/70 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {showUserMenu && (
+                    <AnimatePresence>
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute right-0 mt-2 w-64 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 z-50"
+                      >
+                        <div className="p-2">
+                          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors">
+                            <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Profile</span>
+                          </a>
+                          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors">
+                            <Settings className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Settings</span>
+                          </a>
+                          <a href="#" className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-xl transition-colors">
+                            <Shield className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Security</span>
+                          </a>
+                          <hr className="my-2 border-gray-200/50 dark:border-gray-700/50" />
+                          <button className="flex items-center gap-3 px-3 py-2 w-full hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors">
+                            <LogOut className="w-4 h-4 text-red-600 dark:text-red-400" />
+                            <span className="text-sm text-red-600 dark:text-red-400">Sign Out</span>
+                          </button>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
+        
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {showMobileMenu && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="lg:hidden border-t border-blue-800/30 bg-slate-900/95 backdrop-blur-xl"
+            >
+              <nav className="px-4 py-4 space-y-1">
+                <a href="/hvec" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                  <Home className="w-5 h-5" />
+                  <span className="font-medium">Dashboard</span>
+                </a>
+                <a href="/henry" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                  <Users className="w-5 h-5" />
+                  <span className="font-medium">Veterans</span>
+                </a>
+                <a href="/va-claims-ai" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                  <FileSearch className="w-5 h-5" />
+                  <span className="font-medium">Claims</span>
+                </a>
+                <a href="#" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                  <Shield className="w-5 h-5" />
+                  <span className="font-medium">Benefits</span>
+                </a>
+                <a href="#" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                  <Brain className="w-5 h-5" />
+                  <span className="font-medium">AI Insights</span>
+                </a>
+                <hr className="border-blue-800/30" />
+                <button
+                  onClick={() => setShowWelcomeModal(true)}
+                  className="flex items-center gap-3 px-4 py-3 w-full text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200"
+                >
+                  <HelpCircle className="w-5 h-5" />
+                  <span className="font-medium">Help & Tutorial</span>
+                </button>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Enhanced Patient Selection Panel */}
-          <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
-              {/* Search and Filter Header */}
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  Patient Selection
-                  <TooltipModal
-                    title="Patient Selection Help"
-                    content="Search and filter veterans by various criteria. Click on a patient to view their detailed clinical information."
-                    triggerText="Learn more about patient selection"
-                  />
-                </h2>
+      {/* Welcome Modal */}
+      <AnimatePresence>
+        {showWelcomeModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={handleCloseWelcome}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-3xl bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header with Gradient */}
+              <div className="relative bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 px-8 py-12">
+                <button
+                  onClick={handleCloseWelcome}
+                  className="absolute top-4 right-4 p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-all"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
+                    <HeartPulse className="w-10 h-10 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-white">Welcome to HENRY HVEC</h2>
+                    <p className="text-blue-100 mt-1">Your Advanced Veterans Healthcare Command Center</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2 mt-6">
+                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
+                    Version 2.0
+                  </span>
+                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
+                    AI-Powered
+                  </span>
+                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
+                    HIPAA Compliant
+                  </span>
+                </div>
+              </div>
+              
+              {/* Modal Content */}
+              <div className="px-8 py-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                      <Brain className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">AI-Powered Insights</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Advanced machine learning algorithms analyze patient data to provide predictive diagnostics and treatment recommendations.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                      <Shield className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">VA Benefits Integration</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Seamlessly connects with VA systems to track claims, benefits, and disability ratings in real-time.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+                      <Microscope className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Advanced Diagnostics</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        ACR/EULAR classification criteria and comprehensive lab analysis for accurate clinical assessment.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Predictive Analytics</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Risk stratification and disease progression modeling to prevent cascading health events.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Quick Start Guide */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl p-6 mb-6">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                    <Lightbulb className="w-5 h-5 text-yellow-500" />
+                    Quick Start Guide
+                  </h3>
+                  <ol className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex gap-2">
+                      <span className="font-semibold text-blue-600 dark:text-blue-400">1.</span>
+                      Select a veteran from the patient list or use the search function
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="font-semibold text-blue-600 dark:text-blue-400">2.</span>
+                      Review their comprehensive clinical assessment and AI insights
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="font-semibold text-blue-600 dark:text-blue-400">3.</span>
+                      Navigate tabs to access diagnostics, history, and documentation
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="font-semibold text-blue-600 dark:text-blue-400">4.</span>
+                      Use the export feature to generate reports for VA claims
+                    </li>
+                  </ol>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex gap-3 justify-end">
+                  <button
+                    onClick={() => {
+                      handleCloseWelcome();
+                      window.open('https://github.com/yourusername/henry-hvec/wiki', '_blank');
+                    }}
+                    className="px-5 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all font-medium"
+                  >
+                    View Documentation
+                  </button>
+                  <button
+                    onClick={handleCloseWelcome}
+                    className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg transition-all font-medium"
+                  >
+                    Get Started
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Content Area with Enhanced Scaling */}
+      <div className="min-h-[calc(100vh-5rem)] bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          {/* Page Title and Stats */}
+          <div className="mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Veterans Dashboard</h1>
+                <p className="text-gray-600 dark:text-gray-400 mt-1">Comprehensive clinical management and AI-powered insights</p>
+              </div>
+              <div className="flex gap-3">
+                <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Total Veterans</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-white">{veterans.length}</p>
+                </div>
+                <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Active Cases</p>
+                  <p className="text-xl font-bold text-green-600 dark:text-green-400">
+                    {veterans.filter(v => v.claims?.some(c => c.status === 'pending')).length}
+                  </p>
+                </div>
+                <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">High Risk</p>
+                  <p className="text-xl font-bold text-red-600 dark:text-red-400">
+                    {veterans.filter(v => v.riskScore && v.riskScore > 70).length}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+            {/* Enhanced Patient Selection Panel */}
+            <div className="xl:col-span-3">
+              <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50">
+                {/* Search and Filter Header */}
+                <div className="p-5 border-b border-gray-200/50 dark:border-gray-700/50">
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                    <div className="p-1.5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg">
+                      <Users className="w-4 h-4 text-white" />
+                    </div>
+                    Patient Registry
+                    <TooltipModal
+                      title="Patient Selection Help"
+                      content="Search and filter veterans by various criteria. Click on a patient to view their detailed clinical information."
+                      triggerText="Learn more about patient selection"
+                    />
+                  </h2>
                 
                 {/* Enhanced Search */}
                 <div className="relative mb-3">
@@ -461,17 +798,23 @@ export default function HVECEnhanced() {
                 </div>
               )}
 
-              {/* Patient List */}
-              <div className="max-h-[600px] overflow-y-auto">
+              {/* Patient List with Enhanced Styling */}
+              <div className="max-h-[calc(100vh-24rem)] overflow-y-auto custom-scrollbar">
                 {dataLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <RefreshCw className="w-6 h-6 text-gray-400 animate-spin" />
-                    <span className="ml-2 text-gray-500">Loading veterans...</span>
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <div className="relative">
+                      <div className="w-12 h-12 border-4 border-blue-200 dark:border-blue-800 rounded-full"></div>
+                      <div className="absolute top-0 left-0 w-12 h-12 border-4 border-blue-600 dark:border-blue-400 rounded-full animate-spin border-t-transparent"></div>
+                    </div>
+                    <span className="mt-3 text-sm text-gray-500 dark:text-gray-400">Loading veterans...</span>
                   </div>
                 ) : filteredVeterans.length === 0 ? (
-                  <div className="text-center py-8 px-4">
-                    <User className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500 text-sm">No veterans found</p>
+                  <div className="text-center py-12 px-4">
+                    <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <User className="w-8 h-8 text-gray-400" />
+                    </div>
+                    <p className="text-gray-500 dark:text-gray-400 font-medium">No veterans found</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Try adjusting your filters</p>
                     <button
                       onClick={() => {
                         setSearchQuery('');
@@ -485,43 +828,73 @@ export default function HVECEnhanced() {
                           sortBy: 'name'
                         });
                       }}
-                      className="mt-2 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                      className="mt-4 px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors"
                     >
                       Clear all filters
                     </button>
                   </div>
                 ) : (
-                  <div className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {filteredVeterans.map(veteran => (
-                      <button
-                        key={veteran.id}
-                        onClick={() => setSelectedVeteran(veteran)}
-                        className={`w-full text-left p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
-                          selectedVeteran?.id === veteran.id
-                            ? 'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500'
-                            : ''
-                        }`}
-                      >
-                        <div className="flex items-start justify-between mb-1">
-                          <div className="font-medium text-gray-900 dark:text-white">
-                            {veteran.name}
+                  <div className="space-y-2 p-2">
+                    {filteredVeterans.map(veteran => {
+                      const riskColor = veteran.riskScore && veteran.riskScore > 70 ? 'red' :
+                                       veteran.riskScore && veteran.riskScore > 40 ? 'yellow' : 'green';
+                      
+                      return (
+                        <motion.button
+                          key={veteran.id}
+                          onClick={() => setSelectedVeteran(veteran)}
+                          whileHover={{ scale: 1.01 }}
+                          whileTap={{ scale: 0.99 }}
+                          className={`w-full text-left p-4 rounded-xl transition-all ${
+                            selectedVeteran?.id === veteran.id
+                              ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 ring-2 ring-blue-500 shadow-lg'
+                              : 'bg-white dark:bg-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-md'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center text-white font-semibold">
+                                {veteran.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
+                              </div>
+                              <div>
+                                <div className="font-semibold text-gray-900 dark:text-white">
+                                  {veteran.name}
+                                </div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">
+                                  {veteran.edipi}
+                                </div>
+                              </div>
+                            </div>
+                            {veteran.riskScore && (
+                              <div className={`w-2 h-2 rounded-full animate-pulse ${
+                                riskColor === 'red' ? 'bg-red-500' :
+                                riskColor === 'yellow' ? 'bg-yellow-500' :
+                                'bg-green-500'
+                              }`} />
+                            )}
                           </div>
-                        </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {veteran.branch} • {veteran.disabilityRating}%
-                        </div>
-                        <div className="flex items-center gap-3 mt-2">
-                          <span className="text-xs text-gray-400 dark:text-gray-500">
-                            {veteran.claims?.length || 0} claims
-                          </span>
-                          {veteran.combatService && (
-                            <span className="text-xs px-1.5 py-0.5 bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 rounded">
-                              Combat
+                          
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md">
+                              {veteran.branch}
                             </span>
-                          )}
-                        </div>
-                      </button>
-                    ))}
+                            <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-md font-medium">
+                              {veteran.disabilityRating}%
+                            </span>
+                            {veteran.combatService && (
+                              <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-md">
+                                Combat
+                              </span>
+                            )}
+                            {veteran.claims && veteran.claims.length > 0 && (
+                              <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-md">
+                                {veteran.claims.length} claims
+                              </span>
+                            )}
+                          </div>
+                        </motion.button>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -535,12 +908,13 @@ export default function HVECEnhanced() {
             </div>
           </div>
 
-          {/* Main Content Area */}
-          <div className="lg:col-span-3">
+          {/* Main Content Area with Enhanced Production Styling */}
+          <div className="xl:col-span-9">
             {selectedVeteran ? (
               <>
-                {/* Enhanced Patient Header */}
-                <div className="bg-gradient-to-r from-white to-blue-50 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg p-6 mb-6 border border-gray-200 dark:border-gray-700">
+                {/* Premium Patient Header Card */}
+                <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden mb-6">
+                  <div className="bg-gradient-to-r from-blue-600/10 via-indigo-600/10 to-purple-600/10 dark:from-blue-900/30 dark:via-indigo-900/30 dark:to-purple-900/30 p-6">
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Patient Info */}
                     <div className="lg:col-span-2">
@@ -584,7 +958,7 @@ export default function HVECEnhanced() {
                               </div>
                             </div>
                           ))}
-                          className="text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                          className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                         >
                           <MoreVertical className="w-5 h-5" />
                         </button>
@@ -675,6 +1049,7 @@ export default function HVECEnhanced() {
                         </div>
                       )}
                     </div>
+                  </div>
                   </div>
                 </div>
 
@@ -1183,7 +1558,6 @@ export default function HVECEnhanced() {
                     )}
                   </div>
                 </div>
-              </>
             ) : (
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-12 text-center">
                 <Stethoscope className="w-16 h-16 text-gray-400 mx-auto mb-4" />

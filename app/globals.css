@@ -116,6 +116,44 @@
   .input-field {
     @apply w-full px-4 py-2 bg-skinz-bg-secondary border border-skinz-border-subtle rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200;
   }
+  
+  /* Custom Scrollbar Styling for HVEC */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: theme('colors.gray.400');
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.gray.500');
+  }
+  
+  .dark .custom-scrollbar {
+    scrollbar-color: theme('colors.gray.700') transparent;
+  }
+  
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: theme('colors.gray.700');
+  }
+  
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.gray.600');
+  }
 }
 
 @keyframes gradient-x {
