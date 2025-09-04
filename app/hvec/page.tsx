@@ -424,7 +424,7 @@ export default function HVECEnhanced() {
                   <Home className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span className="font-medium">Dashboard</span>
                 </a>
-                <a href="/henry" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
+                <a href="/henry/dashboard-full" className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group">
                   <Users className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span className="font-medium">Veterans</span>
                 </a>
@@ -681,7 +681,7 @@ export default function HVECEnhanced() {
                   <Home className="w-5 h-5" />
                   <span className="font-medium">Dashboard</span>
                 </a>
-                <a href="/henry" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
+                <a href="/henry/dashboard-full" className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200">
                   <Users className="w-5 h-5" />
                   <span className="font-medium">Veterans</span>
                 </a>

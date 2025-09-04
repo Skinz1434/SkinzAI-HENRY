@@ -5,6 +5,26 @@
  * and provide insights into system performance for the quantum clinical intelligence.
  */
 
+// Extended Navigator interface for device memory API
+interface NavigatorWithDeviceMemory extends Navigator {
+  deviceMemory?: number;
+  connection?: {
+    effectiveType?: string;
+    downlink?: number;
+    rtt?: number;
+    saveData?: boolean;
+  };
+}
+
+// Extended Performance interface for memory API
+interface PerformanceWithMemory extends Performance {
+  memory?: {
+    usedJSHeapSize: number;
+    totalJSHeapSize: number;
+    jsHeapSizeLimit: number;
+  };
+}
+
 export interface PerformanceMetrics {
   renderTime: number;
   memoryUsage: number;
@@ -35,8 +55,9 @@ export const detectDeviceCapabilities = (): DeviceCapabilities => {
   const supportsWebGL = !!gl;
   
   // Estimate device performance based on available APIs
-  const deviceMemory = (navigator as any)?.deviceMemory || 4; // Default to 4GB
-  const networkInfo = (navigator as any)?.connection;
+  const extendedNavigator = navigator as NavigatorWithDeviceMemory;
+  const deviceMemory = extendedNavigator?.deviceMemory || 4; // Default to 4GB
+  const networkInfo = extendedNavigator?.connection;
   const networkType = networkInfo?.effectiveType || 'unknown';
   
   // Performance heuristics
@@ -82,8 +103,11 @@ export class PerformanceMonitor {
     // Monitor memory usage if available
     if ('memory' in performance) {
       setInterval(() => {
-        const memInfo = (performance as any).memory;
-        this.metrics.memoryUsage = memInfo.usedJSHeapSize / memInfo.jsHeapSizeLimit;
+        const extendedPerformance = performance as PerformanceWithMemory;
+        const memInfo = extendedPerformance.memory;
+        if (memInfo) {
+          this.metrics.memoryUsage = memInfo.usedJSHeapSize / memInfo.jsHeapSizeLimit;
+        }
       }, 5000);
     }
   }
@@ -148,12 +172,12 @@ export const getAdaptiveSettings = (capabilities: DeviceCapabilities) => {
 /**
  * Throttle function for performance optimization
  */
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): T => {
   let inThrottle: boolean;
-  return ((...args: any[]) => {
+  return ((...args: Parameters<T>) => {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
@@ -165,12 +189,12 @@ export const throttle = <T extends (...args: any[]) => any>(
 /**
  * Debounce function for performance optimization
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): T => {
   let timeoutId: NodeJS.Timeout;
-  return ((...args: any[]) => {
+  return ((...args: Parameters<T>) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => func.apply(this, args), delay);
   }) as T;
@@ -228,15 +252,15 @@ export const preloadCriticalResources = async () => {
 /**
  * Memory management utility
  */
-export class MemoryManager {
-  private cache: Map<string, any> = new Map();
+export class MemoryManager<T = unknown> {
+  private cache: Map<string, T> = new Map();
   private maxSize: number;
   
   constructor(maxSize: number = 100) {
     this.maxSize = maxSize;
   }
   
-  set(key: string, value: any) {
+  set(key: string, value: T): void {
     if (this.cache.size >= this.maxSize) {
       // Remove oldest entry
       const firstKey = this.cache.keys().next().value;
@@ -247,15 +271,15 @@ export class MemoryManager {
     this.cache.set(key, value);
   }
   
-  get(key: string) {
+  get(key: string): T | undefined {
     return this.cache.get(key);
   }
   
-  clear() {
+  clear(): void {
     this.cache.clear();
   }
   
-  getSize() {
+  getSize(): number {
     return this.cache.size;
   }
 }
