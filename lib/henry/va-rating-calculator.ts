@@ -51,7 +51,9 @@ export function calculateCombinedRating(ratings: number[]): number {
   }
   
   // Round to nearest 10% per VA rules
-  return Math.round(combinedValue / 10) * 10;
+  const rounded = Math.round(combinedValue / 10) * 10;
+  // Ensure it's a valid VA percentage (0-100, increments of 10)
+  return Math.max(0, Math.min(100, rounded));
 }
 
 /**
@@ -60,7 +62,23 @@ export function calculateCombinedRating(ratings: number[]): number {
  */
 export function calculateBilateralFactor(leftRating: number, rightRating: number): number {
   const combined = calculateCombinedRating([leftRating, rightRating]);
-  return Math.round(combined * 1.1); // Add 10% then round
+  const withBilateralFactor = combined * 1.1;
+  // Round to nearest 10% per VA rules
+  return Math.round(withBilateralFactor / 10) * 10;
+}
+
+/**
+ * Validate and fix VA disability rating to ensure it follows VA rules
+ * @param rating Input rating percentage
+ * @returns Valid VA rating (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+ */
+export function validateVARating(rating: number): number {
+  if (rating < 0) return 0;
+  if (rating > 100) return 100;
+  
+  // Round to nearest 10%
+  const rounded = Math.round(rating / 10) * 10;
+  return rounded;
 }
 
 /**
@@ -241,7 +259,7 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
       const ptsd = VA_CONDITIONS['PTSD'];
       conditions.push({
         name: 'PTSD',
-        rating: ptsd.ratingOptions[Math.floor(Math.random() * (ptsd.ratingOptions.length - 2)) + 2], // Skip 0 and 10
+        rating: ptsd.ratingOptions[Math.floor(Math.random() * (ptsd.ratingOptions.length - 2)) + 2] || 30, // Skip 0 and 10, default to 30
         icd10: ptsd.icd10,
         dbq: ptsd.dbq
       });
@@ -263,7 +281,7 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
     const lumbar = VA_CONDITIONS['Lumbar Strain'];
     conditions.push({
       name: 'Lumbar Strain',
-      rating: lumbar.ratingOptions[Math.floor(Math.random() * lumbar.ratingOptions.length)],
+      rating: lumbar.ratingOptions[Math.floor(Math.random() * (lumbar.ratingOptions.length - 1)) + 1] || 10, // Skip 0%, minimum 10%
       icd10: lumbar.icd10,
       dbq: lumbar.dbq
     });
@@ -276,13 +294,13 @@ export function generateRealisticConditions(serviceEra: string, combatService: b
     conditions.push(
       {
         name: 'Right Knee Strain',
-        rating: rightKnee.ratingOptions[Math.floor(Math.random() * rightKnee.ratingOptions.length)],
+        rating: rightKnee.ratingOptions[Math.floor(Math.random() * (rightKnee.ratingOptions.length - 1)) + 1] || 10,
         icd10: rightKnee.icd10,
         dbq: rightKnee.dbq
       },
       {
         name: 'Left Knee Strain',
-        rating: leftKnee.ratingOptions[Math.floor(Math.random() * leftKnee.ratingOptions.length)],
+        rating: leftKnee.ratingOptions[Math.floor(Math.random() * (leftKnee.ratingOptions.length - 1)) + 1] || 10,
         icd10: leftKnee.icd10,
         dbq: leftKnee.dbq
       }

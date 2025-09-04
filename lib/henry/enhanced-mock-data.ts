@@ -10,6 +10,7 @@ import {
   calculateCombinedRating, 
   generateRealisticConditions, 
   calculateTotalRating,
+  validateVARating,
   VA_CONDITIONS 
 } from './va-rating-calculator';
 
@@ -90,7 +91,13 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
       conditions = generateRealisticConditions(serviceEra, combatService, branch);
       
       // Calculate actual combined rating using VA formula
-      disabilityRating = calculateTotalRating(conditions);
+      disabilityRating = validateVARating(calculateTotalRating(conditions));
+      
+      // Double-check: if we somehow still have an invalid rating, force it to valid
+      if (disabilityRating % 10 !== 0) {
+        console.warn(`Invalid VA rating detected: ${disabilityRating}% for ${fullName}, fixing to ${validateVARating(disabilityRating)}%`);
+        disabilityRating = validateVARating(disabilityRating);
+      }
       
       // Generate claims from conditions
       claims = conditions.map((condition, idx) => ({

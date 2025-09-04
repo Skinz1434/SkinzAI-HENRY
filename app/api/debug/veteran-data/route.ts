@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
       : generateMockVeterans(count);
     
     // Analyze the generated data
+    const invalidRatings = veterans.filter(v => v.disabilityRating % 10 !== 0);
     const analysis = {
       total: veterans.length,
       withRatings: veterans.filter(v => v.disabilityRating > 0).length,
@@ -75,7 +76,9 @@ export async function POST(request: NextRequest) {
       withClaims: veterans.filter(v => v.claims?.length > 0).length,
       inconsistent: veterans.filter(v => 
         v.disabilityRating > 0 && (!(v as any).conditions?.length || !v.claims?.length)
-      ).length
+      ).length,
+      invalidRatings: invalidRatings.length,
+      invalidRatingsDetails: invalidRatings.map(v => `${v.name}: ${v.disabilityRating}%`)
     };
     
     return NextResponse.json({
