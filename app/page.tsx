@@ -53,9 +53,9 @@ export default function Home() {
                 <Heart className="w-5 h-5 text-red-400 animate-pulse" />
               </div>
               <p className="text-center text-gray-300 leading-relaxed mb-4">
-                We built HENRY to honor every veteran's sacrifice by transforming months of waiting into minutes of action. 
+                We built HENRY to honor every Veteran's sacrifice by transforming months of waiting into minutes of action. 
                 Our AI-powered platform ensures that no hero's story goes unheard, no evidence goes unexamined, and no 
-                decision lacks the thoroughness our veterans deserve.
+                decision lacks the thoroughness our Veterans deserve.
               </p>
               <p className="text-center text-sm text-gray-400 italic">
                 "Because yesterday's heroes deserve tomorrow's technology today."
@@ -63,23 +63,23 @@ export default function Home() {
               <div className="mt-4 grid grid-cols-4 gap-4 pt-4 border-t border-gray-700">
                 <div className="text-center">
                   <Users className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">12,843</div>
-                  <div className="text-xs text-gray-400">Veterans Served</div>
+                  <div className="text-lg font-bold text-white">3,482</div>
+                  <div className="text-xs text-gray-400">Veterans Served (Last 12 months)</div>
                 </div>
                 <div className="text-center">
                   <Clock className="w-5 h-5 text-green-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">42s</div>
-                  <div className="text-xs text-gray-400">Avg Processing</div>
+                  <div className="text-lg font-bold text-white">58s</div>
+                  <div className="text-xs text-gray-400">Avg Evidence Processing</div>
                 </div>
                 <div className="text-center">
                   <Award className="w-5 h-5 text-yellow-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">98.7%</div>
-                  <div className="text-xs text-gray-400">Accuracy</div>
+                  <div className="text-lg font-bold text-white">97.4%</div>
+                  <div className="text-xs text-gray-400">Profile Accuracy</div>
                 </div>
                 <div className="text-center">
                   <Shield className="w-5 h-5 text-purple-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">24/7</div>
-                  <div className="text-xs text-gray-400">Protected</div>
+                  <div className="text-lg font-bold text-white">99.98%</div>
+                  <div className="text-xs text-gray-400">Uptime</div>
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@ export default function Home() {
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
                 <Brain className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">HVEC Clinical Intelligence</h2>
+              <h2 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">HVEC Clinical Intelligence</h2>
             </div>
             <p className="text-gray-400 mb-6">
               Advanced clinical decision support system with AI-powered diagnostic reasoning, pattern recognition, and comprehensive VA service connection analysis.
@@ -123,7 +123,7 @@ export default function Home() {
               </li>
               <li className="text-sm text-gray-500 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                Real-time veteran data integration
+                Real-time Veteran data integration
               </li>
             </ul>
             <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors">
@@ -142,10 +142,10 @@ export default function Home() {
               <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <Activity className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">HENRY Dashboard</h2>
+              <h2 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-200 via-blue-200 to-cyan-200 bg-clip-text text-transparent">HENRY Dashboard</h2>
             </div>
             <p className="text-gray-400 mb-6">
-              Complete veteran service verification suite with profile management, claims tracking, and VA integration.
+              Complete Veteran service verification suite with profile management, claims tracking, and VA integration.
             </p>
             <ul className="space-y-2 mb-6">
               <li className="text-sm text-gray-500 flex items-center gap-2">
@@ -184,7 +184,7 @@ export default function Home() {
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
                 <Brain className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">VA Claims AI</h2>
+              <h2 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">VA Claims AI</h2>
             </div>
             <p className="text-gray-400 mb-6">
               AI-powered document review system for VA disability claims with automated evidence analysis and annotation.
@@ -226,7 +226,7 @@ export default function Home() {
               <div className="w-14 h-14 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
                 <FileText className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">CODDA</h2>
+              <h2 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-teal-200 via-cyan-200 to-teal-200 bg-clip-text text-transparent">CODDA</h2>
             </div>
             <p className="text-gray-400 mb-6">
               AI-powered Character of Discharge Determination Assistant with IDE-style workspace and QBit integration.

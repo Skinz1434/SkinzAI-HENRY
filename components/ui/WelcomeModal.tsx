@@ -91,11 +91,58 @@ export default function WelcomeModal() {
     document.removeEventListener('mouseup', handleMouseUp);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.target instanceof HTMLElement &&
+        (e.target.closest('button') || e.target.closest('[role="button"]'))) {
+      return;
+    }
+    if (!e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    setIsDragging(true);
+    dragRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      initialX: position.x,
+      initialY: position.y
+    };
+    document.addEventListener('touchmove', handleTouchMove as any, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd as any);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!isDragging) return;
+    if (!e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - dragRef.current.startX;
+    const deltaY = touch.clientY - dragRef.current.startY;
+    const newX = dragRef.current.initialX + deltaX;
+    const newY = dragRef.current.initialY + deltaY;
+    const modal = modalRef.current;
+    if (modal) {
+      const rect = modal.getBoundingClientRect();
+      const maxX = window.innerWidth - rect.width;
+      const maxY = window.innerHeight - rect.height;
+      setPosition({
+        x: Math.max(-rect.width / 2, Math.min(maxX - rect.width / 2, newX)),
+        y: Math.max(-rect.height / 2, Math.min(maxY - rect.height / 2, newY))
+      });
+    }
+    e.preventDefault();
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    document.removeEventListener('touchmove', handleTouchMove as any);
+    document.removeEventListener('touchend', handleTouchEnd as any);
+  };
+
   // Cleanup event listeners on unmount
   useEffect(() => {
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove as any);
+      document.removeEventListener('touchend', handleTouchEnd as any);
     };
   }, []);
 
@@ -117,22 +164,16 @@ export default function WelcomeModal() {
           <motion.div
             ref={modalRef}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1,
-              x: position.x,
-              y: position.y
-            }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, type: 'spring', bounce: 0.4 }}
-            className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-auto"
-            style={{
-              transform: `translate(-50%, -50%) translate(${position.x}px, ${position.y}px)`,
-            }}
+            className="fixed left-1/2 top-1/2 z-50"
+            style={{ transform: `translate(-50%, -50%) translate(${position.x}px, ${position.y}px)` }}
           >
             <div 
-              className={`relative w-[92vw] max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+              className={`relative w-[92vw] max-w-3xl max-h-[90vh] overflow-auto rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
               onMouseDown={handleMouseDown}
+              onTouchStart={handleTouchStart}
             >
               {/* Close button */}
               <button
