@@ -12,6 +12,7 @@ export default function WelcomeModal() {
   const [isDragging, setIsDragging] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ startX: 0, startY: 0, initialX: 0, initialY: 0 });
+  const dragHandleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -57,10 +58,25 @@ export default function WelcomeModal() {
       initialY: position.y
     };
     
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
     e.preventDefault();
+    e.stopPropagation();
   };
+
+  // Add global listeners when dragging starts
+  useEffect(() => {
+    if (isDragging) {
+      const handleGlobalMouseMove = (e: MouseEvent) => handleMouseMove(e);
+      const handleGlobalMouseUp = () => handleMouseUp();
+      
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleGlobalMouseMove);
+        document.removeEventListener('mouseup', handleGlobalMouseUp);
+      };
+    }
+  }, [isDragging]);
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging) return;
@@ -75,20 +91,22 @@ export default function WelcomeModal() {
     const modal = modalRef.current;
     if (modal) {
       const rect = modal.getBoundingClientRect();
-      const maxX = window.innerWidth - rect.width;
-      const maxY = window.innerHeight - rect.height;
+      const halfWidth = rect.width / 2;
+      const halfHeight = rect.height / 2;
+      const maxX = window.innerWidth / 2 - halfWidth - 20;
+      const maxY = window.innerHeight / 2 - halfHeight - 20;
+      const minX = -window.innerWidth / 2 + halfWidth + 20;
+      const minY = -window.innerHeight / 2 + halfHeight + 20;
       
       setPosition({
-        x: Math.max(-rect.width / 2, Math.min(maxX - rect.width / 2, newX)),
-        y: Math.max(-rect.height / 2, Math.min(maxY - rect.height / 2, newY))
+        x: Math.max(minX, Math.min(maxX, newX)),
+        y: Math.max(minY, Math.min(maxY, newY))
       });
     }
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -105,8 +123,8 @@ export default function WelcomeModal() {
       initialX: position.x,
       initialY: position.y
     };
-    document.addEventListener('touchmove', handleTouchMove as any, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd as any);
+    e.preventDefault();
+    e.stopPropagation();
   };
 
   const handleTouchMove = (e: TouchEvent) => {
@@ -120,11 +138,16 @@ export default function WelcomeModal() {
     const modal = modalRef.current;
     if (modal) {
       const rect = modal.getBoundingClientRect();
-      const maxX = window.innerWidth - rect.width;
-      const maxY = window.innerHeight - rect.height;
+      const halfWidth = rect.width / 2;
+      const halfHeight = rect.height / 2;
+      const maxX = window.innerWidth / 2 - halfWidth - 20;
+      const maxY = window.innerHeight / 2 - halfHeight - 20;
+      const minX = -window.innerWidth / 2 + halfWidth + 20;
+      const minY = -window.innerHeight / 2 + halfHeight + 20;
+      
       setPosition({
-        x: Math.max(-rect.width / 2, Math.min(maxX - rect.width / 2, newX)),
-        y: Math.max(-rect.height / 2, Math.min(maxY - rect.height / 2, newY))
+        x: Math.max(minX, Math.min(maxX, newX)),
+        y: Math.max(minY, Math.min(maxY, newY))
       });
     }
     e.preventDefault();
@@ -132,19 +155,23 @@ export default function WelcomeModal() {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    document.removeEventListener('touchmove', handleTouchMove as any);
-    document.removeEventListener('touchend', handleTouchEnd as any);
   };
 
-  // Cleanup event listeners on unmount
+  // Touch event handling
   useEffect(() => {
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove as any);
-      document.removeEventListener('touchend', handleTouchEnd as any);
-    };
-  }, []);
+    if (isDragging) {
+      const handleGlobalTouchMove = (e: TouchEvent) => handleTouchMove(e);
+      const handleGlobalTouchEnd = () => handleTouchEnd();
+      
+      document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
+      document.addEventListener('touchend', handleGlobalTouchEnd);
+      
+      return () => {
+        document.removeEventListener('touchmove', handleGlobalTouchMove);
+        document.removeEventListener('touchend', handleGlobalTouchEnd);
+      };
+    }
+  }, [isDragging]);
 
   return (
     <AnimatePresence>
@@ -163,15 +190,19 @@ export default function WelcomeModal() {
           {/* Modal */}
           <motion.div
             ref={modalRef}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3, type: 'spring', bounce: 0.4 }}
-            className="fixed left-1/2 top-1/2 z-50"
-            style={{ transform: `translate(-50%, -50%) translate(${position.x}px, ${position.y}px)` }}
+            className="fixed z-50"
+            style={{ 
+              left: '50%',
+              top: '50%',
+              transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`
+            }}
           >
             <div 
-              className={`relative w-[92vw] max-w-3xl max-h-[90vh] overflow-auto rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+              className={`relative w-[90vw] max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
               onMouseDown={handleMouseDown}
               onTouchStart={handleTouchStart}
             >
@@ -192,7 +223,10 @@ export default function WelcomeModal() {
               {/* Content */}
               <div className="relative">
                 {/* Drag Handle */}
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full cursor-grab active:cursor-grabbing" />
+                <div 
+                  ref={dragHandleRef}
+                  className="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full cursor-grab active:cursor-grabbing" 
+                />
                 
                 {/* Header */}
                 <div className="mb-6 flex items-start gap-4 pt-4">
