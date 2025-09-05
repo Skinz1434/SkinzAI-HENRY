@@ -36,7 +36,8 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { mockFetchVeterans, mockSyncVetProfile, mockExportData } from '@/lib/henry/mock-data';
-import { Veteran } from '@/types';
+import { Veteran, Branch, DischargeStatus } from '@/types';
+import { BRANCHES, DISCHARGE_STATUSES } from './constants';
 import { VeteranDetailModalEnhanced } from '@/components/VeteranDetailModalEnhanced';
 import { generateVeteranDetails } from '@/lib/henry/veteran-details';
 import { generateVeteranProfileEnhanced, VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
@@ -471,7 +472,7 @@ function VeteransTab({
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   filters: { branch: string; status: string; syncStatus: string };
-  setFilters: (filters: any) => void;
+  setFilters: (filters: { branch: string; status: string; syncStatus: string }) => void;
   onSync: (id: string) => void;
   syncingIds: Set<string>;
   viewMode: 'grid' | 'list';
@@ -504,7 +505,7 @@ function VeteransTab({
             className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
           >
             <option value="">All Branches</option>
-            {Object.values(Branch).map(branch => (
+            {Object.values(Branch || BRANCHES).map(branch => (
               <option key={branch} value={branch}>{branch}</option>
             ))}
           </select>
@@ -515,7 +516,7 @@ function VeteransTab({
             className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
           >
             <option value="">All Statuses</option>
-            {Object.values(DischargeStatus).map(status => (
+            {Object.values(DischargeStatus || DISCHARGE_STATUSES).map(status => (
               <option key={status} value={status}>{status.replace(/_/g, ' ')}</option>
             ))}
           </select>
