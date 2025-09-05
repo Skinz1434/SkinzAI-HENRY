@@ -160,7 +160,7 @@ export function generateEnhancedMockVeterans(count: number = 100): Veteran[] {
     const monthlyCompensation = calculateMonthlyCompensation(disabilityRating, dependents);
     
     // Risk score calculation based on conditions
-    let riskScore = calculateRiskScore(conditions, disabilityRating);
+    const riskScore = calculateRiskScore(conditions, disabilityRating);
     let riskLevel: 'Minimal' | 'Low' | 'Moderate' | 'High' | 'Immediate';
     
     if (riskScore >= 85) riskLevel = 'Immediate';

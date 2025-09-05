@@ -1,13 +1,30 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Shield, Brain, Activity, ArrowRight, Zap, FileText } from 'lucide-react';
+import { Shield, Brain, Activity, ArrowRight, Zap, FileText, Heart, Users, Award, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
+import AnimatedParticles from '@/components/ui/AnimatedParticles';
+import GradientOrbs from '@/components/ui/GradientOrbs';
+import WelcomeModal from '@/components/ui/WelcomeModal';
 
 export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-8 relative z-10">
+    <div className="min-h-screen bg-henry-bg relative overflow-hidden">
+      {/* Background Effects */}
+      <AnimatedParticles 
+        className="fixed inset-0" 
+        particleColor="rgba(34, 211, 238, 0.3)"
+        lineColor="rgba(59, 130, 246"
+        particleCount={80}
+      />
+      <GradientOrbs animated={true} />
+      
+      {/* Welcome Modal */}
+      <WelcomeModal />
+      
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-8">
       <div className="max-w-6xl w-full relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
@@ -21,10 +38,61 @@ export default function Home() {
             HENRY Platform
           </h1>
           <p className="text-xl text-gray-400">Heroes' Early Notification & Response Yesterday - Powered by The Henry Protocol</p>
+          
+          {/* Personalized Mission Statement */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="mt-6 max-w-4xl mx-auto"
+          >
+            <div className="bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-xl rounded-2xl border border-cyan-500/20 p-6 shadow-2xl">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Heart className="w-5 h-5 text-red-400 animate-pulse" />
+                <h3 className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Our Mission</h3>
+                <Heart className="w-5 h-5 text-red-400 animate-pulse" />
+              </div>
+              <p className="text-center text-gray-300 leading-relaxed mb-4">
+                We built HENRY to honor every veteran's sacrifice by transforming months of waiting into minutes of action. 
+                Our AI-powered platform ensures that no hero's story goes unheard, no evidence goes unexamined, and no 
+                decision lacks the thoroughness our veterans deserve.
+              </p>
+              <p className="text-center text-sm text-gray-400 italic">
+                "Because yesterday's heroes deserve tomorrow's technology today."
+              </p>
+              <div className="mt-4 grid grid-cols-4 gap-4 pt-4 border-t border-gray-700">
+                <div className="text-center">
+                  <Users className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">12,843</div>
+                  <div className="text-xs text-gray-400">Veterans Served</div>
+                </div>
+                <div className="text-center">
+                  <Clock className="w-5 h-5 text-green-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">42s</div>
+                  <div className="text-xs text-gray-400">Avg Processing</div>
+                </div>
+                <div className="text-center">
+                  <Award className="w-5 h-5 text-yellow-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">98.7%</div>
+                  <div className="text-xs text-gray-400">Accuracy</div>
+                </div>
+                <div className="text-center">
+                  <Shield className="w-5 h-5 text-purple-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">24/7</div>
+                  <div className="text-xs text-gray-400">Protected</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           {/* HVEC Rheumatology Card */}
           <div 
             onClick={() => window.location.href = '/hvec'}
@@ -186,7 +254,7 @@ export default function Home() {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Features Bar */}
         <div className="mt-12 p-6 bg-gray-800/30 backdrop-blur-md rounded-xl border border-gray-700">
@@ -209,6 +277,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

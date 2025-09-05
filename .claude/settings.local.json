@@ -148,7 +148,8 @@
       "Bash(taskkill:*)",
       "Bash(kill:*)",
       "WebSearch",
-      "WebFetch(domain:commons.wikimedia.org)"
+      "WebFetch(domain:commons.wikimedia.org)",
+      "Bash(npx eslint:*)"
     ],
     "deny": [],
     "ask": []

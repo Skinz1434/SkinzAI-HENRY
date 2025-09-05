@@ -35,8 +35,8 @@ import {
   Brain,
   ExternalLink
 } from 'lucide-react';
-import { mockFetchVeterans, mockSyncVetProfile, mockProcessClaim, mockExportData } from '@/lib/henry/mock-data';
-import { Veteran, Branch, DischargeStatus, ClaimStatus } from '@/types';
+import { mockFetchVeterans, mockSyncVetProfile, mockExportData } from '@/lib/henry/mock-data';
+import { Veteran } from '@/types';
 import { VeteranDetailModalEnhanced } from '@/components/VeteranDetailModalEnhanced';
 import { generateVeteranDetails } from '@/lib/henry/veteran-details';
 import { generateVeteranProfileEnhanced, VeteranProfileEnhanced } from '@/lib/henry/veteran-profile-enhanced';
@@ -167,11 +167,21 @@ export default function DashboardFullPage() {
     }
   };
 
-  const handleExport = async (format: 'csv' | 'xlsx') => {
-    const url = await mockExportData(format, veterans);
+  const handleExport = async (format: 'pdf' | 'csv' | 'email') => {
+    // Map email and pdf to csv for now since mockExportData only supports csv/xlsx
+    const exportFormat = format === 'email' || format === 'pdf' ? 'csv' : format as 'csv';
+    const url = await mockExportData(exportFormat, veterans);
+    
+    if (format === 'email') {
+      // For email, we'd normally send to an API endpoint
+      console.log('Email export requested');
+      alert('Email export feature coming soon');
+      return;
+    }
+    
     const a = document.createElement('a');
     a.href = url;
-    a.download = `veterans-export.${format}`;
+    a.download = `veterans-export.${exportFormat}`;
     a.click();
   };
 
@@ -238,7 +248,7 @@ export default function DashboardFullPage() {
                       HENRY Platform
                     </h1>
                     <p className="text-xs text-gray-400 font-bold tracking-[0.2em] uppercase mt-1">
-                      Heroes' Early Notification & Response Yesterday
+                      Heroes&apos; Early Notification & Response Yesterday
                     </p>
                     <div className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
                   </div>
@@ -455,7 +465,23 @@ function VeteransTab({
   setCurrentPage,
   totalRecords,
   onVeteranClick
-}: any) {
+}: {
+  veterans: Veteran[];
+  loading: boolean;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  filters: { branch: string; status: string; syncStatus: string };
+  setFilters: (filters: any) => void;
+  onSync: (id: string) => void;
+  syncingIds: Set<string>;
+  viewMode: 'grid' | 'list';
+  setViewMode: (mode: 'grid' | 'list') => void;
+  onExport: (format: 'pdf' | 'csv' | 'email') => Promise<void>;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  totalRecords: number;
+  onVeteranClick: (veteran: Veteran) => void;
+}) {
   return (
     <div className="space-y-4">
       {/* Toolbar */}
@@ -613,7 +639,7 @@ function VeteransTab({
 }
 
 // Other tab components
-function ClaimsTab({ veterans }: any) {
+function ClaimsTab({ veterans }: { veterans: Veteran[] }) {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold text-white">Claims Processing</h2>
@@ -638,7 +664,11 @@ function ClaimsTab({ veterans }: any) {
   );
 }
 
-function SyncTab({ veterans, onSync, syncingIds }: any) {
+function SyncTab({ veterans, onSync, syncingIds }: { 
+  veterans: Veteran[]; 
+  onSync: (id: string) => void; 
+  syncingIds: Set<string> 
+}) {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold text-white">Vet Profile Synchronization</h2>
@@ -667,7 +697,7 @@ function SyncTab({ veterans, onSync, syncingIds }: any) {
   );
 }
 
-function ReportsTab({ veterans }: any) {
+function ReportsTab({ veterans }: { veterans: Veteran[] }) {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold text-white">Reports & Analytics</h2>
@@ -729,7 +759,7 @@ function MetricCard({ title, value, subtitle, color }: { title: string; value: s
   );
 }
 
-function ActivityItem({ icon: Icon, text, time, color }: { icon: any; text: string; time: string; color: MetricColor }) {
+function ActivityItem({ icon: Icon, text, time, color }: { icon: React.ComponentType<{ className?: string }>; text: string; time: string; color: MetricColor }) {
   const colorClasses: Record<MetricColor, string> = {
     green: 'text-green-400 bg-green-500/20',
     blue: 'text-blue-400 bg-blue-500/20',
