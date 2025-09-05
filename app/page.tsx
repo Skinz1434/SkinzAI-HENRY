@@ -15,9 +15,11 @@ export default function Home() {
       {/* Background Effects */}
       <AnimatedParticles 
         className="fixed inset-0" 
-        particleColor="rgba(34, 211, 238, 0.3)"
+        particleColor="rgba(94, 234, 212, 0.20)"
         lineColor="rgba(59, 130, 246"
-        particleCount={80}
+        particleCount={140}
+        speed={0.15}
+        interactive={false}
       />
       <GradientOrbs animated={true} />
       
