@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { HelpCircle, X, FileText, Shield } from 'lucide-react';
 import { CODCase, NavigationItem, ChatMessage, CODDASettings } from '@/types/codda';
+import CODDATopNavigation from '@/components/codda/CODDATopNavigation';
 import CODDAHeader from '@/components/codda/CODDAHeader';
 import CODDANavigatorFunctional from '@/components/codda/CODDANavigatorFunctional';
 import CODDAEditorUltra from '@/components/codda/CODDAEditorUltra';
@@ -64,6 +65,7 @@ export default function CODDAPage() {
   });
   const [leftPanelOpen, setLeftPanelOpen] = useState(true);
   const [rightPanelOpen, setRightPanelOpen] = useState(true);
+  const [navMenuOpen, setNavMenuOpen] = useState(false);
   const [activeRightTab, setActiveRightTab] = useState<'insights' | 'evidence' | 'bias' | 'chat'>('insights');
   const [settings, setSettings] = useState<CODDASettings>({
     theme: 'dark',
@@ -80,11 +82,33 @@ export default function CODDAPage() {
   });
   const [showInstructions, setShowInstructions] = useState(false);
   const [isInteractiveTourActive, setIsInteractiveTourActive] = useState(false);
+  const [tourStep, setTourStep] = useState(0);
   const [showEvidenceViewer, setShowEvidenceViewer] = useState(false);
   const [showAdvancedBiasGuard, setShowAdvancedBiasGuard] = useState(false);
 
   // Initialize export service
   const exportService = createExportService(defaultMSGraphConfig);
+
+  // Interactive tour functionality
+  const startInteractiveTour = useCallback(() => {
+    setIsInteractiveTourActive(true);
+    setTourStep(0);
+    setShowInstructions(false);
+    // Show tour overlay with instructions
+  }, []);
+
+  const endInteractiveTour = useCallback(() => {
+    setIsInteractiveTourActive(false);
+    setTourStep(0);
+  }, []);
+
+  const nextTourStep = useCallback(() => {
+    setTourStep(prev => prev + 1);
+  }, []);
+
+  const prevTourStep = useCallback(() => {
+    setTourStep(prev => Math.max(0, prev - 1));
+  }, []);
 
   // Export handlers
   const handleExportPDF = useCallback(async () => {
@@ -176,6 +200,11 @@ export default function CODDAPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <CODDATopNavigation 
+        currentCase={currentCase}
+        onMenuToggle={() => setNavMenuOpen(!navMenuOpen)}
+        isMenuOpen={navMenuOpen}
+      />
       <CODDAHeader 
         currentCase={currentCase}
         leftPanelOpen={leftPanelOpen}
@@ -222,11 +251,7 @@ export default function CODDAPage() {
       <CODDAInstructionsModal
         isOpen={showInstructions}
         onClose={() => setShowInstructions(false)}
-        onStartInteractiveTour={() => {
-          setIsInteractiveTourActive(true);
-          setShowInstructions(false);
-          // Add tour highlighting logic
-        }}
+        onStartInteractiveTour={startInteractiveTour}
       />
       
       {/* Evidence Viewer */}

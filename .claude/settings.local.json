@@ -146,7 +146,9 @@
       "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
       "Read(/Z:\\SkinzAI HENRY\\app\\hvec/**)",
       "Bash(taskkill:*)",
-      "Bash(kill:*)"
+      "Bash(kill:*)",
+      "WebSearch",
+      "WebFetch(domain:commons.wikimedia.org)"
     ],
     "deny": [],
     "ask": []

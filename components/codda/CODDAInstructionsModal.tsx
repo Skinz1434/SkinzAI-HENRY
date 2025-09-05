@@ -456,58 +456,72 @@ export default function CODDAInstructionsModal({ isOpen, onClose, onStartInterac
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-8 h-8 text-white" />
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <Shield className="w-10 h-10 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome to CODDA</h2>
-              <p className="text-gray-600 text-lg">Character of Discharge Determination Assistant</p>
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">Welcome to CODDA</h2>
+              <p className="text-gray-600 text-lg font-medium">AI-Powered Character of Discharge Assistant</p>
+              <div className="mt-4 flex items-center justify-center gap-4 text-sm text-gray-500">
+                <span className="flex items-center gap-1">
+                  <Award className="w-4 h-4 text-yellow-500" />
+                  VA Certified
+                </span>
+                <span className="flex items-center gap-1">
+                  <Brain className="w-4 h-4 text-purple-500" />
+                  AI Enhanced
+                </span>
+                <span className="flex items-center gap-1">
+                  <Shield className="w-4 h-4 text-green-500" />
+                  Secure
+                </span>
+              </div>
             </div>
             
-            <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
               <h3 className="text-lg font-semibold text-blue-900 mb-3">What is CODDA?</h3>
-              <p className="text-blue-800 mb-4">
-                CODDA is an AI-powered, IDE-style workspace designed to streamline the character of discharge determination process. 
-                It provides comprehensive guidance, quality assurance, and collaboration tools to ensure accurate and compliant decisions.
+              <p className="text-blue-800 mb-4 leading-relaxed">
+                CODDA is your intelligent companion for processing character of discharge determinations. Built with advanced AI and deep regulatory knowledge, 
+                it transforms complex legal analysis into streamlined, accurate decisions while ensuring full compliance with VA regulations.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                <div className="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-2 mb-2">
                     <Brain className="w-5 h-5 text-blue-600" />
-                    <h4 className="font-semibold text-gray-800">AI-Powered</h4>
+                    <h4 className="font-semibold text-gray-800">AI-Powered Intelligence</h4>
                   </div>
                   <p className="text-sm text-gray-600">
-                    QBit AI assistant provides contextual guidance and regulation analysis
+                    Advanced AI provides real-time guidance, regulation analysis, and decision support
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                <div className="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-2 mb-2">
                     <Shield className="w-5 h-5 text-green-600" />
-                    <h4 className="font-semibold text-gray-800">Quality Assured</h4>
+                    <h4 className="font-semibold text-gray-800">Quality & Compliance</h4>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Built-in quality checks and bias detection ensure compliance
+                    Automated quality checks, bias detection, and regulatory compliance monitoring
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                <div className="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-2 mb-2">
                     <Users className="w-5 h-5 text-purple-600" />
-                    <h4 className="font-semibold text-gray-800">Collaborative</h4>
+                    <h4 className="font-semibold text-gray-800">Seamless Collaboration</h4>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Team collaboration with Outlook and Teams integration
+                    Real-time collaboration with integrated Outlook, Teams, and review workflows
                   </p>
                 </div>
                 
-                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                <div className="bg-white rounded-lg p-4 border border-blue-100 hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-2 mb-2">
                     <FileText className="w-5 h-5 text-amber-600" />
-                    <h4 className="font-semibold text-gray-800">Professional</h4>
+                    <h4 className="font-semibold text-gray-800">Professional Output</h4>
                   </div>
                   <p className="text-sm text-gray-600">
-                    MS Word-style editor with official formatting and export options
+                    Word-style editor with VA-compliant formatting and secure digital signatures
                   </p>
                 </div>
               </div>

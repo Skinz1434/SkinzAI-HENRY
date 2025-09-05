@@ -119,8 +119,8 @@ export default function CODDAEditorUltra({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showRuler, setShowRuler] = useState(true);
   const [showPageBreaks, setShowPageBreaks] = useState(true);
-  const [activeFont, setActiveFont] = useState('Times New Roman');
-  const [fontSize, setFontSize] = useState(12);
+  const [activeFont, setActiveFont] = useState('Georgia');
+  const [fontSize, setFontSize] = useState(14);
   const [showFindReplace, setShowFindReplace] = useState(false);
   const [showTableModal, setShowTableModal] = useState(false);
   const [showCitationModal, setShowCitationModal] = useState(false);
@@ -155,19 +155,24 @@ export default function CODDAEditorUltra({
   const generateAdvancedTemplate = (caseData: CODCase) => {
     const servicePeriod = caseData.service[0];
     return `
-<div class="document-page">
+<div class="document-page" style="font-family: 'Georgia', 'Times New Roman', serif; font-size: 14px; line-height: 1.8; color: #000;">
   <!-- Document Header -->
-  <div class="document-header" style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 20px;">
-    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-      <img src="/assets/images/va-seal.png" alt="VA Seal" style="width: 60px; height: 60px; margin-right: 15px;" />
-      <div>
-        <h1 style="font-size: 18px; font-weight: bold; margin: 0; color: #000;">
-          DEPARTMENT OF VETERANS AFFAIRS
-        </h1>
-        <h2 style="font-size: 16px; font-weight: bold; margin: 5px 0 0 0; color: #000;">
-          CHARACTER OF DISCHARGE DETERMINATION
-        </h2>
+  <div class="document-header" style="text-align: center; margin-bottom: 30px; border-bottom: 3px double #003F72; padding-bottom: 20px;">
+    <div style="margin-bottom: 15px;">
+      <!-- VA Seal representation using CSS -->
+      <div style="display: inline-block; width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #003F72 0%, #004080 100%); border: 3px solid #B8860B; position: relative; margin-bottom: 10px;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; font-size: 32px; font-family: 'Arial', sans-serif;">VA</div>
       </div>
+      <h1 style="font-size: 20px; font-weight: bold; margin: 10px 0 5px 0; color: #003F72; letter-spacing: 1px;">
+        UNITED STATES OF AMERICA
+      </h1>
+      <h2 style="font-size: 18px; font-weight: bold; margin: 5px 0; color: #003F72;">
+        DEPARTMENT OF VETERANS AFFAIRS
+      </h2>
+      <div style="width: 100px; height: 2px; background: #B8860B; margin: 10px auto;"></div>
+      <h3 style="font-size: 16px; font-weight: bold; margin: 10px 0 0 0; color: #000; letter-spacing: 0.5px;">
+        CHARACTER OF DISCHARGE DETERMINATION
+      </h3>
     </div>
     
     <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #000;">
@@ -197,10 +202,10 @@ export default function CODDAEditorUltra({
     
     <!-- ISSUE Section -->
     <section data-section="issue" style="margin-bottom: 25px;">
-      <h2 style="font-size: 14px; font-weight: bold; margin: 0 0 10px 0; padding: 5px 0; border-bottom: 1px solid #ccc; color: #000;">
+      <h2 style="font-size: 16px; font-weight: bold; margin: 0 0 15px 0; padding: 8px 0; border-bottom: 2px solid #003F72; color: #003F72;">
         I. ISSUE
       </h2>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         Character of discharge for the service period from <strong>${servicePeriod ? new Date(servicePeriod.start).toLocaleDateString() : '[Start Date]'}</strong> 
         to <strong>${servicePeriod ? new Date(servicePeriod.end).toLocaleDateString() : '[End Date]'}</strong>, 
         ${servicePeriod ? servicePeriod.branch : '[Service Branch]'}.
@@ -209,10 +214,10 @@ export default function CODDAEditorUltra({
 
     <!-- EVIDENCE Section -->
     <section data-section="evidence" style="margin-bottom: 25px;">
-      <h2 style="font-size: 14px; font-weight: bold; margin: 0 0 10px 0; padding: 5px 0; border-bottom: 1px solid #ccc; color: #000;">
+      <h2 style="font-size: 16px; font-weight: bold; margin: 0 0 15px 0; padding: 8px 0; border-bottom: 2px solid #003F72; color: #003F72;">
         II. EVIDENCE CONSIDERED
       </h2>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         The evidence of record includes the following:
       </p>
       
@@ -251,10 +256,10 @@ export default function CODDAEditorUltra({
 
     <!-- LAWS AND REGULATIONS Section -->
     <section data-section="laws-regs" style="margin-bottom: 25px;">
-      <h2 style="font-size: 14px; font-weight: bold; margin: 0 0 10px 0; padding: 5px 0; border-bottom: 1px solid #ccc; color: #000;">
+      <h2 style="font-size: 16px; font-weight: bold; margin: 0 0 15px 0; padding: 8px 0; border-bottom: 2px solid #003F72; color: #003F72;">
         III. PERTINENT LAWS AND REGULATIONS
       </h2>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         The following laws and regulations are applicable to this determination:
       </p>
       
@@ -270,24 +275,24 @@ export default function CODDAEditorUltra({
 
     <!-- ANALYSIS Section -->
     <section data-section="analysis" style="margin-bottom: 25px;">
-      <h2 style="font-size: 14px; font-weight: bold; margin: 0 0 10px 0; padding: 5px 0; border-bottom: 1px solid #ccc; color: #000;">
+      <h2 style="font-size: 16px; font-weight: bold; margin: 0 0 15px 0; padding: 8px 0; border-bottom: 2px solid #003F72; color: #003F72;">
         IV. ANALYSIS AND FINDINGS
       </h2>
       
-      <h3 style="font-size: 13px; font-weight: bold; margin: 20px 0 8px 0; color: #000;">
+      <h3 style="font-size: 15px; font-weight: bold; margin: 20px 0 10px 0; color: #003F72;">
         A. Service History and Characterization
       </h3>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         ${servicePeriod ? `The veteran served in the ${servicePeriod.branch} from ${new Date(servicePeriod.start).toLocaleDateString()} 
         to ${new Date(servicePeriod.end).toLocaleDateString()}, receiving a discharge characterized as 
         <strong>${servicePeriod.charOfDischarge}</strong>.` : '[Service history analysis to be completed.]'}
         ${servicePeriod?.notes ? ` The record indicates: ${servicePeriod.notes}` : ''}
       </p>
 
-      <h3 style="font-size: 13px; font-weight: bold; margin: 20px 0 8px 0; color: #000;">
+      <h3 style="font-size: 15px; font-weight: bold; margin: 20px 0 10px 0; color: #003F72;">
         B. Insanity Consideration (38 CFR 3.354)
       </h3>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         Insanity during service has been considered in accordance with 38 CFR 3.354. 
         ${caseData.finding.insanityConsidered ? 
           (caseData.finding.insanityApplies ? 
@@ -297,20 +302,20 @@ export default function CODDAEditorUltra({
         }
       </p>
 
-      <h3 style="font-size: 13px; font-weight: bold; margin: 20px 0 8px 0; color: #000;">
+      <h3 style="font-size: 15px; font-weight: bold; margin: 20px 0 10px 0; color: #003F72;">
         C. Compelling Circumstances
       </h3>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         ${caseData.finding.compellingCircumstancesConsidered ? 
           `Compelling circumstances have been evaluated. ${caseData.finding.compellingRationale || '[Detailed analysis of compelling circumstances to be provided.]'}` :
           'Compelling circumstances have been considered, including but not limited to combat service, traumatic experiences, and personal circumstances that may have contributed to the veteran\'s conduct. [Detailed analysis to be completed.]'
         }
       </p>
 
-      <h3 style="font-size: 13px; font-weight: bold; margin: 20px 0 8px 0; color: #000;">
+      <h3 style="font-size: 15px; font-weight: bold; margin: 20px 0 10px 0; color: #003F72;">
         D. Healthcare Eligibility Analysis (38 CFR 3.360)
       </h3>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         ${caseData.finding.healthcareOnlyConsidered ? 
           `Healthcare eligibility under Chapter 17 has been analyzed. ${caseData.finding.healthcareOnlyRationale || '[Healthcare eligibility determination to be provided.]'}` :
           'Healthcare eligibility under 38 CFR 3.360 is being evaluated. [Analysis to be completed.]'
@@ -320,7 +325,7 @@ export default function CODDAEditorUltra({
 
     <!-- DECISION Section -->
     <section data-section="decision" style="margin-bottom: 25px;">
-      <h2 style="font-size: 14px; font-weight: bold; margin: 0 0 10px 0; padding: 5px 0; border-bottom: 1px solid #ccc; color: #000;">
+      <h2 style="font-size: 16px; font-weight: bold; margin: 0 0 15px 0; padding: 8px 0; border-bottom: 2px solid #003F72; color: #003F72;">
         V. DECISION
       </h2>
       <div style="background-color: #fff3cd; border: 2px solid #ffc107; padding: 15px; margin: 15px 0; border-radius: 5px;">
@@ -332,20 +337,20 @@ export default function CODDAEditorUltra({
 
     <!-- REASONS AND BASES Section -->
     <section data-section="reasons-bases" style="margin-bottom: 25px;">
-      <h2 style="font-size: 14px; font-weight: bold; margin: 0 0 10px 0; padding: 5px 0; border-bottom: 1px solid #ccc; color: #000;">
+      <h2 style="font-size: 16px; font-weight: bold; margin: 0 0 15px 0; padding: 8px 0; border-bottom: 2px solid #003F72; color: #003F72;">
         VI. REASONS AND BASES
       </h2>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         ${caseData.decision.reasonsBases || '[Detailed reasoning and legal basis for the decision to be provided, including specific citations to evidence and applicable law.]'}
       </p>
     </section>
 
     <!-- FAVORABLE FINDINGS Section -->
     <section data-section="favorable" style="margin-bottom: 25px;">
-      <h2 style="font-size: 14px; font-weight: bold; margin: 0 0 10px 0; padding: 5px 0; border-bottom: 1px solid #ccc; color: #000;">
+      <h2 style="font-size: 16px; font-weight: bold; margin: 0 0 15px 0; padding: 8px 0; border-bottom: 2px solid #003F72; color: #003F72;">
         VII. FAVORABLE FINDINGS
       </h2>
-      <p style="margin: 10px 0; line-height: 1.8; text-align: justify;">
+      <p style="margin: 12px 0; line-height: 1.9; text-align: justify; font-size: 14px;">
         The following favorable findings are made and are binding on future determinations:
       </p>
       
@@ -366,7 +371,7 @@ export default function CODDAEditorUltra({
     <table style="width: 100%; border-collapse: collapse;">
       <tr>
         <td style="width: 50%; vertical-align: top; padding-right: 20px;">
-          <p style="margin: 0; font-size: 12px; line-height: 1.6; border: 1px solid #ccc; padding: 10px; height: 100px;">
+          <p style="margin: 0; font-size: 14px; line-height: 1.8; border: 1px solid #ccc; padding: 12px; height: 120px;">
             <strong>PREPARED BY:</strong><br/><br/>
             ________________________________<br/>
             [Name], [Title]<br/>
@@ -374,7 +379,7 @@ export default function CODDAEditorUltra({
           </p>
         </td>
         <td style="width: 50%; vertical-align: top; padding-left: 20px;">
-          <p style="margin: 0; font-size: 12px; line-height: 1.6; border: 1px solid #ccc; padding: 10px; height: 100px;">
+          <p style="margin: 0; font-size: 14px; line-height: 1.8; border: 1px solid #ccc; padding: 12px; height: 120px;">
             <strong>REVIEWED BY:</strong><br/><br/>
             ________________________________<br/>
             [Name], [Title]<br/>
