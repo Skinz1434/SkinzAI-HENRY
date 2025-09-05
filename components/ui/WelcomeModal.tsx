@@ -62,7 +62,7 @@ export default function WelcomeModal() {
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <div 
-              className="relative w-[92vw] max-w-3xl max-h-[90vh] overflow-auto rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl"
+              className="relative w-[92vw] max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl"
             >
               {/* Close button */}
               <button
@@ -101,14 +101,14 @@ export default function WelcomeModal() {
                 {/* Main content */}
                 <div className="mb-6 space-y-4">
                   <p className="text-base leading-relaxed text-slate-300">
-                    We built HENRY to transform how Veterans receive care and benefits. Our AI-powered platform 
-                    reduces processing time from months to minutes, ensures fair and unbiased decisions, and 
-                    keeps human expertise at the center of every determination.
+                    We designed HENRY for a proactive approach to Veterans’ care and benefits. Instead of waiting
+                    for problems to surface, HENRY continuously verifies profiles, surfaces risks early, and routes
+                    the right information to the right humans—fast.
                   </p>
 
                   <p className="text-base leading-relaxed text-slate-300">
-                    HENRY combines advanced clinical intelligence with comprehensive regulatory knowledge to 
-                    deliver accurate, evidence-based outcomes that honor our Veterans' service and sacrifice.
+                    The platform blends clinical reasoning with regulatory knowledge to help teams act sooner,
+                    reduce rework, and make transparent, reviewable decisions with human oversight.
                   </p>
                 </div>
 
@@ -136,22 +136,31 @@ export default function WelcomeModal() {
                   />
                 </div>
 
-                {/* Platform stats */}
+                {/* What HENRY Does */}
                 <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <div className="text-2xl font-bold text-cyan-400">98.7%</div>
-                      <div className="text-xs text-slate-400">Accuracy Rate</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-green-400">42s</div>
-                      <div className="text-xs text-slate-400">Avg Processing</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-purple-400">24/7</div>
-                      <div className="text-xs text-slate-400">Availability</div>
-                    </div>
-                  </div>
+                  <h3 className="text-sm font-semibold text-white mb-3">What this platform does</h3>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <li className="text-sm text-slate-300 flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+                      Proactive Veteran Profile verification and continuous sync with trusted sources
+                    </li>
+                    <li className="text-sm text-slate-300 flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-blue-400"></span>
+                      Early risk detection and intelligent routing for timely interventions
+                    </li>
+                    <li className="text-sm text-slate-300 flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-purple-400"></span>
+                      Evidence ingestion, triage, and organization for Claims and Clinical review
+                    </li>
+                    <li className="text-sm text-slate-300 flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                      AI-assisted reasoning with clear rationales and human-in-the-loop oversight
+                    </li>
+                    <li className="text-sm text-slate-300 flex items-start gap-2 sm:col-span-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-pink-400"></span>
+                      Transparent, auditable outcomes aligned to policy and clinical best practices
+                    </li>
+                  </ul>
                 </div>
 
                 {/* Actions */}
