@@ -9,6 +9,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        henry: {
+          bg: "#0b1220",
+          surface: "#13151a",
+          elevated: "#1a1d23",
+        },
         skinz: {
           bg: {
             primary: "#0a0b0d",
@@ -72,6 +77,7 @@ module.exports = {
         md: "0 4px 12px rgba(0, 0, 0, 0.4)",
         lg: "0 10px 40px rgba(0, 0, 0, 0.5)",
         glow: "0 0 20px rgba(59, 130, 246, 0.15)",
+        glass: "0 10px 30px rgba(0, 0, 0, 0.35)",
       },
       animation: {
         shimmer: "shimmer 2s linear infinite",
@@ -132,7 +138,8 @@ module.exports = {
         smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-grotesk)", "var(--font-inter)", "system-ui"],
         mono: ["JetBrains Mono", "monospace"],
       },
       borderRadius: {

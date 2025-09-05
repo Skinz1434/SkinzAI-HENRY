@@ -39,6 +39,11 @@ import {
 import { DiagnosticsAdvanced } from '../../components/hvec/DiagnosticsAdvanced';
 import { AIInsightsEnhanced } from '../../components/hvec/AIInsightsEnhanced';
 import { motion, AnimatePresence } from 'framer-motion';
+import AnimatedParticles from '@/components/ui/AnimatedParticles';
+import GradientOrbs from '@/components/ui/GradientOrbs';
+import WelcomeModal from '@/components/ui/WelcomeModal';
+import PersonalizedHeader from '@/components/hvec/PersonalizedHeader';
+import FooterInsights from '@/components/hvec/FooterInsights';
 
 // Medical Reference Links with actual URLs
 const MEDICAL_REFERENCES = {
@@ -379,9 +384,24 @@ export default function HVECEnhanced() {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-gray-50 dark:bg-gray-900`}>
-      {/* Premium Header with HENRY Branding */}
-      <header className="relative bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 shadow-2xl border-b border-blue-800/30">
+    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-henry-bg relative overflow-hidden`}>
+      {/* Background Effects */}
+      <AnimatedParticles className="fixed inset-0" particleColor="rgba(115,255,245,0.4)" />
+      <GradientOrbs animated={true} />
+      
+      {/* Welcome Modal */}
+      <WelcomeModal />
+      
+      {/* Personalized Header */}
+      <PersonalizedHeader 
+        userName="Dr. Sarah Johnson"
+        userRole="Senior VA Analyst"
+        notifications={3}
+      />
+      
+      <div className="relative z-10">
+      {/* Original Premium Header with HENRY Branding - Now Hidden */}
+      <header className="hidden relative bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 shadow-2xl border-b border-blue-800/30">
         {/* Subtle animated gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-600/5 to-transparent animate-pulse" />
         
@@ -2584,6 +2604,12 @@ export default function HVECEnhanced() {
           </div>
         </div>
       )}
+      
+      {/* Close the relative wrapper div */}
+      </div>
+      
+      {/* Footer with Platform Insights */}
+      <FooterInsights />
     </div>
   );
 }
