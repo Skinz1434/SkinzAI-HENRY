@@ -53,12 +53,15 @@ export default function Home() {
                 <Heart className="w-5 h-5 text-red-400 animate-pulse" />
               </div>
               <p className="text-center text-gray-300 leading-relaxed mb-4">
-                HENRY takes a proactive approach to Veteran care and benefits. Instead of reacting late, we continuously
-                verify profiles, surface risk early, and organize evidence so teams can act sooner with clear, reviewable
-                rationale and human oversight.
+                We built HENRY to honor every Veteran's sacrifice by transforming months of waiting into minutes of action. 
+                Our AI-powered platform ensures that no hero's story goes unheard, no evidence goes unexamined, and no 
+                decision lacks the thoroughness our Veterans deserve.
               </p>
               <p className="text-center text-sm text-gray-400 italic">
                 "Because yesterday's heroes deserve tomorrow's technology today."
+              </p>
+              <p className="mt-2 text-center text-[11px] text-gray-500 italic">
+                Dedicated to the memory of Christopher J. Henry, USMC — our brother. This mission is for every Veteran we lost and every life we can still save.
               </p>
               <div className="mt-4 grid grid-cols-4 gap-4 pt-4 border-t border-gray-700">
                 <div className="text-center">
