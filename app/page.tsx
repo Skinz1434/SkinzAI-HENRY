@@ -63,26 +63,26 @@ export default function Home() {
               <p className="mt-2 text-center text-[11px] text-gray-500 italic">
                 Dedicated to the memory of Christopher J. Henry, USMC — our brother. This mission is for every Veteran we lost and every life we can still save.
               </p>
-              <div className="mt-4 grid grid-cols-4 gap-4 pt-4 border-t border-gray-700">
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-gray-700">
                 <div className="text-center">
                   <Users className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">12,940</div>
-                  <div className="text-xs text-gray-400">Verified Profiles (Rolling 30 days)</div>
+                  <div className="text-lg font-bold text-white">500</div>
+                  <div className="text-xs text-gray-400">Unique Veteran Profiles (current)</div>
                 </div>
                 <div className="text-center">
-                  <Activity className="w-5 h-5 text-green-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">3,126</div>
-                  <div className="text-xs text-gray-400">Risk Signals Flagged (90 days)</div>
+                  <Brain className="w-5 h-5 text-green-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">Custom Predictive Algorithms</div>
+                  <div className="text-xs text-gray-400">Built for early risk and needs detection</div>
                 </div>
                 <div className="text-center">
                   <FileText className="w-5 h-5 text-yellow-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">87</div>
-                  <div className="text-xs text-gray-400">Evidence Items Organized / Claim (Median)</div>
+                  <div className="text-lg font-bold text-white">TERA Exposure Analysis</div>
+                  <div className="text-xs text-gray-400">Toxic Exposure Risk Assessment integrated</div>
                 </div>
                 <div className="text-center">
-                  <Shield className="w-5 h-5 text-purple-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">100%</div>
-                  <div className="text-xs text-gray-400">Human‑in‑the‑Loop Decisions</div>
+                  <Zap className="w-5 h-5 text-purple-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">Proactive Outreach</div>
+                  <div className="text-xs text-gray-400">Actionable routing and follow‑up workflows</div>
                 </div>
               </div>
             </div>
