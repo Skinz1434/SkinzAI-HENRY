@@ -53,9 +53,9 @@ export default function Home() {
                 <Heart className="w-5 h-5 text-red-400 animate-pulse" />
               </div>
               <p className="text-center text-gray-300 leading-relaxed mb-4">
-                We built HENRY to honor every Veteran's sacrifice by transforming months of waiting into minutes of action. 
-                Our AI-powered platform ensures that no hero's story goes unheard, no evidence goes unexamined, and no 
-                decision lacks the thoroughness our Veterans deserve.
+                HENRY takes a proactive approach to Veteran care and benefits. Instead of reacting late, we continuously
+                verify profiles, surface risk early, and organize evidence so teams can act sooner with clear, reviewable
+                rationale and human oversight.
               </p>
               <p className="text-center text-sm text-gray-400 italic">
                 "Because yesterday's heroes deserve tomorrow's technology today."
@@ -63,23 +63,23 @@ export default function Home() {
               <div className="mt-4 grid grid-cols-4 gap-4 pt-4 border-t border-gray-700">
                 <div className="text-center">
                   <Users className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">3,482</div>
-                  <div className="text-xs text-gray-400">Veterans Served (Last 12 months)</div>
+                  <div className="text-lg font-bold text-white">12,940</div>
+                  <div className="text-xs text-gray-400">Verified Profiles (Rolling 30 days)</div>
                 </div>
                 <div className="text-center">
-                  <Clock className="w-5 h-5 text-green-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">58s</div>
-                  <div className="text-xs text-gray-400">Avg Evidence Processing</div>
+                  <Activity className="w-5 h-5 text-green-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">3,126</div>
+                  <div className="text-xs text-gray-400">Risk Signals Flagged (90 days)</div>
                 </div>
                 <div className="text-center">
-                  <Award className="w-5 h-5 text-yellow-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">97.4%</div>
-                  <div className="text-xs text-gray-400">Profile Accuracy</div>
+                  <FileText className="w-5 h-5 text-yellow-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">87</div>
+                  <div className="text-xs text-gray-400">Evidence Items Organized / Claim (Median)</div>
                 </div>
                 <div className="text-center">
                   <Shield className="w-5 h-5 text-purple-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">99.98%</div>
-                  <div className="text-xs text-gray-400">Uptime</div>
+                  <div className="text-lg font-bold text-white">100%</div>
+                  <div className="text-xs text-gray-400">Human‑in‑the‑Loop Decisions</div>
                 </div>
               </div>
             </div>
