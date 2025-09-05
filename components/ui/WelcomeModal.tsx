@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Shield, Brain, Activity, FileText, Users, Sparkles, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -8,11 +8,6 @@ const STORAGE_KEY = 'henry_welcome_v1'; // Bump this version to re-show after up
 
 export default function WelcomeModal() {
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef({ startX: 0, startY: 0, initialX: 0, initialY: 0 });
-  const dragHandleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -42,136 +37,7 @@ export default function WelcomeModal() {
       learnSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    // Only allow dragging from the header area (not buttons)
-    if (e.target instanceof HTMLElement && 
-        (e.target.closest('button') || e.target.closest('[role="button"]'))) {
-      return;
-    }
-    
-    setIsDragging(true);
-    dragRef.current = {
-      startX: e.clientX,
-      startY: e.clientY,
-      initialX: position.x,
-      initialY: position.y
-    };
-    
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  // Add global listeners when dragging starts
-  useEffect(() => {
-    if (isDragging) {
-      const handleGlobalMouseMove = (e: MouseEvent) => handleMouseMove(e);
-      const handleGlobalMouseUp = () => handleMouseUp();
-      
-      document.addEventListener('mousemove', handleGlobalMouseMove);
-      document.addEventListener('mouseup', handleGlobalMouseUp);
-      
-      return () => {
-        document.removeEventListener('mousemove', handleGlobalMouseMove);
-        document.removeEventListener('mouseup', handleGlobalMouseUp);
-      };
-    }
-  }, [isDragging]);
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return;
-    
-    const deltaX = e.clientX - dragRef.current.startX;
-    const deltaY = e.clientY - dragRef.current.startY;
-    
-    const newX = dragRef.current.initialX + deltaX;
-    const newY = dragRef.current.initialY + deltaY;
-    
-    // Constrain to viewport bounds
-    const modal = modalRef.current;
-    if (modal) {
-      const rect = modal.getBoundingClientRect();
-      const halfWidth = rect.width / 2;
-      const halfHeight = rect.height / 2;
-      const maxX = window.innerWidth / 2 - halfWidth - 20;
-      const maxY = window.innerHeight / 2 - halfHeight - 20;
-      const minX = -window.innerWidth / 2 + halfWidth + 20;
-      const minY = -window.innerHeight / 2 + halfHeight + 20;
-      
-      setPosition({
-        x: Math.max(minX, Math.min(maxX, newX)),
-        y: Math.max(minY, Math.min(maxY, newY))
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.target instanceof HTMLElement &&
-        (e.target.closest('button') || e.target.closest('[role="button"]'))) {
-      return;
-    }
-    if (!e.touches || e.touches.length === 0) return;
-    const touch = e.touches[0];
-    setIsDragging(true);
-    dragRef.current = {
-      startX: touch.clientX,
-      startY: touch.clientY,
-      initialX: position.x,
-      initialY: position.y
-    };
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging) return;
-    if (!e.touches || e.touches.length === 0) return;
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - dragRef.current.startX;
-    const deltaY = touch.clientY - dragRef.current.startY;
-    const newX = dragRef.current.initialX + deltaX;
-    const newY = dragRef.current.initialY + deltaY;
-    const modal = modalRef.current;
-    if (modal) {
-      const rect = modal.getBoundingClientRect();
-      const halfWidth = rect.width / 2;
-      const halfHeight = rect.height / 2;
-      const maxX = window.innerWidth / 2 - halfWidth - 20;
-      const maxY = window.innerHeight / 2 - halfHeight - 20;
-      const minX = -window.innerWidth / 2 + halfWidth + 20;
-      const minY = -window.innerHeight / 2 + halfHeight + 20;
-      
-      setPosition({
-        x: Math.max(minX, Math.min(maxX, newX)),
-        y: Math.max(minY, Math.min(maxY, newY))
-      });
-    }
-    e.preventDefault();
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-  };
-
-  // Touch event handling
-  useEffect(() => {
-    if (isDragging) {
-      const handleGlobalTouchMove = (e: TouchEvent) => handleTouchMove(e);
-      const handleGlobalTouchEnd = () => handleTouchEnd();
-      
-      document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
-      document.addEventListener('touchend', handleGlobalTouchEnd);
-      
-      return () => {
-        document.removeEventListener('touchmove', handleGlobalTouchMove);
-        document.removeEventListener('touchend', handleGlobalTouchEnd);
-      };
-    }
-  }, [isDragging]);
+  
 
   return (
     <AnimatePresence>
@@ -189,22 +55,14 @@ export default function WelcomeModal() {
 
           {/* Modal */}
           <motion.div
-            ref={modalRef}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, type: 'spring', bounce: 0.4 }}
-            className="fixed z-50"
-            style={{ 
-              left: '50%',
-              top: '50%',
-              transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`
-            }}
+            initial={{ opacity: 0, scale: 0.98, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.98, y: 10 }}
+            transition={{ duration: 0.25, type: 'spring', bounce: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <div 
-              className={`relative w-[90vw] max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-              onMouseDown={handleMouseDown}
-              onTouchStart={handleTouchStart}
+              className="relative w-[92vw] max-w-3xl max-h-[90vh] overflow-auto rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-900/98 to-black/95 p-8 shadow-2xl backdrop-blur-xl"
             >
               {/* Close button */}
               <button
@@ -222,12 +80,6 @@ export default function WelcomeModal() {
 
               {/* Content */}
               <div className="relative">
-                {/* Drag Handle */}
-                <div 
-                  ref={dragHandleRef}
-                  className="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full cursor-grab active:cursor-grabbing" 
-                />
-                
                 {/* Header */}
                 <div className="mb-6 flex items-start gap-4 pt-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg">
