@@ -485,20 +485,42 @@ function VeteransTab({
 }) {
   return (
     <div className="space-y-4">
-      {/* Toolbar */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="relative flex-1 max-w-md">
+      {/* Enhanced Toolbar */}
+      <div className="space-y-4">
+        {/* Search Row */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="relative flex-1 w-full sm:max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search veterans..."
+              placeholder="Search by name, EDIPI, SSN..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
             />
           </div>
           
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <button
+              onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+              className="p-3 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+              title={viewMode === 'grid' ? 'Switch to List View' : 'Switch to Grid View'}
+            >
+              {viewMode === 'grid' ? <List className="w-5 h-5" /> : <Grid className="w-5 h-5" />}
+            </button>
+            
+            <button
+              onClick={() => onExport('csv')}
+              className="flex-1 sm:flex-initial px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 font-medium"
+            >
+              <Download className="w-4 h-4" />
+              <span>Export</span>
+            </button>
+          </div>
+        </div>
+        
+        {/* Filters Row */}
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
           <select
             value={filters.branch}
             onChange={(e) => setFilters({...filters, branch: e.target.value})}
@@ -520,120 +542,251 @@ function VeteransTab({
               <option key={status} value={status}>{status.replace(/_/g, ' ')}</option>
             ))}
           </select>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-            className="p-2 text-gray-400 hover:text-white"
-          >
-            {viewMode === 'grid' ? <List className="w-5 h-5" /> : <Grid className="w-5 h-5" />}
-          </button>
           
-          <button
-            onClick={() => onExport('csv')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
+          <select
+            value={filters.syncStatus}
+            onChange={(e) => setFilters({...filters, syncStatus: e.target.value})}
+            className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
           >
-            <Download className="w-4 h-4" />
-            Export
-          </button>
+            <option value="">All Sync Status</option>
+            <option value="success">Synced</option>
+            <option value="error">Sync Error</option>
+            <option value="pending">Pending Sync</option>
+          </select>
         </div>
       </div>
 
-      {/* Data Table */}
+      {/* Enhanced Data Display */}
       {loading ? (
         <div className="flex items-center justify-center h-64">
           <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
         </div>
       ) : (
-        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-gray-900">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Name</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">SSN</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Branch</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Accuracy</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Last Sync</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-700">
-              {veterans.map((veteran: Veteran) => (
-                <tr key={veteran.id} className="hover:bg-gray-700/50 cursor-pointer">
-                  <td className="px-4 py-3 text-white" onClick={() => onVeteranClick(veteran)}>
-                    {veteran.firstName} {veteran.lastName}
-                  </td>
-                  <td className="px-4 py-3 text-gray-300">{veteran.ssn}</td>
-                  <td className="px-4 py-3">
-                    <span className="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-400">
-                      {veteran.branch}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-400">
-                      {veteran.dischargeStatus.replace(/_/g, ' ')}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-white">
-                    {veteran.accuracy.toFixed(1)}%
-                  </td>
-                  <td className="px-4 py-3 text-gray-300">
-                    {veteran.lastSyncDate ? new Date(veteran.lastSyncDate).toLocaleDateString() : 'Never'}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => onSync(veteran.id)}
-                        disabled={syncingIds.has(veteran.id)}
-                        className="p-1 text-blue-400 hover:text-blue-300 disabled:opacity-50"
-                      >
-                        {syncingIds.has(veteran.id) ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <RefreshCw className="w-4 h-4" />
-                        )}
-                      </button>
-                      <button 
-                        onClick={() => onVeteranClick(veteran)}
-                        className="p-1 text-gray-400 hover:text-gray-300"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      <button className="p-1 text-gray-400 hover:text-gray-300">
-                        <Edit className="w-4 h-4" />
-                      </button>
+        <>
+          {/* Mobile Card View (Hidden on Desktop) */}
+          <div className="block lg:hidden space-y-4">
+            {veterans.map((veteran: Veteran) => (
+              <div key={veteran.id} className="bg-gray-800 rounded-lg border border-gray-700 p-4 hover:border-blue-500/50 transition-colors">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
+                      {veteran.firstName?.[0]}{veteran.lastName?.[0]}
                     </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    <div>
+                      <h4 
+                        className="text-white font-medium cursor-pointer hover:text-blue-400"
+                        onClick={() => onVeteranClick(veteran)}
+                      >
+                        {veteran.firstName} {veteran.lastName}
+                      </h4>
+                      <p className="text-xs text-gray-400">
+                        EDIPI: {veteran.edipi} • SSN: {veteran.ssn ? `***-**-${veteran.ssn.slice(-4)}` : 'N/A'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => onSync(veteran.id)}
+                      disabled={syncingIds.has(veteran.id)}
+                      className="p-2 text-blue-400 hover:text-blue-300 hover:bg-blue-500/20 rounded-lg disabled:opacity-50 transition-colors"
+                      title="Sync Profile"
+                    >
+                      {syncingIds.has(veteran.id) ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <RefreshCw className="w-4 h-4" />
+                      )}
+                    </button>
+                    <button 
+                      onClick={() => onVeteranClick(veteran)}
+                      className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg transition-colors"
+                      title="View Details"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="bg-gray-700/50 rounded-lg p-3">
+                    <div className="text-gray-400 text-xs mb-1">Branch & Status</div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-400">
+                        {veteran.branch}
+                      </span>
+                      <span className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-400">
+                        {veteran.dischargeStatus?.replace(/_/g, ' ') || 'Unknown'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-700/50 rounded-lg p-3">
+                    <div className="text-gray-400 text-xs mb-1">Profile Accuracy</div>
+                    <div className="text-white font-medium">
+                      {veteran.accuracy?.toFixed(1) || '0'}%
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-700/50 rounded-lg p-3">
+                    <div className="text-gray-400 text-xs mb-1">Disability Rating</div>
+                    <div className="text-white font-medium">
+                      {veteran.disabilityRating || 0}%
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-700/50 rounded-lg p-3">
+                    <div className="text-gray-400 text-xs mb-1">Last Sync</div>
+                    <div className="text-gray-300 text-xs">
+                      {veteran.lastSyncDate ? new Date(veteran.lastSyncDate).toLocaleDateString() : 'Never'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Desktop Table View (Hidden on Mobile) */}
+          <div className="hidden lg:block bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-900">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Name</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">EDIPI</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">SSN</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Branch</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Rating</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Accuracy</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Last Sync</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {veterans.map((veteran: Veteran) => (
+                    <tr key={veteran.id} className="hover:bg-gray-700/50 cursor-pointer">
+                      <td className="px-4 py-3" onClick={() => onVeteranClick(veteran)}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
+                            {veteran.firstName?.[0]}{veteran.lastName?.[0]}
+                          </div>
+                          <div>
+                            <div className="text-white font-medium">
+                              {veteran.firstName} {veteran.lastName}
+                            </div>
+                            <div className="text-xs text-gray-400">
+                              {veteran.rank && `${veteran.rank} • `}Veteran
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-gray-300 font-mono text-sm">
+                        {veteran.edipi || 'N/A'}
+                      </td>
+                      <td className="px-4 py-3 text-gray-300 font-mono text-sm">
+                        {veteran.ssn ? `***-**-${veteran.ssn.slice(-4)}` : 'N/A'}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-400">
+                          {veteran.branch}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-400">
+                          {veteran.dischargeStatus?.replace(/_/g, ' ') || 'Unknown'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-white font-medium">
+                            {veteran.disabilityRating || 0}%
+                          </span>
+                          {(veteran.disabilityRating || 0) >= 70 && (
+                            <span className="px-1.5 py-0.5 text-xs bg-red-500/20 text-red-400 rounded">
+                              HIGH
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-sm font-medium ${
+                            (veteran.accuracy || 0) >= 95 ? 'text-green-400' : 
+                            (veteran.accuracy || 0) >= 90 ? 'text-yellow-400' : 'text-red-400'
+                          }`}>
+                            {veteran.accuracy?.toFixed(1) || '0.0'}%
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-gray-300 text-sm">
+                        {veteran.lastSyncDate ? new Date(veteran.lastSyncDate).toLocaleDateString() : 'Never'}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <button
+                            onClick={() => onSync(veteran.id)}
+                            disabled={syncingIds.has(veteran.id)}
+                            className="p-2 text-blue-400 hover:text-blue-300 hover:bg-blue-500/20 rounded-lg disabled:opacity-50 transition-colors"
+                            title="Sync Profile"
+                          >
+                            {syncingIds.has(veteran.id) ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <RefreshCw className="w-4 h-4" />
+                            )}
+                          </button>
+                          <button 
+                            onClick={() => onVeteranClick(veteran)}
+                            className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg transition-colors"
+                            title="View Details"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+                          <button 
+                            className="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700 rounded-lg transition-colors"
+                            title="Edit Veteran"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-          {/* Pagination */}
-          <div className="px-4 py-3 bg-gray-900 flex items-center justify-between">
-            <p className="text-sm text-gray-400">
-              Showing {(currentPage - 1) * 20 + 1} to {Math.min(currentPage * 20, totalRecords)} of {totalRecords} results
-            </p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className="px-3 py-1 bg-gray-800 text-white rounded disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage * 20 >= totalRecords}
-                className="px-3 py-1 bg-gray-800 text-white rounded disabled:opacity-50"
-              >
-                Next
-              </button>
+            {/* Enhanced Pagination */}
+            <div className="px-4 py-4 bg-gray-900 border-t border-gray-700">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="text-sm text-gray-400">
+                  Showing <span className="font-medium text-white">{(currentPage - 1) * 20 + 1}</span> to{' '}
+                  <span className="font-medium text-white">{Math.min(currentPage * 20, totalRecords)}</span> of{' '}
+                  <span className="font-medium text-white">{totalRecords}</span> veterans
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Previous
+                  </button>
+                  <span className="px-3 py-2 text-sm text-gray-400">
+                    Page {currentPage} of {Math.ceil(totalRecords / 20)}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage * 20 >= totalRecords}
+                    className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

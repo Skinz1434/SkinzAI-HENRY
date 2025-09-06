@@ -164,22 +164,29 @@ export default function OverviewEnhanced({ accuracy, veteranCount, veterans = []
             </div>
           </div>
 
-          {/* Analytics Tool Card */}
-          <div className="bg-skinz-bg-secondary rounded-xl p-6 border border-skinz-border hover:border-amber-500/50 transition-all cursor-pointer group">
+          {/* TERA Analytics Tool Card */}
+          <div 
+            onClick={() => window.open('/tera-analytics', '_blank')}
+            className="bg-skinz-bg-secondary rounded-xl p-6 border border-skinz-border hover:border-orange-500/50 transition-all cursor-pointer group relative overflow-hidden"
+          >
+            {/* Featured Badge */}
+            <div className="absolute top-2 right-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+              TERA
+            </div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <TrendingUp className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <AlertTriangle className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-white">Analytics</h4>
-                <p className="text-xs text-gray-400">Data Insights</p>
+                <h4 className="text-lg font-semibold text-white">TERA Analytics</h4>
+                <p className="text-xs text-gray-400">Toxic Exposure Analysis</p>
               </div>
             </div>
-            <p className="text-sm text-gray-300 mb-4">Comprehensive analytics dashboard with predictive modeling and performance metrics.</p>
+            <p className="text-sm text-gray-300 mb-4">Advanced toxic exposure risk assessment with comprehensive PACT Act analysis and veteran health insights.</p>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-green-400 flex items-center gap-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                Active
+              <span className="text-xs text-orange-400 flex items-center gap-1">
+                <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                Live Analysis
               </span>
               <Globe className="w-4 h-4 text-cyan-400" />
             </div>
