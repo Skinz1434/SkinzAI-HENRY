@@ -203,7 +203,7 @@ export default function TERAAnalyticsPage() {
                     <AlertTriangle className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">{selectedVeteran.name}</h3>
+                    <h3 className="text-lg font-semibold text-white">{selectedVeteran.firstName} {selectedVeteran.lastName}</h3>
                     <p className="text-sm text-gray-400">TERA Analysis</p>
                   </div>
                 </div>
