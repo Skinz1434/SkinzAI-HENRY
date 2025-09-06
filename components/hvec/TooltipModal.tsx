@@ -40,28 +40,29 @@ export const TooltipModal: React.FC<TooltipModalProps> = ({
 
       {/* Modal */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-xl w-full max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white pr-4">{title}</h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                className="flex-shrink-0 p-1.5 sm:p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                aria-label="Close modal"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
-            <div className="p-4 overflow-y-auto max-h-[calc(80vh-8rem)]">
+            <div className="p-4 sm:p-6 overflow-y-auto max-h-[calc(90vh-10rem)]">
               {typeof content === 'string' ? (
-                <p className="text-gray-700 dark:text-gray-300">{content}</p>
+                <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">{content}</p>
               ) : (
-                content
+                <div className="text-sm sm:text-base">{content}</div>
               )}
             </div>
-            <div className="flex justify-end p-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex justify-end p-4 sm:p-6 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 text-white text-sm sm:text-base font-medium rounded-lg hover:bg-blue-700 transition-colors min-h-[44px] touch-manipulation"
               >
                 Close
               </button>

@@ -786,94 +786,94 @@ export default function HVECEnhanced() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm"
             onClick={handleCloseWelcome}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-3xl bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden"
+              className="relative w-full max-w-[95vw] sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header with Gradient */}
-              <div className="relative bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 px-8 py-12">
+              <div className="relative bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
                 <button
                   onClick={handleCloseWelcome}
-                  className="absolute top-4 right-4 p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-all"
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-all"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
-                    <HeartPulse className="w-10 h-10 text-white" />
+                <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-4 pr-10 sm:pr-12">
+                  <div className="p-2 sm:p-3 bg-white/20 rounded-xl sm:rounded-2xl backdrop-blur-sm flex-shrink-0">
+                    <HeartPulse className="w-6 h-6 sm:w-8 lg:w-10 sm:h-8 lg:h-10 text-white" />
                   </div>
-                  <div>
-                    <h2 className="text-3xl font-bold text-white">Welcome to HENRY HVEC</h2>
-                    <p className="text-blue-100 mt-1">Your Advanced Veterans Healthcare Command Center</p>
+                  <div className="min-w-0">
+                    <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold text-white">Welcome to HENRY HVEC</h2>
+                    <p className="text-sm sm:text-base text-blue-100 mt-1">Your Advanced Veterans Healthcare Command Center</p>
                   </div>
                 </div>
                 
-                <div className="flex gap-2 mt-6">
-                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-4 sm:mt-6">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
                     Version 2.0
                   </span>
-                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
                     AI-Powered
                   </span>
-                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium">
                     HIPAA Compliant
                   </span>
                 </div>
               </div>
               
               {/* Modal Content */}
-              <div className="px-8 py-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                      <Brain className="w-6 h-6 text-white" />
+              <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+                <div className="grid grid-cols-1 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                  <div className="flex gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center">
+                      <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">AI-Powered Insights</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <div className="min-w-0">
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-1">AI-Powered Insights</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         Advanced machine learning algorithms analyze patient data to provide predictive diagnostics and treatment recommendations.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
-                      <Shield className="w-6 h-6 text-white" />
+                  <div className="flex gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center">
+                      <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">VA Benefits Integration</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <div className="min-w-0">
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-1">VA Benefits Integration</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         Seamlessly connects with VA systems to track claims, benefits, and disability ratings in real-time.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-                      <Microscope className="w-6 h-6 text-white" />
+                  <div className="flex gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg sm:rounded-xl flex items-center justify-center">
+                      <Microscope className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Advanced Diagnostics</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <div className="min-w-0">
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-1">Advanced Diagnostics</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         ACR/EULAR classification criteria and comprehensive lab analysis for accurate clinical assessment.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
-                      <TrendingUp className="w-6 h-6 text-white" />
+                  <div className="flex gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg sm:rounded-xl flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Predictive Analytics</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <div className="min-w-0">
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-1">Predictive Analytics</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         Risk stratification and disease progression modeling to prevent cascading health events.
                       </p>
                     </div>
@@ -881,45 +881,45 @@ export default function HVECEnhanced() {
                 </div>
                 
                 {/* Quick Start Guide */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl p-6 mb-6">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                    <Lightbulb className="w-5 h-5 text-yellow-500" />
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                    <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
                     Quick Start Guide
                   </h3>
-                  <ol className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <ol className="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     <li className="flex gap-2">
-                      <span className="font-semibold text-blue-600 dark:text-blue-400">1.</span>
-                      Select a veteran from the patient list or use the search function
+                      <span className="font-semibold text-blue-600 dark:text-blue-400 flex-shrink-0">1.</span>
+                      <span>Select a veteran from the patient list or use the search function</span>
                     </li>
                     <li className="flex gap-2">
-                      <span className="font-semibold text-blue-600 dark:text-blue-400">2.</span>
-                      Review their comprehensive clinical assessment and AI insights
+                      <span className="font-semibold text-blue-600 dark:text-blue-400 flex-shrink-0">2.</span>
+                      <span>Review their comprehensive clinical assessment and AI insights</span>
                     </li>
                     <li className="flex gap-2">
-                      <span className="font-semibold text-blue-600 dark:text-blue-400">3.</span>
-                      Navigate tabs to access diagnostics, history, and documentation
+                      <span className="font-semibold text-blue-600 dark:text-blue-400 flex-shrink-0">3.</span>
+                      <span>Navigate tabs to access diagnostics, history, and documentation</span>
                     </li>
                     <li className="flex gap-2">
-                      <span className="font-semibold text-blue-600 dark:text-blue-400">4.</span>
-                      Use the export feature to generate reports for VA claims
+                      <span className="font-semibold text-blue-600 dark:text-blue-400 flex-shrink-0">4.</span>
+                      <span>Use the export feature to generate reports for VA claims</span>
                     </li>
                   </ol>
                 </div>
                 
                 {/* Action Buttons */}
-                <div className="flex gap-3 justify-end">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-end">
                   <button
                     onClick={() => {
                       handleCloseWelcome();
                       window.open('https://github.com/yourusername/henry-hvec/wiki', '_blank');
                     }}
-                    className="px-5 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all font-medium"
+                    className="px-4 py-2.5 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg sm:rounded-xl transition-all font-medium min-h-[44px] touch-manipulation order-2 sm:order-1"
                   >
                     View Documentation
                   </button>
                   <button
                     onClick={handleCloseWelcome}
-                    className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg transition-all font-medium"
+                    className="px-5 py-2.5 sm:px-6 sm:py-2.5 text-sm sm:text-base bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg sm:rounded-xl hover:shadow-lg transition-all font-medium min-h-[44px] touch-manipulation order-1 sm:order-2"
                   >
                     Get Started
                   </button>

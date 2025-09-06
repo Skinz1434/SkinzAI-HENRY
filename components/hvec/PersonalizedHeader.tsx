@@ -43,11 +43,11 @@ export default function PersonalizedHeader({
   };
 
   const navigationItems = [
-    { href: '/hvec', icon: Home, label: 'Dashboard' },
-    { href: '/hvec/veterans', icon: Users, label: 'Veterans' },
-    { href: '/hvec/claims', icon: FileText, label: 'Claims' },
-    { href: '/hvec/analytics', icon: BarChart3, label: 'Analytics' },
-    { href: '/hvec/ai-tools', icon: Brain, label: 'AI Tools' },
+    { href: '/hvec', icon: Home, label: 'HVEC Dashboard' },
+    { href: '/henry/dashboard-full', icon: Users, label: 'Veterans Registry' },
+    { href: '/va-claims-ai', icon: FileText, label: 'VA Claims AI' },
+    { href: '/codda', icon: Brain, label: 'CODDA IDE' },
+    { href: '/', icon: BarChart3, label: 'Platform Home' },
   ];
 
   return (
