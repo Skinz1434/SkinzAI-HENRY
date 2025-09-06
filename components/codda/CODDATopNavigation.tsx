@@ -21,7 +21,9 @@ import {
   Brain,
   Briefcase,
   Award,
-  Clock
+  Clock,
+  AlertTriangle,
+  Activity
 } from 'lucide-react';
 
 interface CODDATopNavigationProps {
@@ -41,39 +43,39 @@ export default function CODDATopNavigation({
 
   const navigationItems = [
     { 
-      id: 'dashboard', 
-      label: 'Dashboard', 
-      href: '/hvec', 
+      id: 'home', 
+      label: 'Platform Home', 
+      href: '/', 
       icon: Home,
-      description: 'Return to main dashboard'
+      description: 'Return to HENRY platform'
     },
     { 
-      id: 'cases', 
-      label: 'Cases', 
-      href: '/hvec/cases', 
-      icon: Briefcase,
-      description: 'View all cases'
+      id: 'dashboard', 
+      label: 'HENRY Dashboard', 
+      href: '/henry/dashboard-full', 
+      icon: Activity,
+      description: 'Veterans dashboard'
     },
     { 
-      id: 'analytics', 
-      label: 'Analytics', 
-      href: '/hvec/analytics', 
-      icon: BarChart3,
-      description: 'Performance metrics'
-    },
-    { 
-      id: 'team', 
-      label: 'Team', 
-      href: '/hvec/team', 
-      icon: Users,
-      description: 'Team collaboration'
-    },
-    { 
-      id: 'ai-tools', 
-      label: 'AI Tools', 
-      href: '/hvec/ai-tools', 
+      id: 'hvec', 
+      label: 'HVEC Clinical', 
+      href: '/hvec', 
       icon: Brain,
-      description: 'AI assistance tools'
+      description: 'Clinical intelligence system'
+    },
+    { 
+      id: 'va-claims', 
+      label: 'VA Claims AI', 
+      href: '/va-claims-ai', 
+      icon: FileText,
+      description: 'Claims analysis AI'
+    },
+    { 
+      id: 'tera-analytics', 
+      label: 'TERA Analytics', 
+      href: '/tera-analytics', 
+      icon: AlertTriangle,
+      description: 'Toxic exposure analysis'
     }
   ];
 

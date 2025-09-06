@@ -266,16 +266,56 @@ export default function DashboardFullPage() {
                   </div>
                 </div>
                 
-                {/* VA Claims AI Button */}
-                <a 
-                  href="/va-claims-ai"
-                  className="relative group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl blur-lg opacity-0 group-hover:opacity-30 transition-all duration-500" />
-                  <Brain className="w-5 h-5 relative z-10" />
-                  <span className="font-semibold relative z-10">VA Claims AI</span>
-                  <ExternalLink className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
+                {/* Navigation Links */}
+                <div className="hidden lg:flex items-center gap-2">
+                  <a 
+                    href="/"
+                    className="flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                    title="Platform Home"
+                  >
+                    <Activity className="w-4 h-4" />
+                    <span className="text-sm">Home</span>
+                  </a>
+                  <a 
+                    href="/hvec"
+                    className="flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                    title="HVEC Clinical Intelligence"
+                  >
+                    <Brain className="w-4 h-4" />
+                    <span className="text-sm">HVEC</span>
+                  </a>
+                  <a 
+                    href="/va-claims-ai"
+                    className="flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                    title="VA Claims AI"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span className="text-sm">Claims AI</span>
+                  </a>
+                  <a 
+                    href="/codda"
+                    className="flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                    title="CODDA IDE"
+                  >
+                    <Database className="w-4 h-4" />
+                    <span className="text-sm">CODDA</span>
+                  </a>
+                  <a 
+                    href="/tera-analytics"
+                    className="flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                    title="TERA Analytics"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    <span className="text-sm">TERA</span>
+                  </a>
+                </div>
+                
+                {/* Mobile Navigation Menu */}
+                <div className="lg:hidden">
+                  <button className="p-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors">
+                    <Grid className="w-5 h-5" />
+                  </button>
+                </div>
                 
                 {/* Accuracy Metric */}
                 <div className="text-right px-4 py-2 bg-green-500/10 rounded-xl border border-green-500/20 backdrop-blur-sm">

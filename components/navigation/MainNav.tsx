@@ -9,7 +9,8 @@ import {
   RefreshCw,
   FileDown,
   Brain,
-  Home
+  Home,
+  AlertTriangle
 } from 'lucide-react';
 
 export default function MainNav() {
@@ -21,6 +22,7 @@ export default function MainNav() {
     { href: '/henry/dashboard-full', label: 'HENRY Dashboard', icon: Activity },
     { href: '/va-claims-ai', label: 'VA Claims AI', icon: FileText },
     { href: '/codda', label: 'CODDA IDE', icon: RefreshCw },
+    { href: '/tera-analytics', label: 'TERA Analytics', icon: AlertTriangle },
   ];
 
   return (
@@ -59,7 +61,7 @@ export default function MainNav() {
           
           {/* Mobile Navigation - Show only essential links */}
           <div className="flex lg:hidden space-x-2">
-            {navItems.slice(1, 4).map(item => {
+            {navItems.slice(1, 5).map(item => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
               

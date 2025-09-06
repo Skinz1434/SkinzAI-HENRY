@@ -629,6 +629,15 @@ const VAClaimsAIReviewEnhanced: React.FC = () => {
                 <Stethoscope className="w-4 h-4" />
                 <span className="text-sm hidden sm:inline">HVEC</span>
               </Link>
+              
+              <Link
+                href="/tera-analytics"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+                title="TERA Analytics - Toxic Exposure Risk Assessment"
+              >
+                <AlertTriangle className="w-4 h-4" />
+                <span className="text-sm hidden sm:inline">TERA</span>
+              </Link>
 
               <button
                 onClick={() => setShowSettings(true)}

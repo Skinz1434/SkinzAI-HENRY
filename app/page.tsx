@@ -16,7 +16,7 @@ export default function Home() {
       <AnimatedParticles 
         className="fixed inset-0" 
         particleColor="rgba(94, 234, 212, 0.20)"
-        lineColor="rgba(59, 130, 246"
+        lineColor="rgba(59, 130, 246, 0.15)"
         particleCount={140}
         speed={0.15}
         interactive={false}
@@ -96,167 +96,167 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 sm:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-4 sm:gap-6"
         >
           {/* HVEC Clinical Intelligence Card */}
           <div 
             onClick={() => window.location.href = '/hvec'}
-            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 lg:p-8 border border-gray-700 hover:border-purple-500/50 transition-all cursor-pointer group relative z-10"
+            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 border border-gray-700 hover:border-purple-500/50 transition-all cursor-pointer group relative z-10 min-h-[420px] flex flex-col"
             style={{ pointerEvents: 'auto' }}
           >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Brain className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">HVEC Clinical Intelligence</h2>
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent leading-tight">HVEC Clinical Intelligence</h2>
             </div>
-            <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6">
+            <p className="text-sm text-gray-400 mb-4 leading-relaxed flex-grow">
               Advanced clinical decision support system with AI-powered diagnostic reasoning, pattern recognition, and comprehensive VA service connection analysis.
             </p>
-            <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0"></span>
+            <ul className="space-y-2 mb-6">
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>Multi-specialty diagnostic engine</span>
               </li>
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0"></span>
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>Evidence-based recommendations</span>
               </li>
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0"></span>
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>Automated documentation & DBQ</span>
               </li>
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0"></span>
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>Real-time Veteran data integration</span>
               </li>
             </ul>
-            <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors">
-              <span className="text-xs sm:text-sm font-medium">Launch Clinical Intelligence</span>
-              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center text-purple-400 group-hover:text-purple-300 transition-colors mt-auto">
+              <span className="text-sm font-medium">Launch Clinical Intelligence</span>
+              <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* Dashboard Card */}
           <div 
             onClick={() => window.location.href = '/henry/dashboard-full'}
-            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 lg:p-8 border border-gray-700 hover:border-cyan-500/50 transition-all cursor-pointer group relative z-10"
+            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 border border-gray-700 hover:border-cyan-500/50 transition-all cursor-pointer group relative z-10 min-h-[420px] flex flex-col"
             style={{ pointerEvents: 'auto' }}
           >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Activity className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-200 via-blue-200 to-cyan-200 bg-clip-text text-transparent">HENRY Dashboard</h2>
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight bg-gradient-to-r from-cyan-200 via-blue-200 to-cyan-200 bg-clip-text text-transparent leading-tight">HENRY Dashboard</h2>
             </div>
-            <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6">
+            <p className="text-sm text-gray-400 mb-4 leading-relaxed flex-grow">
               Complete Veteran service verification suite with profile management, claims tracking, and VA integration.
             </p>
-            <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+            <ul className="space-y-2 mb-6">
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>Veteran profile management</span>
               </li>
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>Claims tracking & analysis</span>
               </li>
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>VA profile synchronization</span>
               </li>
-              <li className="text-xs sm:text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0 mt-1.5"></span>
                 <span>Comprehensive reporting</span>
               </li>
             </ul>
-            <div className="flex items-center gap-2 text-cyan-400 group-hover:text-cyan-300 transition-colors">
-              <span className="text-xs sm:text-sm font-semibold">Open Dashboard</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center gap-2 text-cyan-400 group-hover:text-cyan-300 transition-colors mt-auto">
+              <span className="text-sm font-semibold">Open Dashboard</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* VA Claims AI Card */}
           <div 
             onClick={() => window.location.href = '/va-claims-ai'}
-            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 lg:p-8 border border-gray-700 hover:border-purple-500/50 transition-all cursor-pointer group relative overflow-hidden z-10"
+            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 border border-gray-700 hover:border-purple-500/50 transition-all cursor-pointer group relative overflow-hidden z-10 min-h-[420px] flex flex-col"
             style={{ pointerEvents: 'auto' }}
           >
             <div className="absolute top-0 right-0 px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold rounded-bl-lg">
               NEW
             </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            <div className="flex items-center gap-3 mb-4 mt-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Brain className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">VA Claims AI</h2>
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200 bg-clip-text text-transparent leading-tight">VA Claims AI</h2>
             </div>
-            <p className="text-gray-400 mb-6">
+            <p className="text-sm text-gray-400 mb-4 leading-relaxed flex-grow">
               AI-powered document review system for VA disability claims with automated evidence analysis and annotation.
             </p>
             <ul className="space-y-2 mb-6">
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                Intelligent document processing & OCR
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>Intelligent document processing & OCR</span>
               </li>
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                AI evidence analysis & scoring
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>AI evidence analysis & scoring</span>
               </li>
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                Automated annotations & tabbing
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>Automated annotations & tabbing</span>
               </li>
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                C&P exam request generation
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>C&P exam request generation</span>
               </li>
             </ul>
-            <div className="flex items-center gap-2 text-purple-400 group-hover:text-purple-300 transition-colors">
-              <span className="font-semibold">Launch AI Review</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center gap-2 text-purple-400 group-hover:text-purple-300 transition-colors mt-auto">
+              <span className="text-sm font-semibold">Launch AI Review</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* CODDA Card */}
           <div 
             onClick={() => window.location.href = '/codda'}
-            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 lg:p-8 border border-gray-700 hover:border-teal-500/50 transition-all cursor-pointer group relative overflow-hidden z-10"
+            className="bg-gray-800/50 backdrop-blur-md rounded-xl p-4 sm:p-6 border border-gray-700 hover:border-teal-500/50 transition-all cursor-pointer group relative overflow-hidden z-10 min-h-[420px] flex flex-col"
             style={{ pointerEvents: 'auto' }}
           >
             <div className="absolute top-0 right-0 px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-bold rounded-bl-lg">
               NEW
             </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            <div className="flex items-center gap-3 mb-4 mt-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <FileText className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-teal-200 via-cyan-200 to-teal-200 bg-clip-text text-transparent">CODDA</h2>
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight bg-gradient-to-r from-teal-200 via-cyan-200 to-teal-200 bg-clip-text text-transparent leading-tight">CODDA</h2>
             </div>
-            <p className="text-gray-400 mb-6">
+            <p className="text-sm text-gray-400 mb-4 leading-relaxed flex-grow">
               AI-powered Character of Discharge Determination Assistant with IDE-style workspace and QBit integration.
             </p>
             <ul className="space-y-2 mb-6">
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
-                Evidence gap detection & analysis
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>Evidence gap detection & analysis</span>
               </li>
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
-                QBit AI assistant integration
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>QBit AI assistant integration</span>
               </li>
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
-                IPR workflow automation
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>IPR workflow automation</span>
               </li>
-              <li className="text-sm text-gray-500 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full"></span>
-                Bias guard & quality assurance
+              <li className="text-sm text-gray-500 flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-teal-400 rounded-full flex-shrink-0 mt-1.5"></span>
+                <span>Bias guard & quality assurance</span>
               </li>
             </ul>
-            <div className="flex items-center gap-2 text-teal-400 group-hover:text-teal-300 transition-colors">
-              <span className="font-semibold">Launch CODDA</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center gap-2 text-teal-400 group-hover:text-teal-300 transition-colors mt-auto">
+              <span className="text-sm font-semibold">Launch CODDA</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
           

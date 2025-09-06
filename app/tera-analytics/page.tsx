@@ -106,8 +106,52 @@ export default function TERAAnalyticsPage() {
               </div>
             </div>
 
-            {/* Actions */}
+            {/* Navigation & Actions */}
             <div className="flex items-center gap-3 w-full sm:w-auto">
+              {/* Tool Navigation - Hidden on mobile */}
+              <div className="hidden lg:flex items-center gap-2 mr-4">
+                <a 
+                  href="/"
+                  className="flex items-center gap-1 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                  title="Platform Home"
+                >
+                  <Activity className="w-4 h-4" />
+                  <span className="text-xs">Home</span>
+                </a>
+                <a 
+                  href="/henry/dashboard-full"
+                  className="flex items-center gap-1 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                  title="HENRY Dashboard"
+                >
+                  <Users className="w-4 h-4" />
+                  <span className="text-xs">Dashboard</span>
+                </a>
+                <a 
+                  href="/hvec"
+                  className="flex items-center gap-1 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                  title="HVEC Clinical Intelligence"
+                >
+                  <Brain className="w-4 h-4" />
+                  <span className="text-xs">HVEC</span>
+                </a>
+                <a 
+                  href="/va-claims-ai"
+                  className="flex items-center gap-1 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                  title="VA Claims AI"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span className="text-xs">Claims AI</span>
+                </a>
+                <a 
+                  href="/codda"
+                  className="flex items-center gap-1 px-3 py-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                  title="CODDA IDE"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  <span className="text-xs">CODDA</span>
+                </a>
+              </div>
+              
               <button className="flex-1 sm:flex-initial flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 <Download className="w-4 h-4" />
                 <span className="text-sm">Export Report</span>

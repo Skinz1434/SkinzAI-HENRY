@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   User, Bell, Settings, LogOut, Shield, Clock, 
   Activity, Award, Menu, X, Sun, Moon, Home,
-  FileText, Users, BarChart3, Brain, ChevronDown
+  FileText, Users, BarChart3, Brain, ChevronDown, AlertTriangle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -47,6 +47,7 @@ export default function PersonalizedHeader({
     { href: '/henry/dashboard-full', icon: Users, label: 'Veterans Registry' },
     { href: '/va-claims-ai', icon: FileText, label: 'VA Claims AI' },
     { href: '/codda', icon: Brain, label: 'CODDA IDE' },
+    { href: '/tera-analytics', icon: AlertTriangle, label: 'TERA Analytics' },
     { href: '/', icon: BarChart3, label: 'Platform Home' },
   ];
 
